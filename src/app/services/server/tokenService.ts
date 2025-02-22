@@ -3,7 +3,7 @@ import { Client } from "viem";
 import { EthereumSepolia, PolygonAmoy, ArbitrumSepolia, arbitrumClient, arbitrumSepoliaClient, baseClient, ethClient, optimismClient, polygonAmoyClient, polygonClient, sepoliaClient, MAINNET } from "../common-utils/chainUtils";
 import { ReadBalanceCheckerReturnType, readMultipleOwnersTokensBalance, readNativeBalance } from "./balanceScanner";
 import { TokenDetails } from "@/app/constants/asset.interface";
-
+import { z } from "zod";
 
 export interface TokenFetchAPI {
   getTokensByOwners: (
@@ -132,3 +132,9 @@ export class TokensServices {
 
 export const SIMPLEHASH = "simplehash";
 export const CRYPTOCOMPARE = "cryptocompare";
+
+
+export const TokenBalancesQuerySchema = z.object({
+    address: z.array(z.string()),
+    tokenContracts: z.array(z.string()),
+});

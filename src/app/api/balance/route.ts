@@ -1,14 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import redisClient from "@/lib/redis";
 
-import { TokensServices } from "@/app/services/server/tokenService";
+import { TokenBalancesQuerySchema, TokensServices } from "@/app/services/server/tokenService";
 import { SimpleHash } from "@/app/services/server/simplehash";
-import { z } from "zod";
-
-export const TokenBalancesQuerySchema = z.object({
-    address: z.array(z.string()),
-    tokenContracts: z.array(z.string()),
-});
 
 // for start set to 60secs
 const REDIS_TIMEOUT = 60;
