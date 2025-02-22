@@ -136,9 +136,9 @@ const WrapUnwrapCard = () => {
     try {
       setLoading(true);
       const value = BigInt(parseFloat(wrapAmount) * 1e18);
-
+      // The module is only loaded on the client is address is sfa during handle wrap
       if (safeEnabled) {
-        
+        // dynamically loads
         const SafeKit = (await import('@safe-global/protocol-kit')).default
         const apiKit = (await import("@safe-global/api-kit")).default
 

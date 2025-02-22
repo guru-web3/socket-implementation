@@ -1,10 +1,14 @@
 "use client";
 
-import TokenList from "@/app/components/organisms/TokenList";
 import { useVisibleAssets } from "@/app/composibles/useAssetsBalance";
 import useUserStore from "@/store/userStore";
+import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 import { useAccount } from "wagmi";
+
+const TokenList = dynamic(() =>
+  import("@/app/components/organisms/TokenList").then((module) => module.default),
+);
 
 const Wallet = () => {
   const { address } = useAccount();

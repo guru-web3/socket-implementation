@@ -1,7 +1,11 @@
 "use client";
-import WrapEthCard from "@/app/components/templates/WrapEth";
+import dynamic from "next/dynamic";
 import React from "react";
 import { useAccount } from "wagmi";
+
+const WrapEthCard = dynamic(() =>
+  import("@/app/components/templates/WrapEth").then((module) => module.default),
+);
 
 const Activity = () => {
   const { address } = useAccount();

@@ -1,7 +1,11 @@
 "use client";
-import SwapCard from "@/app/components/templates/SwapCard";
+import dynamic from "next/dynamic";
 import React from "react";
 import { useAccount } from "wagmi";
+
+const SwapCard = dynamic(() =>
+  import("@/app/components/templates/SwapCard").then((module) => module.default),
+);
 
 const Swap = () => {
   const { address } = useAccount();
