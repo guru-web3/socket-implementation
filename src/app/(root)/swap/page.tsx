@@ -5,6 +5,7 @@ import { useAccount } from "wagmi";
 
 const SwapCard = dynamic(() =>
   import("@/app/components/templates/SwapCard").then((module) => module.default),
+  { ssr: false }
 );
 
 const Swap = () => {

@@ -1,6 +1,7 @@
+'use client';
+
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { sepolia, mainnet, polygon, optimism, polygonAmoy, arbitrumSepolia, arbitrum } from "wagmi/chains";
-import { rainbowWeb3AuthConnector } from "@/context/RainbowWeb3authConnector";
 import {
   rainbowWallet,
   metaMaskWallet,
@@ -28,7 +29,6 @@ export const defaultWagmiConfig = getDefaultConfig({
         groupName: "Suggested",
         wallets: [
           rainbowWallet,
-          rainbowWeb3AuthConnector,
           metaMaskWallet,
           walletConnectWallet,
         ],

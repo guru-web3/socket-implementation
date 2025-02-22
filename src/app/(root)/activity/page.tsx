@@ -3,8 +3,12 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { useAccount } from "wagmi";
 
-const ActivityFeed = dynamic(() =>
-  import("@/app/components/templates/ActivityFeed").then((module) => module.default),
+const ActivityFeed = dynamic(
+  () =>
+    import("@/app/components/templates/ActivityFeed").then(
+      (module) => module.default
+    ),
+  { ssr: false }
 );
 
 const Activity = () => {

@@ -8,6 +8,7 @@ import { useAccount } from "wagmi";
 
 const TokenList = dynamic(() =>
   import("@/app/components/organisms/TokenList").then((module) => module.default),
+  { ssr: false }
 );
 
 const Wallet = () => {

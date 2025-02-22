@@ -1,7 +1,5 @@
-import { Address } from "abitype";
-
 import { readContract } from "viem/actions";
-import { Client, Hex } from "viem";
+import { type Address, Client, Hex } from "viem";
 import { ARBITRUM_MAINNET, ArbitrumSepolia, AVALANCHE_MAINNET, EthereumSepolia, GOERLI, MAINNET, MATIC, OPTIMISM_MAINNET, PolygonAmoy } from "../common-utils/chainUtils";
 
 const abi = [
