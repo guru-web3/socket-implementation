@@ -18,9 +18,11 @@ export function useAssetsBalances() {
   const initLocalAssetBalanceController = () => {
     const localAssetBalanceController = AssetsBalanceController.getInstance({
       config: {
-        assetsInfoConfig: {},
+        assetsInfoConfig: {
+          interval: 10_000,
+        },
         balanceControllerConfig: {
-          interval: 30_000,
+          interval: 10_000,
         },
       },
 
