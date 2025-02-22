@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import redisClient from '@/lib/redis';
 import { BLOCK_EXPLORER_URL, EChain } from "@/app/services/common-utils/chainUtils";
-export const DEFAULT_REDIS_PREFIX = "REDIS_SMART_WALLET";
+const DEFAULT_REDIS_PREFIX = "REDIS_SMART_WALLET";
   
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
