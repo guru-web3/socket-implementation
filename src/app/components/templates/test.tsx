@@ -1,16 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { formatEther, formatUnits } from "viem";
-import { sepolia } from "viem/chains";
-import SafeApiKit from "@safe-global/api-kit";
 import Dropdown from "../atoms/DropDown";
-import Image from "next/image";
 import { EChain, BLOCK_EXPLORER_URL } from "@/app/services/common-utils/chainUtils";
-
-const SAFE_API_URL = "https://safe-transaction-sepolia.safe.global/api";
+import { RawToken } from "@/app/constants/asset.interface";
 
 const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
-  const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     days: 7,
@@ -21,18 +16,15 @@ const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
     { value: "30", name: "Last 30 days" },
     { value: "90", name: "Last 90 days" },
   ];
-
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  const [transactions, setTransactions] = useState<any[]>([]);
+  
   const TYPE_FILTER_OPTIONS = [
     { value: "all", name: "All Transactions" },
     { value: "ETH", name: "ETH Transfers" },
     { value: "ERC20", name: "Token Transfers" },
     { value: "NFT", name: "NFT Transfers" },
   ];
-
-  const safeService = new SafeApiKit({
-    chainId: BigInt(sepolia.id),
-    txServiceUrl: SAFE_API_URL,
-  });
 
   const fetchExplorerActivity = async () => {
     try {
@@ -71,44 +63,6 @@ const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
   };
 
   useEffect(() => {
-    const fetchSafeActivity = async () => {
-      try {
-        const [multisigTxs, moduleTxs, getPendingTransactions] =
-          await Promise.all([
-            safeService.getMultisigTransactions(safeAddress),
-            safeService.getModuleTransactions(safeAddress),
-            safeService.getPendingTransactions(safeAddress),
-          ]);
-        const pendingTransactionsWithTimestamp =
-          getPendingTransactions.results.map((tx) => ({
-            ...tx,
-            timestamp: new Date(tx.submissionDate),
-          }));
-
-        const processed = [...multisigTxs.results, ...moduleTxs.results]
-          .filter((tx) => tx.isSuccessful)
-          .map((tx) => ({
-            ...tx,
-            timestamp: new Date(tx.executionDate),
-          }))
-          .sort(
-            (a, b) =>
-              new Date(b.executionDate).getTime() -
-              new Date(a.executionDate).getTime()
-          );
-        const allTransactions = processed.concat(
-          pendingTransactionsWithTimestamp
-        );
-        setTransactions(allTransactions);
-      } catch (error) {
-        console.error("Error fetching activity:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    // fetchSafeActivity();
-    // const interval = setInterval(fetchSafeActivity, 15000);
-    // return () => clearInterval(interval);
     fetchExplorerActivity();
     const interval = setInterval(fetchExplorerActivity, 15000);
     return () => clearInterval(interval);
@@ -130,7 +84,7 @@ const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
     );
   };
 
-  const formatValue = (tx: any) => {
+  const formatValue = (tx: RawToken) => {
     if (tx.type === "ETH") {
       return `${formatEther(BigInt(tx.value || 0))} ETH`;
     }
@@ -262,7 +216,7 @@ const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
                   Value
                 </p>
                 <p className="text-app-gray-50">
-                  {formatValue(tx)}
+                  {formatValue(tx as RawToken)}
                   {tx.type === "NFT" && (
                     <span className="block text-xs text-app-gray-400 mt-1">
                       Contract: {tx.contractAddress?.slice(0, 6)}...

@@ -29,7 +29,6 @@ export class TokensServices {
 
   constructor(fetchAPI: TokenFetchAPI) {
     this.fetchAPI = fetchAPI;
-    this.clients;
   }
 
   async detectTokens(owner: string[], networks: string[]) {
@@ -91,6 +90,7 @@ export class TokensServices {
             });
             resultMap[network] = balance;
           } catch (error) {
+            console.error("error while getting token balance", error)
             owners.forEach((owner) => {
               resultMap[network][owner] = {};
             });

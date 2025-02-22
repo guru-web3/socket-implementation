@@ -67,7 +67,7 @@ export default class BalancesController extends BaseController<
     const defaultShownAssets: `${string}.0x${string}`[] = DefaultAssetsInfo.map(
       (asset) => asset.assetId,
     );
-    let finalAssets = assets.length ? assets : defaultShownAssets;
+    const finalAssets = assets.length ? assets : defaultShownAssets;
     // const accounts = this.accountPreferenceAPI.getAccounts();
     const accounts = [useUserStore.getState().address];
     if (!accounts.length || !finalAssets.length) {

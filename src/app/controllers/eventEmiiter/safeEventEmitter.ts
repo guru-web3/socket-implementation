@@ -1,11 +1,12 @@
-/* eslint-disable no-unused-vars */
-import { EventEmitter } from "events";
+ import { EventEmitter } from "events";
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 type Handler = (...args: any[]) => void;
 interface EventMap {
   [k: string]: Handler | Handler[] | undefined;
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 function safeApply<T, A extends any[]>(
   handler: (this: T, ...handlerArgs: A) => void,
   context: T,
@@ -31,9 +32,11 @@ function arrayClone<T>(arr: T[]): T[] {
 }
 
 export default class SafeEventEmitter extends EventEmitter {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   emit(type: string, ...args: any[]): boolean {
     let doError = type === "error";
 
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     const events: EventMap = (this as any)._events;
     if (events !== undefined) {
       doError = doError && events.error === undefined;
@@ -54,6 +57,7 @@ export default class SafeEventEmitter extends EventEmitter {
       }
       // At least give some kind of context to the user
       const err = new Error(`Unhandled error.${er ? ` (${er.message})` : ""}`);
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       (err as any).context = er;
       throw err; // Unhandled 'error' event
     }

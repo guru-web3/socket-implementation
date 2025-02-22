@@ -45,5 +45,15 @@ export type ChainInfo = {
   decimals: number;
 
   defaultAssetInfoList: AssetInfo[];
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   walletCapabilities: Record<string, any>;
+};
+
+export type RawToken = {
+  type: string;
+  tokenId: string;
+  value?: string;
+  tokenSymbol?: string;
+  tokenValue?: string;
+  tokenDecimal?: string;
 };

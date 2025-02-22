@@ -24,7 +24,7 @@ interface RouteDetails {
 
 const BridgeRoutes = () => {
   const {selectedToToken} = useSwapStore();
-  const { routes, setToAmount, selectedRoute, setSelectedRoute } = useSwapTransactionStore();
+  const { routes, setToAmount, setSelectedRoute } = useSwapTransactionStore();
   const [quickestRoute, setQuickestRoute] = useState<RouteDetails | null>(null);
   const [bestReturnRoute, setBestReturnRoute] = useState<RouteDetails | null>(null);
 

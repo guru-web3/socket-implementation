@@ -43,14 +43,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     setSelectedOption(
       options.find((o) => o.value === defaultValue) || null
     );
-  }, [defaultValue])
-
-  // Safelist these classes in tailwind.config.js
-  const inputContainerClasses = [
-    "bg-primary-100", 
-    "dark:bg-primary-500",
-    "text-primary-800"
-  ];
+  }, [options, defaultValue])
 
   useEffect(() => {
     if (value) {

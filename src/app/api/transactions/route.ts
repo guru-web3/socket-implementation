@@ -58,11 +58,13 @@ export async function GET(req: NextRequest) {
     ];
 
     // Fetch blockchain transactions
+     
     const [blockchainResults] = await Promise.all([
       Promise.allSettled(urls.map(url => fetch(url).then(res => res.json()))),
     ]);
 
     // Process blockchain transactions
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     const chainTransactions = blockchainResults.reduce((acc: any[], result) => {
       if (result.status === 'fulfilled' && result.value.status === '1') {
         return [...acc, ...result.value.result];
@@ -145,9 +147,6 @@ export async function POST(req: NextRequest) {
       })
     );
 
-    const result = await redisClient.get(
-      `tx:${txData.chainId}:${txData.hash}`,
-    )
     return NextResponse.json({ success: true });
 
   } catch (error) {

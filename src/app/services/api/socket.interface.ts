@@ -1,5 +1,3 @@
-import { BaseState } from "@/app/controllers/base";
-
 // services/api/tokenLists.ts
 export interface Token {
   address: string;
@@ -122,6 +120,7 @@ export interface QuoteResponse {
   success: boolean;
   result?: {
     routes?: Route[];
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     [key: string]: any; // Handle additional fields
   };
 }
@@ -154,6 +153,7 @@ export interface PrepareNextTxResponse {
   success: boolean;
   proceed: boolean;
   message?: string;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   [key: string]: any; // Handle additional fields in the response
 }
 

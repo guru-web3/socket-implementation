@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   // Base styles
-  let baseStyles =
+  const baseStyles =
     "flex items-center justify-center gap-x-3 font-medium w-full focus:outline-none focus-visible:ring-1 disabled:opacity-60 disabled:pointer-events-none";
 
   // Variant styles

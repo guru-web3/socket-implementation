@@ -90,6 +90,7 @@ export class BaseController<C extends BaseConfig, S extends BaseState>
 
       for (const key in this.internalConfig) {
         if (typeof this.internalConfig[key] !== "undefined") {
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
           (this as any)[key as string] = this.internalConfig[key];
         }
       }
@@ -97,6 +98,7 @@ export class BaseController<C extends BaseConfig, S extends BaseState>
       for (const key in config) {
         if (typeof this.internalConfig[key] !== "undefined") {
           this.internalConfig[key] = config[key] as C[Extract<keyof C, string>];
+          /* eslint-disable  @typescript-eslint/no-explicit-any */
           (this as any)[key] = config[key];
         }
       }

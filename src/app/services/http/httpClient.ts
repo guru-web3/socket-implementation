@@ -1,9 +1,9 @@
-// services/api/httpClient.ts
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 interface HttpClientConfig {
   method?: HttpMethod;
   params?: Record<string, string | number | boolean>;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   body?: Record<string, any>; // Add body support for POST/PUT requests
   headers?: HeadersInit;
 }

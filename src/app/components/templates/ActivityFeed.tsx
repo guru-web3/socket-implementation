@@ -7,6 +7,7 @@ import useTransactionStore from "@/store/activityStore";
 import { Loader } from "../molecules/Loader";
 import ComponentLoader from "../atoms/ComponentLoader";
 import { useAccount } from "wagmi";
+import { RawToken } from "@/app/constants/asset.interface";
 
 const Dropdown = dynamic(() => import('../atoms/DropDown'), {
   ssr: true,
@@ -70,7 +71,7 @@ const ActivityFeed = () => {
     );
   };
 
-  const formatValue = (tx: any) => {
+  const formatValue = (tx: RawToken) => {
     if (tx.type === "ETH") {
       return `${formatEther(BigInt(tx.value || 0))} ETH`;
     }
@@ -87,7 +88,7 @@ const ActivityFeed = () => {
     return "Token Transfer";
   };
 
-  const getTransactionTitle = (tx: any) => {
+  const getTransactionTitle = (tx: RawToken) => {
     const base = `${tx.type} Transfer`;
     if (tx.type === "ERC20" && tx.tokenSymbol)
       return `${tx.tokenSymbol} Transfer`;
@@ -156,7 +157,7 @@ const ActivityFeed = () => {
                 <TransactionTypeIcon type={tx.type} />
                 <div>
                   <h3 className="font-medium text-app-gray-50">
-                    {getTransactionTitle(tx)}
+                    {getTransactionTitle(tx as unknown as RawToken)}
                   </h3>
                   <p className="text-sm text-app-gray-300">
                     {new Date(tx.timestamp).toLocaleDateString()} •{" "}
@@ -198,7 +199,7 @@ const ActivityFeed = () => {
                   Value
                 </p>
                 <p className="text-app-gray-50">
-                  {formatValue(tx)}
+                  {formatValue(tx as unknown as RawToken)}
                   {tx.type === "NFT" && (
                     <span className="block text-xs text-app-gray-400 mt-1">
                       Contract: {tx.contractAddress?.slice(0, 6)}...

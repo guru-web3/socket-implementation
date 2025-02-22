@@ -52,9 +52,6 @@ const SwapCard = () => {
   } = useMakeApprovalTx();
   const {
     executeTx,
-    error, 
-    isSuccess,
-    txHash
   } = useBungeeTx();
 
   const { fromAmount, setRoutes, selectedRoute } =
@@ -106,7 +103,6 @@ const SwapCard = () => {
       selectedToToken
     ) {
       setFetchingQuote(true);
-      selectedFromToken.decimals;
       const bigIntFromAmount = parseUnits(fromAmount.toString(), selectedFromToken.decimals);
       const routeResult = await getQuote({
         fromChainId: selectedFromChain.chainId,
@@ -213,13 +209,12 @@ const SwapCard = () => {
   }, [selectedToChain]);
 
   const setSelectedToken = (token: Token) => {
-    selectedTokenType === "from"
-      ? setSelectedFromToken(token)
-      : selectedTokenType === "to"
-      ? setSelectedToToken(token)
-      : null;
+    if (selectedTokenType === "from") {
+      setSelectedFromToken(token);
+    } else if (selectedTokenType === "to") {
+      setSelectedToToken(token);
+    }
   };
-
   const startTx = async () => {
     if (
       selectedFromChain &&
@@ -228,7 +223,7 @@ const SwapCard = () => {
       selectedFromToken &&
       selectedToToken
     ) {
-      const bigIntFromAmount = parseUnits(fromAmount.toString(), selectedFromToken.decimals);
+      // const bigIntFromAmount = parseUnits(fromAmount.toString(), selectedFromToken.decimals);
   
       const routeStarted = await startRoute({
         fromChainId: selectedFromChain?.chainId || 0,
@@ -243,8 +238,8 @@ const SwapCard = () => {
         toAssetAddress: selectedToToken?.address || "",
       });
       // Relevant data from response of /route/start
-      const activeRouteId = routeStarted.result.activeRouteId;
-      const userTxIndex = routeStarted.result.userTxIndex;
+      // const activeRouteId = routeStarted.result.activeRouteId;
+      // const userTxIndex = routeStarted.result.userTxIndex;
       const txTarget = routeStarted.result.txTarget;
       const txData = routeStarted.result.txData;
       const value = routeStarted.result.value;
@@ -252,10 +247,10 @@ const SwapCard = () => {
       if (routeStarted.result.approvalData == null) {
         console.log("Approval is needed", routeStarted.result.approvalData);
         // Params for approval
-        let approvalTokenAddress =
+        const approvalTokenAddress =
           routeStarted.result.approvalData.approvalTokenAddress;
-        let allowanceTarget = routeStarted.result.approvalData.allowanceTarget;
-        let minimumApprovalAmount =
+        const allowanceTarget = routeStarted.result.approvalData.allowanceTarget;
+        const minimumApprovalAmount =
           routeStarted.result.approvalData.minimumApprovalAmount;
         
         const txHash = await approve({

@@ -148,7 +148,7 @@ interface BuildNextTxParams {
 
 interface BuildNextTxResponse {
   success: boolean;
-  transactionData?: any; // Replace with actual transaction data structure if known
+  transactionData?: string;
   message?: string;
 }
 

@@ -110,7 +110,7 @@ export const useVisibleAssets = () => {
         balanceState.balancesMap[deployedAccountAddress]
       ) {
         const localVisibleAssets: TokenCardProps[] = [];
-        let localAccountValue = new BigNumber(0);
+        const localAccountValue = new BigNumber(0);
 
         // for logging
         const assetNotFound: string[] = [];

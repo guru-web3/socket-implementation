@@ -15,7 +15,7 @@ const Wallet = () => {
     if (address) {
       setAddress(address);
     }
-  }, [visibleAssets, nonZeroAssets]);
+  }, [address, setAddress, visibleAssets, nonZeroAssets]);
   return (
     <>
       <div className="bg-[#171721] min-h-[560px] relative mx-auto mt-12 w-full max-w-lg rounded-xl bg-socket-layers-1 px-6 py-6 shadow-card sm:border sm:border-neutral-800">

@@ -1,4 +1,4 @@
-import { EthereumSepolia, getSimpleHashApiKey, getChainInfoFromNetwork, AMOY, ARBITRUM_MAINNET, ARBITRUM_SEPOLIA, AVALANCHE_MAINNET, BSC_MAINNET, CELO_MAINNET, GOERLI, MAINNET, MATIC, OPTIMISM_MAINNET, OPTIMISM_SEPOLIA } from "@/app/services/common-utils/chainUtils";
+import { EthereumSepolia, getSimpleHashApiKey, AMOY, ARBITRUM_MAINNET, ARBITRUM_SEPOLIA, AVALANCHE_MAINNET, BSC_MAINNET, CELO_MAINNET, GOERLI, MAINNET, MATIC, OPTIMISM_MAINNET, OPTIMISM_SEPOLIA } from "@/app/services/common-utils/chainUtils";
 
 const SIMPLEHASH_MAP: Record<string, string> = {
   [MAINNET]: "ethereum",
@@ -35,7 +35,7 @@ export class SimpleHash {
 
   // https://api.simplehash.com/api/v0/fungibles/balances?chains={chains}&wallet_addresses={wallet_addresses}
   async getTokensByOwners(owner: string[], networks: string[]) {
-    let toNetworks = this.convertNetworksToSimpleHash(networks);
+    const toNetworks = this.convertNetworksToSimpleHash(networks);
 
     const response = await fetch(
       `https://api.simplehash.com/api/v0/fungibles/balances?chains=${toNetworks.join(",")}&wallet_addresses=${owner.join(",")}`,

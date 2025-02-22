@@ -192,7 +192,7 @@ const WrapUnwrapCard = () => {
       }
     } catch (error) {
       console.error("Transaction failed:", error);
-      addToast("error", (error as any).shortMessage || (error as Error).message || "Transaction failed")
+      addToast("error", (error as {shortMessage: string}).shortMessage || (error as Error).message || "Transaction failed")
     } finally {
       setLoading(false);
     }
@@ -216,7 +216,7 @@ const WrapUnwrapCard = () => {
       setTxHash(hash);
     } catch (error) {
       console.error("Unwrap failed:", error);
-      addToast("error", (error as any).shortMessage || (error as Error).message || "Transaction failed")
+      addToast("error", (error as {shortMessage: string}).shortMessage || (error as Error).message || "Transaction failed")
     } finally {
       setUnWrapLoading(false);
     }

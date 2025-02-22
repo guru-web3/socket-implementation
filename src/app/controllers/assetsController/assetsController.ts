@@ -84,7 +84,7 @@ export default class AssetsInfoController extends BaseController<
       ],
       ...mergedAssetsInfo,
     });
-
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     (this as any).emit("postInitialized");
   }
 

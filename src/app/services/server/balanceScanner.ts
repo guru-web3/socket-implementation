@@ -126,10 +126,6 @@ export type ReadBalanceCheckerReturnType = Record<
   string,
   Record<string, string>
 >;
-type Result = {
-  success: boolean;
-  data: Hex;
-};
 
 export const readNativeBalance = async (params: {
   client: Client;
@@ -150,7 +146,7 @@ export const readNativeBalance = async (params: {
     args: [batchOwnerAddress],
   })) as { success: boolean; data: Hex }[];
 
-  let resultMap: ReadBalanceCheckerReturnType = {};
+  const resultMap: ReadBalanceCheckerReturnType = {};
 
   result.forEach((value, index) => {
     const keyName = `${network}.0x0`;
@@ -183,7 +179,7 @@ export const readTokensBalance = async (params: {
     args: [ownerAddress, tokensContractAddress],
   })) as { success: boolean; data: Hex }[];
 
-  let resultMap: ReadBalanceCheckerReturnType = {};
+  const resultMap: ReadBalanceCheckerReturnType = {};
   result.forEach((value, index) => {
     const keyName = `${network}.${tokensContractAddress[index]}`;
     const amount = value.success ? BigInt(value.data).toString() : "0";

@@ -203,7 +203,7 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
     } catch (err) {
       addToast(
         "error",
-        (err as any).shortMessage ||
+        (err as {shortMessage: string}).shortMessage ||
           (err as Error).message ||
           "Transaction failed"
       );

@@ -1,8 +1,6 @@
 import { AssetIdType, AssetInfo } from "@/app/constants/asset.interface";
 import { arbitrumTokens } from "./Arbitrum";
-import { baseTokens } from "./Base";
 import { ethereumTokens } from "./Ethereum";
-import { optimismTokens } from "./Optimisim";
 import { polygonTokens } from "./Polygon";
 import {
   ArbitrumSepolia,

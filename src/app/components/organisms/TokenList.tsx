@@ -7,10 +7,7 @@ import { TokenCard } from "../molecules/TokenCard";
 import { Loader } from "../molecules/Loader";
 import { TokenTransfer } from "./TokenTransfer";
 
-interface TokenListProps {
-}
-
-const TokenList: React.FC<TokenListProps> = ({
+const TokenList: React.FC = ({
 }) => {
   const { visibleAssets, loading } = useVisibleAssets();
   const [selectedToken, setSelectedToken] = useState<TokenCardProps>()

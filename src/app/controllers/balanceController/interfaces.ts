@@ -1,4 +1,3 @@
-import { AccountAssetsInfo } from "../assetsController/assetsController";
 import { BaseConfig, BaseState } from "../base";
 
 export interface IAccountPreferenceAPI {

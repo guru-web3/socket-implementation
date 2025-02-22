@@ -27,7 +27,6 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [toasts, setToasts] = useState<ToastObj[]>([]);
   const [customIcon, setCustomIcon] = useState<React.ReactNode | null>(null);
-  const [customStyle, setCustomStyle] = useState<string | null>("");
 
   const removeToast = useCallback((id: number) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
@@ -38,14 +37,12 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
       type: ToastType,
       message: string,
       icon?: React.ReactNode,
-      style?: string,
     ) => {
       setToasts((prevToasts) => [
         ...prevToasts,
         { id: ++toastId, type, message },
       ]);
       if (icon) setCustomIcon(icon || null);
-      if (style) setCustomStyle(style || null);
     },
     [],
   );
