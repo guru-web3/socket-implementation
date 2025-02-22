@@ -1,0 +1,45 @@
+{
+  "name": "eth-wrapper",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "export NODE_TLS_REJECT_UNAUTHORIZED=0 && next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@rainbow-me/rainbowkit": "^2.2.4",
+    "@safe-global/api-kit": "^2.5.11",
+    "@safe-global/protocol-kit": "^5.2.4",
+    "@safe-global/sdk-starter-kit": "^1.1.7",
+    "@safe-global/types-kit": "^1.0.4",
+
+    "@web3auth/auth-adapter": "^9.5.1",
+    "@web3auth/base": "^9.5.1",
+    "@web3auth/ethereum-provider": "^9.5.1",
+    "@web3auth/modal": "^9.5.1",
+    "@web3auth/web3auth-wagmi-connector": "^7.0.0",
+
+    "bignumber.js": "^9.1.2",
+    "next": "15.1.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    
+    "redis": "^4.7.0",
+    "viem": "^2.23.2",
+    "zod": "^3.24.2",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.7",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.w3a-parent-container {
+  z-index: 9999999999 !important;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --socket-primary-white: 255, 255, 255;
+  --socket-primary-purple: 127, 31, 255;
+  --socket-gray-90: 29, 41, 57;
+  --socket-gray-80: 52, 64, 84;
+  --socket-gray-70: 71, 84, 103;
+  --socket-gray-60: 102, 112, 133;
+  --socket-gray-50: 152, 162, 179;
+  --socket-gray-30: 234, 236, 240;
+  --socket-gray-20: 242, 244, 247;
+  --socket-gray-10: 249, 250, 251;
+  --socket-gray-0: 252, 252, 253;
+  --socket-purple-100: 22, 0, 51;
+  --socket-purple-70: 103, 17, 215;
+  --socket-purple-60: 119, 32, 233;
+  --socket-purple-50: 134, 51, 242;
+  --socket-purple-30: 170, 108, 251;
+  --socket-purple-20: 193, 147, 253;
+  --socket-purple-10: 218, 190, 254;
+  --socket-purple-0: 249, 245, 255;
+  --socket-blue-70: 17, 93, 215;
+  --socket-blue-50: 51, 124, 242;
+  --socket-blue-30: 108, 163, 251;
+  --socket-blue-20: 147, 187, 253;
+  --socket-blue-10: 190, 215, 254;
+  --socket-blue-0: 235, 242, 255;
+  --socket-rose-70: 215, 17, 116;
+  --socket-rose-60: 233, 32, 132;
+  --socket-rose-50: 233, 32, 132;
+  --socket-rose-30: 251, 108, 179;
+  --socket-rose-0: 255, 250, 252;
+  --socket-green-80: 2, 122, 72;
+  --socket-green-70: 3, 152, 85;
+  --socket-green-50: 50, 213, 131;
+  --socket-green-30: 166, 244, 197;
+  --socket-green-10: 236, 253, 243;
+  --socket-green-0: 246, 254, 249;
+  --socket-yellow-80: 173, 115, 7;
+  --socket-yellow-50: 242, 175, 51;
+  --socket-yellow-30: 251, 201, 108;
+  --socket-yellow-0: 255, 248, 235;
+  --bg-dark: 28, 28, 40;
+}
+
+/* to hide arrow from number input */
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
