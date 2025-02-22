@@ -64,7 +64,9 @@ export default function RootLayout({
 
         <Providers>
           <NavBar />
-          {children}
+          <div className="min-h-[87vh]">
+            {children}
+          </div>
           <Footer />
         </Providers>
       </body>

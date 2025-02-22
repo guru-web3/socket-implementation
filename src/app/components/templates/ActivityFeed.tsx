@@ -107,7 +107,7 @@ const ActivityFeed = () => {
   return (
     <div className="bg-[#171721] relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 sm:flex-row flex-col">
         <h2
           className="text-xl font-semibold text-socket-primary sm:text-2xl"
           aria-label="Transaction History"
@@ -116,7 +116,7 @@ const ActivityFeed = () => {
         </h2>
 
         {/* Filters */}
-        <div className="flex gap-4">
+        <div className="flex gap-4 sm:flex-row flex-col">
           <Dropdown
             options={DAYS_FILTER_OPTIONS}
             inputSize="md"
