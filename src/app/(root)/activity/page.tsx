@@ -9,7 +9,7 @@ const Activity = () => {
   return (
     <>
       <div className="p-4 flex flex-col h-full w-full flex-1">
-        {address && <ActivityFeed safeAddress={address} />}
+        {address && <ActivityFeed />}
       </div>
     </>
   );
