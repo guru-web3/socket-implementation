@@ -115,7 +115,7 @@ const BridgeRoutes = () => {
     <>
       {/* Bridge Routes */}
       {routes && routes.length > 0 && (
-        <div className="bg-[#171721] mt-4 rounded-lg shadow-md w-full max-w-lg mx-auto" aria-label="Bridge Routes Container">
+        <div className="bg-app-dark-surface3 mt-4 rounded-lg shadow-md w-full max-w-lg mx-auto" aria-label="Bridge Routes Container">
           {/* Header */}
           <div className="flex justify-between items-center mb-4 px-4" aria-label="Bridge Routes Header">
             <h3 className="text-app-gray-50 text-lg font-semibold" aria-label="Select Bridge Route">
@@ -129,7 +129,7 @@ const BridgeRoutes = () => {
           {/* Best Return Route */}
           {bestReturnRoute && (
             <div
-              className={`p-4 rounded-lg border border-purple-400 bg-socket-layers-2 hover:bg-[#252534] transition`}
+              className={`p-4 rounded-lg border border-purple-400 bg-socket-layers-2 hover:bg-app-dark-surface4 transition`}
               onClick={() => {
                 const selectedRoute = routes?.find((route) => route.routeId === bestReturnRoute.routeId);
                 if (selectedRoute) {
@@ -170,7 +170,7 @@ const BridgeRoutes = () => {
                     </p>
                   </div>
                 </div>
-                <span className="px-2 py-[2px] text-xs font-semibold rounded-md bg-[#16A34A] text-white" aria-label="Best Return Badge">
+                <span className="px-2 py-[2px] text-xs font-semibold rounded-md bg-green-600 text-white" aria-label="Best Return Badge">
                   BEST RETURN
                 </span>
               </div>
@@ -180,7 +180,7 @@ const BridgeRoutes = () => {
           {/* Quickest Route */}
           {quickestRoute && (
             <div
-              className={`p-4 rounded-lg border border-transparent bg-socket-layers-2 hover:bg-[#252534] transition`}
+              className={`p-4 rounded-lg border border-transparent bg-socket-layers-2 hover:bg-app-dark-surface4 transition`}
               onClick={() => {
                 const selectedRoute = routes?.find((route) => route.routeId === quickestRoute.routeId);
                 if (selectedRoute) {
@@ -221,7 +221,7 @@ const BridgeRoutes = () => {
                     </p>
                   </div>
                 </div>
-                <span className="px-2 py-[2px] text-xs font-semibold rounded-md bg-[#1E50FF] text-white" aria-label="Fastest Badge">
+                <span className="px-2 py-[2px] text-xs font-semibold rounded-md bg-indigo-600 text-white" aria-label="Fastest Badge">
                   FASTEST
                 </span>
               </div>

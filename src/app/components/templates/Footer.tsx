@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer
       aria-label="Powered by Socket Footer"
-      className="bg-[#171721] py-4 border-t border-neutral-800 text-sm text-gray-400 flex justify-between items-center px-8 shadow-inner mt-auto"
+      className="bg-app-dark-surface3 py-4 border-t border-neutral-800 text-sm text-gray-400 flex justify-between items-center px-8 shadow-inner mt-auto"
     >
       {/* Left Section: Powered by Socket */}
       <div>

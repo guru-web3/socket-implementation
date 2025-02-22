@@ -150,7 +150,7 @@
 //   }
 
 //   return (
-//     <div className="bg-[#171721] relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card">
+//     <div className="bg-app-dark-surface3 relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card">
 //       {/* Header */}
 //       <div className="flex justify-between items-center mb-6">
 //         <h2 className="text-xl font-semibold text-socket-primary sm:text-2xl">
@@ -165,7 +165,7 @@
 //             defaultValue={filters.days.toString()}
 //             classes={{
 //               container: "w-36",
-//               inputContainer: "p-3 bg-[#1c1c28] border border-neutral-800",
+//               inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
 //               input: "text-app-gray-50",
 //               arrow: "text-app-gray-400",
 //             }}
@@ -180,7 +180,7 @@
 //             defaultValue={filters.type}
 //             classes={{
 //               container: "w-44",
-//               inputContainer: "p-3 bg-[#1c1c28] border border-neutral-800",
+//               inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
 //               input: "text-app-gray-50",
 //               arrow: "text-app-gray-400",
 //             }}
@@ -194,7 +194,7 @@
 //         {transactions.map((tx) => (
 //           <div
 //             key={tx.hash}
-//             className="bg-[#1c1c28] p-4 border border-neutral-800 rounded-lg hover:bg-[#252534] transition-colors"
+//             className="bg- bg-app-dark-surface2 p-4 border border-neutral-800 rounded-lg hover:bg-app-dark-surface4 transition-colors"
 //           >
 //             <div className="flex justify-between items-start mb-4">
 //               <div className="flex items-center gap-3">

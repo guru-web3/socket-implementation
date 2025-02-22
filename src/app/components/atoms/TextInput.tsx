@@ -80,7 +80,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             ${block ? "w-full" : ""}
             ${pill ? "rounded-full" : "rounded-lg"}
             ${borderColor}
-            bg-[#1c1c28] border transition-colors px-4 py-[10px]
+            bg- bg-app-dark-surface2 border transition-colors px-4 py-[10px]
           `}
         >
           {StartSlot && <div className="pr-2">{StartSlot}</div>}

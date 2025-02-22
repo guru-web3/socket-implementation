@@ -32,12 +32,12 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
           placeholder="Search by name or paste address"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-4 py-2 bg-[#1c1c28] border border-neutral-800 rounded-lg text-app-gray-50 focus:outline-none focus:ring-0 focus:border-transparent"
+          className="w-full px-4 py-2 bg- bg-app-dark-surface2 border border-neutral-800 rounded-lg text-app-gray-50 focus:outline-none focus:ring-0 focus:border-transparent"
           aria-label="Search Input"
         />
         <Button
           onClick={() => setIsSelection(undefined)}
-          className="bg-[#1c1c28] !w-10 h-10 !p-0 rounded-md"
+          className="bg- bg-app-dark-surface2 !w-10 h-10 !p-0 rounded-md"
           aria-label="Close Button"
         >
           <Image
@@ -54,7 +54,7 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
         filteredTokens.map((token) => (
           <div
             key={token.address}
-            className={`flex items-center justify-between p-[12px] bg-[#1c1c28] hover:bg-[#252534] transition-all rounded-lg`}
+            className={`flex items-center justify-between p-[12px] bg- bg-app-dark-surface2 hover:bg-app-dark-surface4 transition-all rounded-lg`}
             onClick={() => {
               onSelect(token);
               setIsSelection(undefined);

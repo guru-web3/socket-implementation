@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useAccount } from "wagmi";
@@ -12,17 +13,34 @@ import {
   startRoute,
 } from "@/app/services/api/socket";
 import { parseUnits } from "viem";
+import dynamic from "next/dynamic";
 
 import useSwapStore from "@/store/swapStore";
 import useSwapTransactionStore from "@/store/swapTransactionStore";
 import { useBungeeTx, useMakeApprovalTx } from "@/app/composibles/useApproval";
 import { Token } from "@/app/services/api/socket.interface";
 
-import TokenFilter from "../organisms/TokenFilter";
-import FromTokenSelection from "../organisms/FromToken";
-import ToTokenSelection from "../organisms/ToToken";
-import EnableRefuel from "../organisms/EnableRefuel";
-import BridgeRoutes from "../organisms/BridgeRoutes";
+
+const TokenFilter = dynamic(() =>
+  import("../organisms/TokenFilter").then((module) => module.default),
+  { ssr: false }
+);
+const FromTokenSelection = dynamic(() =>
+  import("../organisms/FromToken").then((module) => module.default),
+  { ssr: false }
+);
+const ToTokenSelection = dynamic(() =>
+  import("../organisms/ToToken").then((module) => module.default),
+  { ssr: false }
+);
+const EnableRefuel = dynamic(() =>
+  import("../organisms/EnableRefuel").then((module) => module.default),
+  { ssr: false }
+);
+const BridgeRoutes = dynamic(() =>
+  import("../organisms/BridgeRoutes").then((module) => module.default),
+  { ssr: false }
+);
 
 const SwapCard = () => {
   const { address } = useAccount();
@@ -267,7 +285,7 @@ const SwapCard = () => {
   }
 
   return (
-    <div className="bg-[#171721] min-h-[560px] relative mx-auto mt-12 w-full max-w-lg rounded-xl bg-socket-layers-1 px-6 py-6 shadow-card sm:border sm:border-neutral-800" aria-label="Swap Card Container">
+    <div className="bg-app-dark-surface3 min-h-[560px] relative mx-auto mt-12 w-full max-w-lg rounded-xl bg-socket-layers-1 px-6 py-6 shadow-card sm:border sm:border-neutral-800" aria-label="Swap Card Container">
       {selectedTokenType ? (
         <TokenFilter
           onSelect={setSelectedToken}
@@ -347,8 +365,8 @@ const SwapCard = () => {
           {!fetchingQuote && <BridgeRoutes aria-label="Bridge Routes Section" />}
     
           {/* Add Recipient Address Button */}
-          <Button className="w-56 my-4 flex items-center gap-2 bg-[#2C2C2C] text-app-gray-50 rounded-full !p-0 max-h-9 shadow-md hover:bg-[#3A3A3A] transition-all" aria-label="Add Recipient Address Button">
-            <span className="flex items-center justify-center w-5 h-5 bg-[#FBC94A] text-black font-bold rounded-full" aria-label="Add Icon">
+          <Button className="w-56 my-4 flex items-center gap-2 bg-neutral-800 text-app-gray-50 rounded-full !p-0 max-h-9 shadow-md hover:bg-neutral-700 transition-all" aria-label="Add Recipient Address Button">
+            <span className="flex items-center justify-center w-5 h-5 bg-amber-300 text-black font-bold rounded-full" aria-label="Add Icon">
               +
             </span>
             <span className="text-sm font-medium" aria-label="Add Recipient Address Text">Add Recipient Address</span>
@@ -357,7 +375,7 @@ const SwapCard = () => {
           {/* Review Route Button */}
           <Button
             variant="primary"
-            className="w-full h-[54px] px-6 py-3 bg-app-primary-500 disabled:bg-[#374151] text-white text-base font-semibold rounded-lg shadow-md transition-all"
+            className="w-full h-[54px] px-6 py-3 bg-app-primary-500 disabled:bg-gray-700 text-white text-base font-semibold rounded-lg shadow-md transition-all"
             disabled={!(
               selectedFromChain &&
               selectedToChain &&

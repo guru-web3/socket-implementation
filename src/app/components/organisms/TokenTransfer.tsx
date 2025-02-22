@@ -214,7 +214,7 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
 
   if (chain?.id !== selectedToken.chainId) {
       return (
-        <div className="bg-[#171721] p-4 rounded-xl border border-neutral-800 text-center">
+        <div className="bg-app-dark-surface3 p-4 rounded-xl border border-neutral-800 text-center">
           <div className="mb-3 flex flex-col items-center gap-2">
             <Image
               src="/icons/settings.svg"

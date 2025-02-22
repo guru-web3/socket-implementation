@@ -22,7 +22,7 @@ const ToTokenSelection: React.FC<ToTokenSelectionProps> = ({
   const { toAmount } = useSwapTransactionStore();
   return (
     <>
-      <div className="bg-[#1c1c28] rounded bg-socket-layers-2 mb-4 mt-7" aria-label="To Token Container">
+      <div className="bg- bg-app-dark-surface2 rounded bg-socket-layers-2 mb-4 mt-7" aria-label="To Token Container">
         <div className="border-b-2 border-b-zinc-800 flex items-center justify-between px-3 py-2.5 sm:p-3 max-h-12" aria-label="To Token Header">
           <div className="flex items-center" aria-label="To Token Dropdown">
             <p className="text-sm text-app-gray-50 sm:text-base" aria-label="To Label">To</p>

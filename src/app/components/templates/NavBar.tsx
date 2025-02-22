@@ -9,7 +9,7 @@ const NavBar = () => {
 
   return (
     <header
-      className="flex justify-between items-center px-6 py-4 bg-[#171721] border-b border-neutral-800 shadow-md"
+      className="flex justify-between items-center px-6 py-4 bg-app-dark-surface3 border-b border-neutral-800 shadow-md"
       aria-label="Main Navigation"
     >
       {/* Left Section: Logo and Navigation Links */}
@@ -33,11 +33,11 @@ const NavBar = () => {
           aria-label="Primary Navigation"
         >
           <Link
-            href="/transfer"
+            href="/home"
             className="hover:text-white transition-colors"
-            aria-label="Transfer"
+            aria-label="Wrap"
           >
-            Transfer
+            Wrap
           </Link>
           <Link
             href="/swap"
@@ -71,7 +71,7 @@ const NavBar = () => {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg bg-[#1c1c28] hover:bg-neutral-700 transition-colors text-white flex items-center justify-center w-10 h-10"
+          className="md:hidden p-2 rounded-lg bg- bg-app-dark-surface2 hover:bg-neutral-700 transition-colors text-white flex items-center justify-center w-10 h-10"
           aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
         >
           {isMobileMenuOpen ? "✖" : "☰"}
@@ -79,7 +79,7 @@ const NavBar = () => {
 
         {/* Dark Mode Toggle */}
         <button
-          className="hidden md:flex p-2 rounded-lg bg-[#1c1c28] hover:bg-neutral-700 transition-colors text-white flex items-center justify-center w-10 h-10"
+          className="hidden md:flex p-2 rounded-lg bg- bg-app-dark-surface2 hover:bg-neutral-700 transition-colors text-white flex items-center justify-center w-10 h-10"
           aria-label="Toggle Dark Mode"
         >
           🌙
@@ -87,7 +87,7 @@ const NavBar = () => {
 
         {/* More Options */}
         <button
-          className="hidden md:flex p-2 rounded-lg bg-[#1c1c28] hover:bg-neutral-700 transition-colors text-white flex items-center justify-center w-10 h-10"
+          className="hidden md:flex p-2 rounded-lg bg- bg-app-dark-surface2 hover:bg-neutral-700 transition-colors text-white flex items-center justify-center w-10 h-10"
           aria-label="More Options"
         >
           ...
@@ -97,18 +97,18 @@ const NavBar = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <nav
-          className="absolute top-[70px] left-0 w-full bg-[#171721] border-t border-neutral-800 shadow-lg z-[1000]"
+          className="absolute top-[70px] left-0 w-full bg-app-dark-surface3 border-t border-neutral-800 shadow-lg z-[1000]"
           aria-label="Mobile Navigation"
         >
           <ul className="flex flex-col space-y-4 py-4 px-6 text-sm font-medium text-gray-400">
             <li>
               <Link
-                href="/transfer"
+                href="/home"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block hover:text-white transition-colors"
-                aria-label="Transfer"
+                aria-label="home"
               >
-                Transfer
+                Wrap
               </Link>
             </li>
             <li>

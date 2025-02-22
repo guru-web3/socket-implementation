@@ -120,7 +120,7 @@ const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
   }
 
   return (
-    <div className="bg-[#171721] relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card">
+    <div className="bg-app-dark-surface3 relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2
@@ -138,7 +138,7 @@ const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
             defaultValue={filters.days.toString()}
             classes={{
               container: "w-36",
-              inputContainer: "p-3 bg-[#1c1c28] border border-neutral-800",
+              inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
               input: "text-app-gray-50",
               arrow: "text-app-gray-400",
             }}
@@ -153,7 +153,7 @@ const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
             defaultValue={filters.type}
             classes={{
               container: "w-44",
-              inputContainer: "p-3 bg-[#1c1c28] border border-neutral-800",
+              inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
               input: "text-app-gray-50",
               arrow: "text-app-gray-400",
             }}
@@ -167,7 +167,7 @@ const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
         {transactions.map((tx) => (
           <div
             key={tx.hash}
-            className="bg-[#1c1c28] p-4 border border-neutral-800 rounded-lg hover:bg-[#252534] transition-colors"
+            className="bg- bg-app-dark-surface2 p-4 border border-neutral-800 rounded-lg hover:bg-app-dark-surface4 transition-colors"
           >
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-3">
@@ -520,7 +520,7 @@ export default ActivityFeed;
 
 //   if (chain?.id !== sepolia.id) {
 //     return (
-//       <div className="bg-[#171721] p-4 rounded-xl border border-neutral-800 text-center">
+//       <div className="bg-app-dark-surface3 p-4 rounded-xl border border-neutral-800 text-center">
 //         <div className="mb-3 flex flex-col items-center gap-2">
 //           <Image
 //             src="/icons/warning.svg"
@@ -543,7 +543,7 @@ export default ActivityFeed;
 //   }
 
 //   return (
-//     <div className="bg-[#171721] relative mx-auto w-full max-w-lg rounded-xl border border-neutral-800 p-6 shadow-card">
+//     <div className="bg-app-dark-surface3 relative mx-auto w-full max-w-lg rounded-xl border border-neutral-800 p-6 shadow-card">
 //       {/* Safe Wallet Toggle */}
 //       <div className="mb-4 h-8 flex items-center justify-between">
 //         <div className="flex items-center gap-2">
@@ -567,7 +567,7 @@ export default ActivityFeed;
 //             value={safeAddress}
 //             onChange={(e) => setSafeAddress(e.target.value)}
 //             placeholder="Safe address..."
-//             className="w-48 px-3 py-1 bg-[#1c1c28] border border-neutral-800 rounded-lg text-app-gray-50 text-sm focus:outline-none"
+//             className="w-48 px-3 py-1 bg- bg-app-dark-surface2 border border-neutral-800 rounded-lg text-app-gray-50 text-sm focus:outline-none"
 //             aria-label="Safe Wallet Address"
 //           />
 //         )}
@@ -576,7 +576,7 @@ export default ActivityFeed;
 //       {/* Cards Container */}
 //       <div className="space-y-4">
 //         {/* Wrap Card */}
-//         <div className="bg-[#1c1c28] rounded-lg border border-neutral-800 p-4">
+//         <div className="bg- bg-app-dark-surface2 rounded-lg border border-neutral-800 p-4">
 //           <div className="flex items-center justify-between mb-4">
 //             <h3 className="text-app-gray-50 font-medium text-nowrap">Wrap-ETH</h3>
 //             <Button
@@ -618,7 +618,7 @@ export default ActivityFeed;
 //         </div>
 
 //         {/* Unwrap Card */}
-//         <div className="bg-[#1c1c28] rounded-lg border border-neutral-800 p-4">
+//         <div className="bg- bg-app-dark-surface2 rounded-lg border border-neutral-800 p-4">
 //           <div className="flex items-center justify-between mb-4">
 //             <h3 className="text-app-gray-50 font-medium">Unwrap WETH</h3>
 //             <Button

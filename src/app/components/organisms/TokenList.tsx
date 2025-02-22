@@ -3,9 +3,17 @@ import {
   useVisibleAssets,
 } from "@/app/composibles/useAssetsBalance";
 import React, { useState } from "react";
-import { TokenCard } from "../molecules/TokenCard";
 import { Loader } from "../molecules/Loader";
-import { TokenTransfer } from "./TokenTransfer";
+import dynamic from "next/dynamic";
+
+const TokenTransfer = dynamic(() =>
+  import("./TokenTransfer").then((module) => module.TokenTransfer),
+  { ssr: false }
+);
+const TokenCard = dynamic(() =>
+  import("../molecules/TokenCard").then((module) => module.TokenCard),
+  { ssr: false }
+);
 
 const TokenList: React.FC = ({
 }) => {

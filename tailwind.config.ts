@@ -9,18 +9,6 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    // extend: {
-    //   colors: {
-    //     darkBg: '#1A1A1A',
-    //     cardBg: '#2C2C2C',
-    //     primaryPurple: '#7F56D9',
-    //     textGray: '#B3B3B3',
-    //     borderGray: '#3F3F3F',
-    //   },
-    //   boxShadow: {
-    //     cardShadow: '0px 4px 12px rgba(0, 0, 0, 0.25)',
-    //   },
-    // },
     extend: {
       colors: {
         transparent: 'transparent',
@@ -123,9 +111,10 @@ export default {
           dark: {
             "surface-main": "var(--app-gray-900)",
             surface1: "var(--app-black)",
-            surface2: "var(--app-gray-900)",
-            surface3: "var(--app-gray-800)",
-            surface4: "var(--app-gray-700)",
+            surface2: "#1c1c28",
+            surface3: "#171721",
+            surface4: "#252534",
+            surface5: "bg-app-dark-surface4",
           },
           success: "var(--app-success)",
           warning: "var(--app-warning)",

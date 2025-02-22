@@ -23,7 +23,7 @@ const Wallet = () => {
   }, [address, setAddress, visibleAssets, nonZeroAssets]);
   return (
     <>
-      <div className="bg-[#171721] min-h-[560px] relative mx-auto mt-12 w-full max-w-lg rounded-xl bg-socket-layers-1 px-6 py-6 shadow-card sm:border sm:border-neutral-800">
+      <div className="bg-app-dark-surface3 min-h-[560px] relative mx-auto mt-12 w-full max-w-lg rounded-xl bg-socket-layers-1 px-6 py-6 shadow-card sm:border sm:border-neutral-800">
         {address && <TokenList />}
       </div>
     </>

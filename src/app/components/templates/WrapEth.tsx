@@ -224,7 +224,7 @@ const WrapUnwrapCard = () => {
 
   if (chain?.id !== sepolia.id) {
     return (
-      <div className="bg-[#171721] p-4 rounded-xl border border-neutral-800 text-center">
+      <div className="bg-app-dark-surface3 p-4 rounded-xl border border-neutral-800 text-center">
         <div className="mb-3 flex flex-col items-center gap-2">
           <Image
             src="/icons/settings.svg"
@@ -248,7 +248,7 @@ const WrapUnwrapCard = () => {
 
   return (
     chain?.id == sepolia.id && (
-    <div className="bg-[#171721] relative mx-auto w-full max-w-lg rounded-xl border border-neutral-800 p-6 shadow-card">
+    <div className="bg-app-dark-surface3 relative mx-auto w-full max-w-lg rounded-xl border border-neutral-800 p-6 shadow-card">
       {/* Safe Wallet Toggle */}
       <div className="mb-4 h-8 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -272,7 +272,7 @@ const WrapUnwrapCard = () => {
             value={safeAddress}
             onChange={(e) => setSafeAddress(e.target.value)}
             placeholder="Safe address..."
-            className="w-48 px-3 py-1 bg-[#1c1c28] border border-neutral-800 rounded-lg text-app-gray-50 text-sm focus:outline-none"
+            className="w-48 px-3 py-1 bg- bg-app-dark-surface2 border border-neutral-800 rounded-lg text-app-gray-50 text-sm focus:outline-none"
             aria-label="Safe Wallet Address"
           />
         )}
@@ -281,7 +281,7 @@ const WrapUnwrapCard = () => {
       {/* Cards Container */}
       <div className="space-y-4">
         {/* Wrap Card */}
-        <div className="bg-[#1c1c28] rounded-lg border border-neutral-800 p-4">
+        <div className="bg- bg-app-dark-surface2 rounded-lg border border-neutral-800 p-4">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-app-gray-50 font-medium text-nowrap">Wrap-ETH</h3>
             <Button
@@ -323,7 +323,7 @@ const WrapUnwrapCard = () => {
         </div>
 
         {/* Unwrap Card */}
-        <div className="bg-[#1c1c28] rounded-lg border border-neutral-800 p-4">
+        <div className="bg- bg-app-dark-surface2 rounded-lg border border-neutral-800 p-4">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-app-gray-50 font-medium">Unwrap WETH</h3>
             <Button

@@ -7,7 +7,7 @@ const EnableRefuel = () => {
   const { chain } = useAccount();
 
   return (
-    <div className="bg-gradient-to-b from-[#1c1c28] to-[#171721] rounded-lg p-4 flex items-center justify-between shadow-md" aria-label="Enable Refuel Container">
+    <div className="bg-gradient-to-b from- bg-app-dark-surface2 to-gray-900 rounded-lg p-4 flex items-center justify-between shadow-md" aria-label="Enable Refuel Container">
       {/* Left Section */}
       <div className="flex items-center gap-3" aria-label="Refuel Information">
         <Image

@@ -23,7 +23,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({
     <div className="flex items-center gap-x-8 w-full" aria-label="Token Card">
       {/* Token Icon */}
       <div className="relative" aria-label="Token Icon">
-        <div className="overflow-hidden h-12 w-12 flex items-center justify-center border dark:border-gray-600 rounded-full bg-[#252534]">
+        <div className="overflow-hidden h-12 w-12 flex items-center justify-center border dark:border-gray-600 rounded-full bg-app-dark-surface4">
           {icon ? (
             <Image
               src={icon}
@@ -40,7 +40,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({
     
         {/* Network Icon */}
         {networkImage && (
-          <div className="absolute -top-2 -right-2 h-6 w-6 flex items-center justify-center border dark:border-gray-600 rounded-full bg-[#1c1c28]" aria-label="Network Icon">
+          <div className="absolute -top-2 -right-2 h-6 w-6 flex items-center justify-center border dark:border-gray-600 rounded-full bg- bg-app-dark-surface2" aria-label="Network Icon">
             <Image
               src={networkImage}
               alt={`${name} network`}

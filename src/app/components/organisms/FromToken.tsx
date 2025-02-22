@@ -23,7 +23,7 @@ const FromTokenSelection: React.FC<FromTokenSelectionProps> = ({
 
   return (
     <>
-      <div className="bg-[#1c1c28] rounded bg-socket-layers-2 mb-[-1]" aria-label="From Token Container">
+      <div className="bg- bg-app-dark-surface2 rounded bg-socket-layers-2 mb-[-1]" aria-label="From Token Container">
         <div className="border-b-2 border-b-zinc-800 flex items-center justify-between px-3 py-2.5 sm:p-3 max-h-12" aria-label="From Token Header">
           <div className="flex items-center" aria-label="From Token Dropdown">
             <p className="text-sm text-app-gray-50 sm:text-base" aria-label="From Label">From</p>
