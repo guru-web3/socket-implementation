@@ -3,20 +3,15 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import { WagmiProvider, http } from "wagmi";
-import { RainbowKitProvider, getDefaultConfig } from "@rainbow-me/rainbowkit";
-import { sepolia, mainnet, polygon, optimism, polygonAmoy, arbitrumSepolia, arbitrum } from "wagmi/chains";
-import { rainbowWeb3AuthConnector } from "@/context/RainbowWeb3authConnector";
-import {
-  rainbowWallet,
-  metaMaskWallet,
-  walletConnectWallet,
-} from "@rainbow-me/rainbowkit/wallets";
+import { WagmiProvider } from "wagmi";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { sepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import NavBar from "./components/templates/NavBar";
 import Footer from "./components/templates/Footer";
 import ZustandProvider from "../context/ZustandProvider";
 import { ToastProvider } from "@/context/ToastContex";
+import { defaultWagmiConfig } from "./services/common-utils/rainbowKitUtils";
 
 const queryClient = new QueryClient();
 const geistSans = Geist({
@@ -27,34 +22,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-export const defaultWagmiConfig = getDefaultConfig({
-  appName: "My RainbowKit App",
-  projectId: "04309ed1007e77d1f119b85205bb779d",
-  chains: [sepolia, mainnet, polygon, optimism, polygonAmoy, arbitrumSepolia, arbitrum],
-  transports: {
-    [sepolia.id]: http(
-      "https://sepolia.infura.io/v3/84afdf720535440ca2457d5e38875563"
-    ),
-    [mainnet.id]: http(),
-    [polygon.id]: http(),
-    [optimism.id]: http(),
-    [polygonAmoy.id]: http(),
-    [arbitrumSepolia.id]: http(),
-    [arbitrum.id]: http(),
-  },
-  wallets: [
-    {
-      groupName: "Suggested",
-      wallets: [
-        rainbowWallet,
-        rainbowWeb3AuthConnector,
-        metaMaskWallet,
-        walletConnectWallet,
-      ],
-    },
-  ],
 });
 
 export default function RootLayout({
