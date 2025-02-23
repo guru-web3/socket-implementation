@@ -38,8 +38,8 @@ p.s(safe wallet is down currently haven't tested e2e flow, but have integrated t
 - Redis: Caching transactions with expiry to reduce API calls.
 - zod: for request body validation
 
-## npm test
-for testing the unit tests inside `src/__tests__/app`
+## npm install
+use `npm i`
 
 ## npm run dev
 for running locally, copy env.local into .env and populate the values and test out
@@ -53,6 +53,9 @@ CRYPTOCOMPARE_API_KEY=
 ARBISCAN_API_KEY=
 POLYGONSCAN_API_KEY=
 ```
+
+## npm test
+for testing the unit tests inside `src/__tests__/app`
 
 ## Screenshots
 <img width="1719" alt="Screenshot 2025-02-23 at 4 01 10 PM" src="https://github.com/user-attachments/assets/26fd439d-7bcb-4b4f-bf6f-28d79bde81d3" />

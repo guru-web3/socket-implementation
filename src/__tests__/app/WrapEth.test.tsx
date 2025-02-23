@@ -3,6 +3,11 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import WrapUnwrapCard from "../../app/components/templates/WrapEth";
 import { ToastProvider } from "@/context/ToastContex"; // Import the ToastProvider
 import '@testing-library/jest-dom';
+import { useRouter } from "next/navigation";
+
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+}));
 
 // Mock wagmi hooks using Jest
 jest.mock("wagmi", () => ({
@@ -16,7 +21,7 @@ jest.mock("wagmi", () => ({
       : { value: BigInt(10e18), formatted: "10.0" },
   })),
   useWriteContract: jest.fn(() => ({
-    writeContractAsync: jest.fn().mockResolvedValue("0xTxHash"),
+    writeContractAsync: jest.fn().mockResolvedValue("0x"),
   })),
   usePublicClient: jest.fn(() => ({
     getGasPrice: jest.fn().mockResolvedValue(BigInt(1000000000)), // Mocked gas price
@@ -28,7 +33,7 @@ jest.mock("wagmi", () => ({
     status: "success",
   })),
   useConnectorClient: jest.fn(() => ({
-    data: { someData: "mockedData" },
+    data: { mock: "mockedData" },
   })),
   useEstimateGas: jest.fn(() => ({
     estimateGas: jest.fn().mockResolvedValue(BigInt(21000)), // Mocked gas estimation
@@ -37,6 +42,10 @@ jest.mock("wagmi", () => ({
 
 describe("WrapUnwrapCard Component", () => {
   beforeEach(() => {
+    (useRouter as jest.Mock).mockReturnValue({
+      push: jest.fn(), // Mock the `push` method
+      pathname: "/",
+    });
     jest.clearAllMocks();
   });
 

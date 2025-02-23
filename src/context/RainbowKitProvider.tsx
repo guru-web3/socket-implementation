@@ -20,12 +20,16 @@ type Props = {
 
 export default function Providers({ children }: Props) {
   return (
+    // toast provider for conveying messages to users
     <ToastProvider>
+      {/* wagmi and rainbow kit provider for wallet login */}
       <WagmiProvider config={defaultWagmiConfig}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider initialChain={sepolia.id}>
+          {/* state management provider - zustand */}
             <ZustandProvider>
               <NavBar />
+            {/* Handle unauthorized routes */}
               <AuthProvider>
                 {children}
               </AuthProvider>
