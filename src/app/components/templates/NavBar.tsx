@@ -78,12 +78,12 @@ const NavBar = () => {
         </button>
 
         {/* Dark Mode Toggle */}
-        <button
+        {/* <button
           className="hidden md:flex p-2 rounded-lg bg- bg-app-dark-surface2 hover:bg-neutral-700 transition-colors text-white flex items-center justify-center w-10 h-10"
           aria-label="Toggle Dark Mode"
         >
           🌙
-        </button>
+        </button> */}
 
         {/* More Options */}
         <button

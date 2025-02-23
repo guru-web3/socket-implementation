@@ -127,7 +127,7 @@ const WrapUnwrapCard = () => {
     if (wrapType === "wrap") {
       await postTransaction(wrapType, hash, address || "", wrapAmount, "0")
     } else {
-      await postTransaction(wrapType, txHash || "", address || "", "0", wrapAmount)
+      await postTransaction(wrapType, hash || "", address || "", "0", unWrapAmount)
     }
   }
 
