@@ -59,7 +59,7 @@ const TokenList: React.FC = ({}) => {
         <TokenTransfer selectedToken={selectedToken} />
       ) : (
         <div
-          className={`overflow-auto w-full h-[calc(100vh_-_330px)] @xs/root:h-[calc(100vh_-_410px)] ${
+          className={`overflow-auto w-full h-[560px] @xs/root:h-[calc(100vh_-_510px)] ${
             visibleAssets.length <= 0
               ? "flex flex-col items-center justify-center"
               : ""

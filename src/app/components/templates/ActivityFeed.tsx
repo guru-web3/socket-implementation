@@ -4,7 +4,7 @@ import { formatEther, formatUnits } from "viem";
 import dynamic from "next/dynamic";
 import {
   EChain,
-  BLOCK_EXPLORER_URL,
+  BLOCK_EXPLORER_URL_UI,
 } from "@/app/services/common-utils/chainUtils";
 import useTransactionStore from "@/store/activityStore";
 import { Loader } from "../molecules/Loader";
@@ -267,7 +267,7 @@ const ActivityFeed = () => {
             <a
               aria-label="View transactions Explorer"
               href={`${
-                BLOCK_EXPLORER_URL[(chain?.id as EChain) || EChain.ETH_SEPOLIA]
+                BLOCK_EXPLORER_URL_UI[(chain?.id as EChain) || EChain.ETH_SEPOLIA]
               }/tx/${tx.hash}`}
               target="_blank"
               className="inline-flex items-center text-primary-400 hover:text-primary-300 text-sm transition-colors"

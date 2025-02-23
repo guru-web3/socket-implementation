@@ -532,6 +532,24 @@ export const BLOCK_EXPLORER_URL = {
 [EChain.ETH_RINKEBY]: "",
 };
 
+export const BLOCK_EXPLORER_URL_UI = {
+// mainnets
+[EChain.ETH_MAINNET]: "https://etherscan.io",
+[EChain.POLYGON_MAINNET]: "https://polygonscan.com",
+[EChain.OPTIMISM]: "https://optimistic.etherscan.io",
+[EChain.BASE]: "https://basescan.org",
+[EChain.ARBITRUM_ONE]: "https://arbiscan.io/",
+
+// testnets
+[EChain.ETH_SEPOLIA]: "https://sepolia.etherscan.io",
+[EChain.POLYGON_AMOY]: "https://oklink.com/amoy",
+[EChain.BASE_SEPOLIA]: "https://sepolia.basescan.org/",
+[EChain.ARBITRUM_SEPOLIA]: "https://sepolia.arbiscan.io",
+[EChain.OPTIMISM_SEPOLIA]: "https://sepolia-optimism.etherscan.io",
+[EChain.ETH_GOERLI]: "",
+[EChain.ETH_RINKEBY]: "",
+};
+
 // Helper to get chain configuration
 export const getChainConfiguration = (chainId: number) => {
   switch (chainId) {

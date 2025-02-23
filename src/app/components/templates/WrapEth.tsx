@@ -22,6 +22,7 @@ import { useToast } from "@/context/ToastContex";
 import WethAbi from "../../constants/wethAbi.json";
 import { TextInput } from "../atoms/TextInput";
 import Button from "../atoms/Button";
+import { useRouter } from "next/navigation";
 
 const WrapUnwrapCard = () => {
   const publicClient = usePublicClient();
@@ -29,6 +30,7 @@ const WrapUnwrapCard = () => {
   const { switchChain } = useSwitchChain();
   const { addToast } = useToast();
   const { postTransaction } = useTransactionStore();
+  const router = useRouter();
 
   const sepoliaId = 11_155_111;
   const [wrapAmount, setWrapAmount] = useState("");
@@ -173,6 +175,7 @@ const WrapUnwrapCard = () => {
         });
         await postTransactionApi("wrap", txHash);
         setTxHash(txHash as `0x${string}`);
+        return router.push("/activity")
       } else {
         const hash = await writeContractAsync({
           address: WETH_SEPOLIA_CONTRACT,
@@ -180,14 +183,14 @@ const WrapUnwrapCard = () => {
           functionName: "deposit",
           value,
         });
-        await postTransactionApi("wrap", hash);
         // post to tx api
         // store in redis with expiry of 10 minutes
         // while fetching from transaction activity api, check if tx is in redis
         // if yes, use txhash fetch from eth scan if not present in eth scan
         // get the transaction details from api and format it to show in the UI
+        await postTransactionApi("wrap", hash);
         setTxHash(hash);
-        console.log({ hash });
+        return router.push("/activity")
       }
     } catch (error) {
       console.error("Transaction failed:", error);
@@ -211,9 +214,9 @@ const WrapUnwrapCard = () => {
         args: [value],
       });
       await postTransactionApi("unwrap", hash);
-      
       setTxHash(hash);
-    } catch (error) {
+      return router.push("/activity")
+      } catch (error) {
       console.error("Unwrap failed:", error);
       addToast("error", (error as {shortMessage: string}).shortMessage || (error as Error).message || "Transaction failed")
     } finally {
