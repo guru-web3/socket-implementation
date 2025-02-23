@@ -62,6 +62,7 @@ const ToTokenSelection: React.FC<ToTokenSelectionProps> = ({
         <div className="flex items-center justify-between px-3 py-[14px] sm:py-3 max-h-16" aria-label="To Token Input">
           <input
             type="number"
+            disabled={true}
             placeholder="0.0"
             className="w-full bg-transparent text-lg font-bold leading-7 text-socket-primary focus:outline-none sm:text-xl"
             value={toAmount?.toFixed(4)}

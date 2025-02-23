@@ -6,6 +6,7 @@ export interface Token {
   decimals: number;
   logoURI: string;
   balance: number;
+  tokenImage?: React.JSX.Element;
 }
 
 export interface UserBalance extends Token {

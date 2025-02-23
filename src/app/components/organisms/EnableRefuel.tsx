@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useAccount } from "wagmi";
+import useSwapTransactionStore from "@/store/swapTransactionStore";
 
 const EnableRefuel = () => {
-  const [isRefuelEnabled, setIsRefuelEnabled] = useState(false);
+  const {
+    isRefuelEnabled, setIsRefuelEnabled
+   } = useSwapTransactionStore();
   const { chain } = useAccount();
 
   return (

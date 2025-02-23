@@ -1,265 +1,265 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { formatEther, formatUnits } from "viem";
-import Dropdown from "../atoms/DropDown";
-import { EChain, BLOCK_EXPLORER_URL } from "@/app/services/common-utils/chainUtils";
-import { RawToken } from "@/app/constants/asset.interface";
+// "use client";
+// import React, { useState, useEffect } from "react";
+// import { formatEther, formatUnits } from "viem";
+// import Dropdown from "../atoms/DropDown";
+// import { EChain, BLOCK_EXPLORER_URL } from "@/app/services/common-utils/chainUtils";
+// import { RawToken } from "@/app/constants/asset.interface";
 
-const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
-  const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({
-    days: 7,
-    type: "all",
-  });
-  const DAYS_FILTER_OPTIONS = [
-    { value: "7", name: "Last 7 days" },
-    { value: "30", name: "Last 30 days" },
-    { value: "90", name: "Last 90 days" },
-  ];
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  const [transactions, setTransactions] = useState<any[]>([]);
+// const ActivityFeed = ({ safeAddress }: { safeAddress: string }) => {
+//   const [loading, setLoading] = useState(true);
+//   const [filters, setFilters] = useState({
+//     days: 7,
+//     type: "all",
+//   });
+//   const DAYS_FILTER_OPTIONS = [
+//     { value: "7", name: "Last 7 days" },
+//     { value: "30", name: "Last 30 days" },
+//     { value: "90", name: "Last 90 days" },
+//   ];
+//   /* eslint-disable  @typescript-eslint/no-explicit-any */
+//   const [transactions, setTransactions] = useState<any[]>([]);
   
-  const TYPE_FILTER_OPTIONS = [
-    { value: "all", name: "All Transactions" },
-    { value: "ETH", name: "ETH Transfers" },
-    { value: "ERC20", name: "Token Transfers" },
-    { value: "NFT", name: "NFT Transfers" },
-  ];
+//   const TYPE_FILTER_OPTIONS = [
+//     { value: "all", name: "All Transactions" },
+//     { value: "ETH", name: "ETH Transfers" },
+//     { value: "ERC20", name: "Token Transfers" },
+//     { value: "NFT", name: "NFT Transfers" },
+//   ];
 
-  const fetchExplorerActivity = async () => {
-    try {
-      const params = new URLSearchParams({
-        address: safeAddress!,
-        chainId: EChain.ETH_SEPOLIA.toString(),
-        // ...Object.fromEntries(
-        //   Object.entries(filters).map(([key, value]) => [key, value.toString()])
-        // ),
-      });
+//   const fetchExplorerActivity = async () => {
+//     try {
+//       const params = new URLSearchParams({
+//         address: safeAddress!,
+//         chainId: EChain.ETH_SEPOLIA.toString(),
+//         // ...Object.fromEntries(
+//         //   Object.entries(filters).map(([key, value]) => [key, value.toString()])
+//         // ),
+//       });
 
-      const response = await fetch(`/api/transactions?${params}`);
-      const { data } = await response.json();
+//       const response = await fetch(`/api/transactions?${params}`);
+//       const { data } = await response.json();
 
-      interface Transaction {
-        timeStamp: number;
-        tokenSymbol?: string;
-        tokenID?: string;
-        type?: string;
-        timestamp?: Date;
-      }
+//       interface Transaction {
+//         timeStamp: number;
+//         tokenSymbol?: string;
+//         tokenID?: string;
+//         type?: string;
+//         timestamp?: Date;
+//       }
 
-      const formatted: Transaction[] = data.map((tx: Transaction) => ({
-        ...tx,
-        timestamp: new Date(tx.timeStamp),
-        type: tx.tokenSymbol ? "ERC20" : tx.tokenID ? "NFT" : "ETH",
-      }));
+//       const formatted: Transaction[] = data.map((tx: Transaction) => ({
+//         ...tx,
+//         timestamp: new Date(tx.timeStamp),
+//         type: tx.tokenSymbol ? "ERC20" : tx.tokenID ? "NFT" : "ETH",
+//       }));
 
-      console.log({ formatted });
-      setTransactions(formatted);
-    } catch (error) {
-      console.error("Failed to load transactions:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+//       console.log({ formatted });
+//       setTransactions(formatted);
+//     } catch (error) {
+//       console.error("Failed to load transactions:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
 
-  useEffect(() => {
-    fetchExplorerActivity();
-    const interval = setInterval(fetchExplorerActivity, 15000);
-    return () => clearInterval(interval);
-  }, [safeAddress]);
+//   useEffect(() => {
+//     fetchExplorerActivity();
+//     const interval = setInterval(fetchExplorerActivity, 15000);
+//     return () => clearInterval(interval);
+//   }, [safeAddress]);
 
-  const TransactionTypeIcon = ({ type }: { type: string }) => {
-    const icons = {
-      ETH: "Ξ",
-      ERC20: "🪙",
-      ERC721: "🖼️",
-      NFT: "🖼️",
-      default: "🌐",
-    };
+//   const TransactionTypeIcon = ({ type }: { type: string }) => {
+//     const icons = {
+//       ETH: "Ξ",
+//       ERC20: "🪙",
+//       ERC721: "🖼️",
+//       NFT: "🖼️",
+//       default: "🌐",
+//     };
 
-    return (
-      <span className="text-2xl">
-        {icons[type as keyof typeof icons] || icons.default}
-      </span>
-    );
-  };
+//     return (
+//       <span className="text-2xl">
+//         {icons[type as keyof typeof icons] || icons.default}
+//       </span>
+//     );
+//   };
 
-  const formatValue = (tx: RawToken) => {
-    if (tx.type === "ETH") {
-      return `${formatEther(BigInt(tx.value || 0))} ETH`;
-    }
+//   const formatValue = (tx: RawToken) => {
+//     if (tx.type === "ETH") {
+//       return `${formatEther(BigInt(tx.value || 0))} ETH`;
+//     }
 
-    if (tx.type === "ERC20" && tx.tokenSymbol) {
-      return `${formatUnits(
-        BigInt(tx.tokenValue || 0),
-        Number(tx.tokenDecimal || 18)
-      )} ${tx.tokenSymbol}`;
-    }
+//     if (tx.type === "ERC20" && tx.tokenSymbol) {
+//       return `${formatUnits(
+//         BigInt(tx.tokenValue || 0),
+//         Number(tx.tokenDecimal || 18)
+//       )} ${tx.tokenSymbol}`;
+//     }
 
-    if (tx.type === "NFT") {
-      return `NFT ${tx.tokenId ? `#${tx.tokenId}` : "Transfer"}`;
-    }
+//     if (tx.type === "NFT") {
+//       return `NFT ${tx.tokenId ? `#${tx.tokenId}` : "Transfer"}`;
+//     }
 
-    return "Token Transfer";
-  };
+//     return "Token Transfer";
+//   };
 
-  const getTransactionTitle = (tx: any) => {
-    const base = `${tx.type} Transfer`;
-    if (tx.type === "ERC20" && tx.tokenSymbol)
-      return `${tx.tokenSymbol} Transfer`;
-    if (tx.type === "NFT") return "NFT Transfer";
-    return base;
-  };
+//   const getTransactionTitle = (tx: any) => {
+//     const base = `${tx.type} Transfer`;
+//     if (tx.type === "ERC20" && tx.tokenSymbol)
+//       return `${tx.tokenSymbol} Transfer`;
+//     if (tx.type === "NFT") return "NFT Transfer";
+//     return base;
+//   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center py-8">
-        {/* <Loader2 className="w-8 h-8 text-blue-500 animate-spin" /> */}
-      </div>
-    );
-  }
+//   if (loading) {
+//     return (
+//       <div className="flex justify-center py-8">
+//         {/* <Loader2 className="w-8 h-8 text-blue-500 animate-spin" /> */}
+//       </div>
+//     );
+//   }
 
-  return (
-    <div className="bg-app-dark-surface3 relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2
-          className="text-xl font-semibold text-socket-primary sm:text-2xl"
-          aria-label="Transaction History"
-        >
-          Transaction History
-        </h2>
+//   return (
+//     <div className="bg-app-dark-surface3 relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card">
+//       {/* Header */}
+//       <div className="flex justify-between items-center mb-6">
+//         <h2
+//           className="text-xl font-semibold text-socket-primary sm:text-2xl"
+//           aria-label="Transaction History"
+//         >
+//           Transaction History
+//         </h2>
 
-        {/* Filters */}
-        <div className="flex gap-4">
-          <Dropdown
-            options={DAYS_FILTER_OPTIONS}
-            inputSize="md"
-            defaultValue={filters.days.toString()}
-            classes={{
-              container: "w-36",
-              inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
-              input: "text-app-gray-50",
-              arrow: "text-app-gray-400",
-            }}
-            onChange={(value) =>
-              setFilters({ ...filters, days: Number(value) })
-            }
-          />
+//         {/* Filters */}
+//         <div className="flex gap-4">
+//           <Dropdown
+//             options={DAYS_FILTER_OPTIONS}
+//             inputSize="md"
+//             defaultValue={filters.days.toString()}
+//             classes={{
+//               container: "w-36",
+//               inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
+//               input: "text-app-gray-50",
+//               arrow: "text-app-gray-400",
+//             }}
+//             onChange={(value) =>
+//               setFilters({ ...filters, days: Number(value) })
+//             }
+//           />
 
-          <Dropdown
-            options={TYPE_FILTER_OPTIONS}
-            inputSize="md"
-            defaultValue={filters.type}
-            classes={{
-              container: "w-44",
-              inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
-              input: "text-app-gray-50",
-              arrow: "text-app-gray-400",
-            }}
-            onChange={(value) => setFilters({ ...filters, type: value })}
-          />
-        </div>
-      </div>
+//           <Dropdown
+//             options={TYPE_FILTER_OPTIONS}
+//             inputSize="md"
+//             defaultValue={filters.type}
+//             classes={{
+//               container: "w-44",
+//               inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
+//               input: "text-app-gray-50",
+//               arrow: "text-app-gray-400",
+//             }}
+//             onChange={(value) => setFilters({ ...filters, type: value })}
+//           />
+//         </div>
+//       </div>
 
-      {/* Transaction List */}
-      <div className="space-y-4">
-        {transactions.map((tx) => (
-          <div
-            key={tx.hash}
-            className="bg- bg-app-dark-surface2 p-4 border border-neutral-800 rounded-lg hover:bg-app-dark-surface4 transition-colors"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex items-center gap-3">
-                <TransactionTypeIcon type={tx.type} />
-                <div>
-                  <h3 className="font-medium text-app-gray-50">
-                    {getTransactionTitle(tx)}
-                  </h3>
-                  <p className="text-sm text-app-gray-300">
-                    {new Date(tx.timestamp).toLocaleDateString()} •{" "}
-                    {new Date(tx.timestamp).toLocaleTimeString()}
-                  </p>
-                </div>
-              </div>
-              <span
-                aria-label={tx.status}
-                className={`px-3 py-1 rounded-full text-sm ${
-                  tx.status === "failed"
-                    ? "bg-red-500/20 text-red-400"
-                    : "bg-green-500/20 text-green-400"
-                }`}
-              >
-                {tx.status === "failed" ? "Failed" : "Confirmed"}
-              </span>
-            </div>
+//       {/* Transaction List */}
+//       <div className="space-y-4">
+//         {transactions.map((tx) => (
+//           <div
+//             key={tx.hash}
+//             className="bg- bg-app-dark-surface2 p-4 border border-neutral-800 rounded-lg hover:bg-app-dark-surface4 transition-colors"
+//           >
+//             <div className="flex justify-between items-start mb-4">
+//               <div className="flex items-center gap-3">
+//                 <TransactionTypeIcon type={tx.type} />
+//                 <div>
+//                   <h3 className="font-medium text-app-gray-50">
+//                     {getTransactionTitle(tx)}
+//                   </h3>
+//                   <p className="text-sm text-app-gray-300">
+//                     {new Date(tx.timestamp).toLocaleDateString()} •{" "}
+//                     {new Date(tx.timestamp).toLocaleTimeString()}
+//                   </p>
+//                 </div>
+//               </div>
+//               <span
+//                 aria-label={tx.status}
+//                 className={`px-3 py-1 rounded-full text-sm ${
+//                   tx.status === "failed"
+//                     ? "bg-red-500/20 text-red-400"
+//                     : "bg-green-500/20 text-green-400"
+//                 }`}
+//               >
+//                 {tx.status === "failed" ? "Failed" : "Confirmed"}
+//               </span>
+//             </div>
 
-            <div className="grid grid-cols-3 gap-4 text-sm mb-4">
-              <div>
-                <p className="text-app-gray-300 mb-1" aria-label="from">
-                  From
-                </p>
-                <p className="text-app-gray-50 truncate" aria-label={tx.from}>
-                  {tx.from}
-                </p>
-              </div>
-              <div>
-                <p className="text-app-gray-300 mb-1" aria-label="to">
-                  To
-                </p>
-                <p className="text-app-gray-50 truncate" aria-label={tx.to}>
-                  {tx.to}
-                </p>
-              </div>
-              <div>
-                <p className="text-app-gray-300 mb-1" aria-label="value">
-                  Value
-                </p>
-                <p className="text-app-gray-50">
-                  {formatValue(tx as RawToken)}
-                  {tx.type === "NFT" && (
-                    <span className="block text-xs text-app-gray-400 mt-1">
-                      Contract: {tx.contractAddress?.slice(0, 6)}...
-                      {tx.contractAddress?.slice(-4)}
-                    </span>
-                  )}
-                </p>
-              </div>
-            </div>
+//             <div className="grid grid-cols-3 gap-4 text-sm mb-4">
+//               <div>
+//                 <p className="text-app-gray-300 mb-1" aria-label="from">
+//                   From
+//                 </p>
+//                 <p className="text-app-gray-50 truncate" aria-label={tx.from}>
+//                   {tx.from}
+//                 </p>
+//               </div>
+//               <div>
+//                 <p className="text-app-gray-300 mb-1" aria-label="to">
+//                   To
+//                 </p>
+//                 <p className="text-app-gray-50 truncate" aria-label={tx.to}>
+//                   {tx.to}
+//                 </p>
+//               </div>
+//               <div>
+//                 <p className="text-app-gray-300 mb-1" aria-label="value">
+//                   Value
+//                 </p>
+//                 <p className="text-app-gray-50">
+//                   {formatValue(tx as RawToken)}
+//                   {tx.type === "NFT" && (
+//                     <span className="block text-xs text-app-gray-400 mt-1">
+//                       Contract: {tx.contractAddress?.slice(0, 6)}...
+//                       {tx.contractAddress?.slice(-4)}
+//                     </span>
+//                   )}
+//                 </p>
+//               </div>
+//             </div>
 
-            <a
-              aria-label="View transactions Explorer"
-              href={`${BLOCK_EXPLORER_URL[EChain.ETH_SEPOLIA]}/tx/${tx.hash}`}
-              target="_blank"
-              className="inline-flex items-center text-primary-400 hover:text-primary-300 text-sm transition-colors"
-            >
-              View on Explorer
-              <svg
-                className="ml-1 w-4 h-4"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-              </svg>
-            </a>
-          </div>
-        ))}
+//             <a
+//               aria-label="View transactions Explorer"
+//               href={`${BLOCK_EXPLORER_URL[EChain.ETH_SEPOLIA]}/tx/${tx.hash}`}
+//               target="_blank"
+//               className="inline-flex items-center text-primary-400 hover:text-primary-300 text-sm transition-colors"
+//             >
+//               View on Explorer
+//               <svg
+//                 className="ml-1 w-4 h-4"
+//                 fill="currentColor"
+//                 viewBox="0 0 20 20"
+//               >
+//                 <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+//                 <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+//               </svg>
+//             </a>
+//           </div>
+//         ))}
 
-        {!loading && transactions.length === 0 && (
-          <div
-            className="text-center py-8 text-app-gray-400"
-            aria-label="No transactions Found Explorer"
-          >
-            No transactions found
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
+//         {!loading && transactions.length === 0 && (
+//           <div
+//             className="text-center py-8 text-app-gray-400"
+//             aria-label="No transactions Found Explorer"
+//           >
+//             No transactions found
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
 
-export default ActivityFeed;
+// export default ActivityFeed;
 
 
 // "use client";
@@ -1295,3 +1295,436 @@ export default ActivityFeed;
 // };
 
 // export default WrapUnwrapCard;
+
+// "use client";
+
+// import React, { useEffect, useState } from "react";
+// import Image from "next/image";
+// import { useAccount, useSwitchChain } from "wagmi";
+// import Button from "../atoms/Button";
+// import { parseUnits } from "viem";
+// import dynamic from "next/dynamic";
+
+// import useSwapStore from "@/store/swapStore";
+// import useSwapTransactionStore from "@/store/swapTransactionStore";
+// import { useBungeeTx, useMakeApprovalTx } from "@/app/composibles/useApproval";
+// import { Token } from "@/app/services/api/socket.interface";
+// import { startRoute } from "@/app/services/api/socket";
+// import { Ethereum } from "@/app/services/common-utils/chainUtils";
+// import { Loader } from "../molecules/Loader";
+
+// const TokenFilter = dynamic(
+//   () => import("../organisms/TokenFilter").then((module) => module.default),
+//   { ssr: false }
+// );
+// const FromTokenSelection = dynamic(
+//   () => import("../organisms/FromToken").then((module) => module.default),
+//   { ssr: false }
+// );
+// const ToTokenSelection = dynamic(
+//   () => import("../organisms/ToToken").then((module) => module.default),
+//   { ssr: false }
+// );
+// const EnableRefuel = dynamic(
+//   () => import("../organisms/EnableRefuel").then((module) => module.default),
+//   { ssr: false }
+// );
+// const BridgeRoutes = dynamic(
+//   () => import("../organisms/BridgeRoutes").then((module) => module.default),
+//   { ssr: false }
+// );
+
+// const SwapCard = () => {
+//   const { address, chain } = useAccount();
+//   const { switchChain } = useSwitchChain();
+
+//   const {
+//     supportedChains,
+//     fromTokens,
+//     toTokens,
+//     selectedFromChain,
+//     selectedFromToken,
+//     selectedToToken,
+//     selectedToChain,
+//     setSelectedTokenType,
+//     selectedTokenType,
+//     fetchUserBalances,
+//     fetchSupportedChains,
+//     setSelectedFromChain,
+//     setSelectedToChain,
+//     setSelectedFromToken,
+//     setSelectedToToken,
+//   } = useSwapStore();
+//   const { approve } = useMakeApprovalTx();
+//   const { executeTx } = useBungeeTx();
+
+//   const {
+//     fromAmount,
+//     isRefuelEnabled,
+//     selectedRoute,
+//     fetchQuote,
+//     setFetchingQuote,
+//     fetchingQuote,
+//   } = useSwapTransactionStore();
+//   const [balanceError, setBalanceError] = useState("");
+//   const [chainError, setChainError] = useState("");
+
+//   // fetch all supported chains
+//   const fetchSupportedChainsBungee = async () => {
+//     try {
+//       await Promise.all([fetchSupportedChains()]);
+//     } catch (error) {
+//       console.error("Error fetching data:", error);
+//     }
+//   };
+
+//   // in case of no default chain select eth and optimism as default chain
+//   useEffect(() => {
+//     const setInitChain = async () => {
+//       if (!selectedFromChain && supportedChains.length) {
+//         const defaultChain = supportedChains.find(
+//           (supportedChain) => supportedChain.chainId === 1
+//         );
+//         const defaultToChain = supportedChains.find(
+//           (supportedChain) => supportedChain.chainId === 10
+//         );
+//         defaultChain && (await setSelectedFromChain(defaultChain));
+//         defaultToChain && (await setSelectedToChain(defaultToChain));
+//       }
+//     };
+//     setInitChain();
+//   }, [supportedChains]);
+
+//   // balance validation error hook
+//   useEffect(() => {
+//     if (
+//       selectedFromToken &&
+//       fromAmount &&
+//       fromAmount > selectedFromToken.balance
+//     ) {
+//       console.log({ selectedFromChain });
+//       setBalanceError("Insufficient Balance");
+//     } else {
+//       setBalanceError("");
+//     }
+//   }, [fromAmount]);
+
+//   // chain validation error hook
+//   useEffect(() => {
+//     if (selectedFromChain && chain?.id !== selectedFromChain?.chainId) {
+//       setChainError(`Switch to ${selectedFromChain?.name}`);
+//     } else {
+//       setChainError("");
+//     }
+//   }, [chain, selectedFromChain]);
+
+//   // chain validation error hook
+//   useEffect(() => {
+//     selectedFromChain && setSelectedFromChain(selectedFromChain);
+//     selectedToChain && setSelectedToChain(selectedToChain);
+//   }, []);
+
+//   // calculate route on from, to, amount change
+//   useEffect(() => {
+//     calculateRoutes();
+//   }, [
+//     selectedToToken,
+//     selectedFromToken,
+//     fromAmount,
+//     selectedFromChain,
+//     selectedToChain,
+//   ]);
+
+//   // fetch balance and chain at init
+//   useEffect(() => {
+//     const init = async () => {
+//       if (address) {
+//         await fetchUserBalances(address);
+//         // in future make this cached from redis and fetch from backend server
+//         await fetchSupportedChainsBungee();
+//       }
+//     };
+//     init();
+//   }, [address]);
+
+//   const calculateRoutes = async () => {
+//     // calculate routes
+//     if (
+//       selectedFromChain &&
+//       selectedToChain &&
+//       fromAmount &&
+//       selectedFromToken &&
+//       selectedToToken
+//     ) {
+//       setFetchingQuote(true);
+//       const bigIntFromAmount = parseUnits(
+//         fromAmount.toString(),
+//         selectedFromToken.decimals
+//       );
+//       const routeResult = await fetchQuote({
+//         fromChainId: selectedFromChain.chainId,
+//         toChainId: selectedToChain.chainId,
+
+//         fromTokenAddress: selectedFromToken?.address || "",
+//         toTokenAddress: selectedToToken?.address || "",
+
+//         fromAmount: bigIntFromAmount,
+//         userAddress: address || "",
+
+//         sort: "output",
+//         defaultSwapSlippage: 0.5,
+//         isContractCall: false,
+//         showAutoRoutes: false,
+
+//         singleTxOnly: true,
+//         bridgeWithGas: isRefuelEnabled || false,
+//       });
+//       setFetchingQuote(false);
+//     }
+//   };
+
+//   const changeNetwork = (chainId: string, option: "from" | "to") => {
+//     const newSelectedChain = supportedChains?.find(
+//       (supportedChain) => supportedChain.chainId === parseInt(chainId, 10)
+//     );
+//     if (newSelectedChain) {
+//       if (option === "from") {
+//         setSelectedFromChain(newSelectedChain);
+//       } else if (option === "to") {
+//         setSelectedToChain(newSelectedChain);
+//       }
+//     }
+//   };
+
+//   const setSelectedToken = (token: Token) => {
+//     if (selectedTokenType === "from") {
+//       setSelectedFromToken(token);
+//     } else if (selectedTokenType === "to") {
+//       setSelectedToToken(token);
+//     }
+//   };
+
+//   const startTx = async () => {
+//     if (
+//       selectedFromChain &&
+//       selectedToChain &&
+//       fromAmount &&
+//       selectedFromToken &&
+//       selectedToToken
+//     ) {
+//       // const bigIntFromAmount = parseUnits(fromAmount.toString(), selectedFromToken.decimals);
+
+//       const routeStarted = await startRoute({
+//         fromChainId: selectedFromChain?.chainId || 0,
+//         toChainId: selectedToChain?.chainId || 0,
+//         fromTokenAddress: selectedFromToken?.address || "",
+//         toTokenAddress: selectedToToken?.address || "",
+//         includeFirstTxDetails: true,
+//         route: selectedRoute,
+
+//         userAddress: address || "",
+//         fromAssetAddress: selectedFromToken?.address || "",
+//         toAssetAddress: selectedToToken?.address || "",
+//       });
+//       // Relevant data from response of /route/start
+//       // const activeRouteId = routeStarted.result.activeRouteId;
+//       // const userTxIndex = routeStarted.result.userTxIndex;
+//       const txTarget = routeStarted.result.txTarget;
+//       const txData = routeStarted.result.txData;
+//       const value = routeStarted.result.value;
+
+//       if (routeStarted.result.approvalData == null) {
+//         console.log("Approval is needed", routeStarted.result.approvalData);
+//         // Params for approval
+//         const approvalTokenAddress =
+//           routeStarted.result.approvalData.approvalTokenAddress;
+//         const allowanceTarget =
+//           routeStarted.result.approvalData.allowanceTarget;
+//         const minimumApprovalAmount =
+//           routeStarted.result.approvalData.minimumApprovalAmount;
+
+//         const txHash = await approve({
+//           allowanceTarget,
+//           minimumApprovalAmount,
+//           approvalTokenAddress,
+//         });
+//         console.log("Approval txHash", txHash);
+//       } else {
+//         console.log("Approval not needed");
+//       }
+//       await executeTx(txTarget, value, txData);
+//     }
+//   };
+
+//   return (
+//     <>
+//       {address ? (
+//         <div
+//           className="bg-app-dark-surface3 min-h-[560px] relative mx-auto mt-12 w-full max-w-lg rounded-xl bg-socket-layers-1 px-6 py-6 shadow-card sm:border sm:border-neutral-800"
+//           aria-label="Swap Card Container"
+//         >
+//           {selectedTokenType ? (
+//             <TokenFilter
+//               onSelect={setSelectedToken}
+//               tokens={
+//                 selectedTokenType === "from"
+//                   ? fromTokens
+//                   : selectedTokenType === "to"
+//                   ? toTokens
+//                   : []
+//               }
+//               setIsSelection={setSelectedTokenType}
+//               aria-label="Token Filter"
+//             />
+//           ) : (
+//             <>
+//               {/* Header */}
+//               <div
+//                 className="mb-3 flex items-center justify-between"
+//                 aria-label="Swap Card Header"
+//               >
+//                 <span
+//                   className="text-xl font-semibold leading-8 text-socket-primary sm:text-2xl"
+//                   aria-label="Transfer Label"
+//                 >
+//                   Transfer
+//                 </span>
+//                 <div
+//                   className="flex items-center gap-2"
+//                   aria-label="Header Buttons"
+//                 >
+//                   <Button
+//                     variant="secondary"
+//                     className="h-10 !w-10 !p-0 flex items-center justify-center rounded-full border border-neutral-800 text-socket-icon-primary hover:bg-socket-layers-2"
+//                     aria-label="Refresh Button"
+//                   >
+//                     <Image
+//                       src="/icons/refresh.svg"
+//                       alt="Refresh"
+//                       width={18}
+//                       height={18}
+//                       aria-label="Refresh Icon"
+//                     />
+//                   </Button>
+//                   <Button
+//                     variant="secondary"
+//                     className="h-10 !w-10 !p-0 flex items-center justify-center rounded-full border border-neutral-800 text-socket-icon-primary hover:bg-socket-layers-2"
+//                     aria-label="Settings Button"
+//                   >
+//                     <Image
+//                       src="/icons/settings.svg"
+//                       alt="Settings"
+//                       width={18}
+//                       height={18}
+//                       aria-label="Settings Icon"
+//                     />
+//                   </Button>
+//                 </div>
+//               </div>
+
+//               {/* From Section */}
+//               <FromTokenSelection
+//                 changeNetwork={changeNetwork}
+//                 aria-label="From Token Selection"
+//               />
+
+//               {/* Swap Icon */}
+//               <Button
+//                 variant="secondary"
+//                 className="rounded-full ml-[40%] absolute mt-[-6] h-11 !w-11 !p-0"
+//                 aria-label="Swap Icon Button"
+//               >
+//                 <Image
+//                   className="rotate-90"
+//                   src="/icons/arrow-up.svg"
+//                   alt="Swap Icon"
+//                   width={18}
+//                   height={18}
+//                   aria-label="Swap Icon"
+//                 />
+//               </Button>
+
+//               {/* To Section */}
+//               <ToTokenSelection
+//                 changeNetwork={changeNetwork}
+//                 aria-label="To Token Selection"
+//               />
+
+//               {/* Enable Section */}
+//               <EnableRefuel aria-label="Enable Refuel Section" />
+
+//               {/* Bridge Routes */}
+//               <BridgeRoutes aria-label="Bridge Routes Section" />
+
+//               {/* Add Recipient Address Button */}
+//               <Button
+//                 className="w-56 my-4 flex items-center gap-2 bg-neutral-800 text-app-gray-50 rounded-full !p-0 max-h-9 shadow-md hover:bg-neutral-700 transition-all"
+//                 aria-label="Add Recipient Address Button"
+//               >
+//                 <span
+//                   className="flex items-center justify-center w-5 h-5 bg-amber-300 text-black font-bold rounded-full"
+//                   aria-label="Add Icon"
+//                 >
+//                   +
+//                 </span>
+//                 <span
+//                   className="text-sm font-medium"
+//                   aria-label="Add Recipient Address Text"
+//                 >
+//                   Add Recipient Address
+//                 </span>
+//               </Button>
+
+//               {/* Review Route Button */}
+//               {balanceError ? (
+//                 <Button
+//                   variant="primary"
+//                   className="w-full h-[54px] px-6 py-3 bg-app-primary-500 disabled:bg-gray-700 text-white text-base font-semibold rounded-lg shadow-md transition-all"
+//                   disabled={true}
+//                   aria-label={balanceError}
+//                 >
+//                   {balanceError}
+//                 </Button>
+//               ) : chainError ? (
+//                 <Button
+//                   variant="primary"
+//                   className="w-full h-[54px] px-6 py-3 bg-app-primary-500 disabled:bg-gray-700 text-white text-base font-semibold rounded-lg shadow-md transition-all"
+//                   onClick={() =>
+//                     switchChain?.({ chainId: selectedFromChain?.chainId || 1 })
+//                   }
+//                   aria-label="Review Route Button"
+//                 >
+//                   {chainError}
+//                 </Button>
+//               ) : (
+//                 <Button
+//                   variant="primary"
+//                   className="w-full h-[54px] px-6 py-3 bg-app-primary-500 disabled:bg-gray-700 text-white text-base font-semibold rounded-lg shadow-md transition-all"
+//                   disabled={
+//                     !(
+//                       selectedFromChain &&
+//                       selectedToChain &&
+//                       fromAmount &&
+//                       selectedFromToken &&
+//                       selectedToToken &&
+//                       !fetchingQuote &&
+//                       selectedRoute
+//                     )
+//                   }
+//                   onClick={startTx}
+//                   aria-label="Review Route Button"
+//                 >
+//                   Review Route
+//                 </Button>
+//               )}
+//             </>
+//           )}
+//         </div>
+//       ) : (
+//         <Loader aria-label="Loading Tokens" />
+//       )}
+//     </>
+//   );
+// };
+
+// export default SwapCard;

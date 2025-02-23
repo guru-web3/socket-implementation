@@ -5,29 +5,55 @@ import {
 import React, { useState } from "react";
 import { Loader } from "../molecules/Loader";
 import dynamic from "next/dynamic";
+import { Token } from "@/app/services/api/socket.interface";
 
-const TokenTransfer = dynamic(() =>
-  import("./TokenTransfer").then((module) => module.TokenTransfer),
+const TokenTransfer = dynamic(
+  () => import("./TokenTransfer").then((module) => module.TokenTransfer),
   { ssr: false }
 );
-const TokenCard = dynamic(() =>
-  import("../molecules/TokenCard").then((module) => module.TokenCard),
+const TokenImage = dynamic(
+  () => import("../molecules/TokenImage").then((module) => module.TokenImage),
+  { ssr: false }
+);
+const TokenFilter = dynamic(
+  () => import("./TokenFilter").then((module) => module.default),
   { ssr: false }
 );
 
-const TokenList: React.FC = ({
-}) => {
+const TokenList: React.FC = ({}) => {
   const { visibleAssets, loading } = useVisibleAssets();
-  const [selectedToken, setSelectedToken] = useState<TokenCardProps>()
+  const [selectedToken, setSelectedToken] = useState<TokenCardProps>();
 
-  const handleTokenDetails = (token: TokenCardProps) => {
-    setSelectedToken(token);
+  const handleTokenDetails = (token: Token) => {
+    const tokenMapped = visibleAssets.find(
+      (asset) => asset.address == token.address
+    );
+    if (tokenMapped) {
+      setSelectedToken(tokenMapped);
+    }
   };
+
+  const formatVisibleAssets = (assets: TokenCardProps[]): Token[] => {
+    return assets.map((asset) => ({
+      address: asset.address,
+      name: asset.name,
+      symbol: asset.crypto,
+      decimals: asset.decimals,
+      logoURI: asset.icon || "",
+      balance: asset.balance ? parseFloat(asset.balance) : 0,
+      tokenImage:  (<TokenImage
+                  name={asset.name}
+                  icon={asset.icon}
+                  networkImage={asset.networkImage}
+          />)
+    }));
+  };
+
+  const formattedAssets = formatVisibleAssets(visibleAssets);
 
   return (
     <>
-    {
-      selectedToken ? (
+      {selectedToken ? (
         <TokenTransfer selectedToken={selectedToken} />
       ) : (
         <div
@@ -46,17 +72,12 @@ const TokenList: React.FC = ({
           >
             {visibleAssets.length > 0 ? (
               <>
-                {visibleAssets.map((token) => (
-                  <div
-                    key={token.assetId}
-                    className="hover:cursor-pointer appearance-none bg-app-light-surface3 dark:bg-app-dark-surface3 rounded-2xl p-4 flex @md/root:flex-col items-center justify-between @md/root:items-start gap-x-8 @md/root:gap-y-8"
-                    onClick={() => handleTokenDetails(token)}
-                    aria-label={`Token Card ${token.name}`}
-                  >
-                    <TokenCard {...token} />
-                  </div>
-                ))}
-                {visibleAssets.length >= 5 && <div className="h-20 w-full" aria-label="Spacer" />}
+                <TokenFilter
+                  tokens={formattedAssets}
+                  onSelect={handleTokenDetails}
+                  setIsSelection={() => {}}
+                  tokenImage={true}
+                />
               </>
             ) : loading ? (
               <Loader aria-label="Loading Tokens" />
@@ -65,8 +86,7 @@ const TokenList: React.FC = ({
             )}
           </div>
         </div>
-      )
-    }
+      )}
     </>
   );
 };
