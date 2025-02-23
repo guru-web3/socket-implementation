@@ -31,11 +31,11 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
   return (
     <div
       className={`max-h-[560px] overflow-y-auto space-y-[8px]`}
-      aria-label="Token Filter Container"
+      data-testid="token-filter-container"
     >
       <div
         className="flex gap-x-4 items-center justify-between"
-        aria-label="Search and Close Button"
+        data-testid="search-and-close-button"
       >
         <input
           type="text"
@@ -43,12 +43,12 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full px-4 py-2 bg- bg-app-dark-surface2 border border-neutral-800 rounded-lg text-app-gray-50 focus:outline-none focus:ring-0 focus:border-transparent"
-          aria-label="Search Input"
+          data-testid="search-input"
         />
         <Button
           onClick={() => setIsSelection(null)}
           className="bg- bg-app-dark-surface2 !w-10 h-10 !p-0 rounded-md"
-          aria-label="Close Button"
+          data-testid="close-button"
         >
           <Image
             className="cursor-pointer rotate-90"
@@ -56,7 +56,7 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
             alt="Close"
             width={12}
             height={12}
-            aria-label="Close Icon"
+            data-testid="close-icon"
           />
         </Button>
       </div>
@@ -64,17 +64,18 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
         filteredTokens.map((token, index) => (
           <div
             key={`${token.address}-${index}`}
+            role="listitem"
             className={`flex items-center justify-between p-[12px] bg- bg-app-dark-surface2 hover:bg-app-dark-surface4 transition-all rounded-lg`}
             onClick={() => {
               onSelect(token);
               setIsSelection(null);
             }}
-            aria-label={`Token ${token.name}`}
+            data-testid={`token-${token.name}`}
           >
             {/* Token Logo and Details */}
             <div
               className="flex items-center gap-[12px]"
-              aria-label="Token Details"
+              data-testid="token-details"
             >
               {tokenImage ? (
                 token.tokenImage
@@ -86,24 +87,24 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
                   height={32}
                   className={`rounded-full`}
                   unoptimized
-                  aria-label={`${token.name} Logo`}
+                  data-testid={`${token.name}-logo`}
                 />
               ) : (
                 <div
                   className={`w-[32px] h-[32px] bg-neutral rounded-full`}
-                  aria-label="Token Placeholder"
+                  data-testid="token-placeholder"
                 />
               )}
               <div className="flex flex-col">
                 <p
                   className={`text-app-gray-50 font-medium`}
-                  aria-label="Token Name"
+                  data-testid="token-name"
                 >
                   {token.name}
                 </p>
                 <p
                   className={`text-app-gray-300 text-sm`}
-                  aria-label="Token Symbol"
+                  data-testid="token-symbol"
                 >
                   {token.symbol}
                 </p>
@@ -113,14 +114,14 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
             {/* Token Balance */}
             <p
               className={`text-app-gray-50 font-medium`}
-              aria-label="Token Balance"
+              data-testid="token-balance"
             >
               {Number(token.balance).toFixed(4)}
             </p>
           </div>
         ))
       ) : (
-        <p className="text-app-gray-300 text-sm" aria-label="No Tokens Found">
+        <p className="text-app-gray-300 text-sm" data-testid="no-tokens-found">
           No tokens found.
         </p>
       )}

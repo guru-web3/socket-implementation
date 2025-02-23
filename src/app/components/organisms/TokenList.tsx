@@ -41,11 +41,13 @@ const TokenList: React.FC = ({}) => {
       decimals: asset.decimals,
       logoURI: asset.icon || "",
       balance: asset.balance ? parseFloat(asset.balance) : 0,
-      tokenImage:  (<TokenImage
-                  name={asset.name}
-                  icon={asset.icon}
-                  networkImage={asset.networkImage}
-          />)
+      tokenImage: (
+        <TokenImage
+          name={asset.name}
+          icon={asset.icon}
+          networkImage={asset.networkImage}
+        />
+      ),
     }));
   };
 

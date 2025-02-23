@@ -12,8 +12,6 @@ import {
   Config,
   usePublicClient,
 } from "wagmi";
-import { formatEther, parseGwei } from 'viem'
-import { sepolia } from "wagmi/chains";
 import Image from "next/image";
 import type { SafeConfig } from "@safe-global/protocol-kit";
 
@@ -32,6 +30,7 @@ const WrapUnwrapCard = () => {
   const { addToast } = useToast();
   const { postTransaction } = useTransactionStore();
 
+  const sepoliaId = 11_155_111;
   const [wrapAmount, setWrapAmount] = useState("");
   const [unWrapAmount, setUnwrapAmount] = useState("");
 
@@ -67,7 +66,7 @@ const WrapUnwrapCard = () => {
   const { writeContractAsync } = useWriteContract();
 
   const handleMaxWrap = async () => {
-    
+    const { formatEther, parseGwei } = await import("viem");
     if (!ethBalance?.value || !wrapGas.data) return;
     try {
       // Get current block base fee
@@ -131,7 +130,7 @@ const WrapUnwrapCard = () => {
   }
 
   const handleWrap = async () => {
-    if (!address || chain?.id !== sepolia.id) return;
+    if (!address || chain?.id !== sepoliaId) return;
     
     try {
       setLoading(true);
@@ -163,7 +162,7 @@ const WrapUnwrapCard = () => {
         console.log({txHash});
 
         const api = new apiKit({ 
-          chainId: BigInt(sepolia.id),
+          chainId: BigInt(sepoliaId),
         });
         await api.proposeTransaction({
           safeAddress,
@@ -199,7 +198,7 @@ const WrapUnwrapCard = () => {
   };
 
   const handleUnwrap = async () => {
-    if (!address || chain?.id !== sepolia.id) return;
+    if (!address || chain?.id !== sepoliaId) return;
 
     try {
       setUnWrapLoading(true);
@@ -222,7 +221,7 @@ const WrapUnwrapCard = () => {
     }
   };
 
-  if (chain?.id !== sepolia.id) {
+  if (chain?.id !== sepoliaId) {
     return (
       <div className="bg-app-dark-surface3 p-4 rounded-xl border border-neutral-800 text-center">
         <div className="mb-3 flex flex-col items-center gap-2">
@@ -235,7 +234,7 @@ const WrapUnwrapCard = () => {
           />
           <p className="text-app-gray-50">Please switch to Sepolia network</p>
           <button
-            onClick={() => switchChain?.({ chainId: sepolia.id })}
+            onClick={() => switchChain?.({ chainId: sepoliaId })}
             className="mt-2 hover:bg-purple-400 text-white px-4 py-2 rounded-full transition-colors"
             aria-label="Switch to Sepolia network"
           >
@@ -247,7 +246,7 @@ const WrapUnwrapCard = () => {
   }
 
   return (
-    chain?.id == sepolia.id && (
+    chain?.id == sepoliaId && (
     <div className="bg-app-dark-surface3 relative mx-auto w-full max-w-lg rounded-xl border border-neutral-800 p-6 shadow-card">
       {/* Safe Wallet Toggle */}
       <div className="mb-4 h-8 flex items-center justify-between">
@@ -305,9 +304,11 @@ const WrapUnwrapCard = () => {
               EndSlot={<span className="text-neutral-500">ETH</span>}
               helperText={wrapError}
               className="w-full"
+              data-testid="wrap-input"
             />
             <Button
               onClick={handleWrap}
+              data-testid="wrap-button"
               loading={loading}
               disabled={loading || !wrapAmount}
               className={`!h-12 !w-28 px-6 py-3 rounded-lg font-medium transition-colors ${
@@ -339,6 +340,7 @@ const WrapUnwrapCard = () => {
           <TextInput
               placeholder="0.0"
               type="number"
+              data-testid="unwrap-input"
               inputSize="lg"
               pill={true}
               error={!!unWrapError}
@@ -350,6 +352,7 @@ const WrapUnwrapCard = () => {
             />
             <Button
               onClick={handleUnwrap}
+              data-testid="unwrap-button"
               loading={unWrapLoading}
               disabled={unWrapLoading || !unWrapAmount}
               className={`!h-12 !w-28 px-6 py-3 rounded-lg font-medium transition-colors ${

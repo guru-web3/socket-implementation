@@ -1,6 +1,5 @@
 // stores/transactionStore.ts
 import { create } from "zustand";
-import { sepolia } from "wagmi/chains";
 import { WETH_SEPOLIA_CONTRACT } from "@/app/constants/transaction";
 
 interface Transaction {
@@ -100,6 +99,7 @@ const useTransactionStore = create<TransactionState>((set) => ({
     unWrapAmount
   ) => {
     set({ isPosting: true, error: null });
+    const { sepolia } = await import("wagmi/chains");
 
     try {
       const url = "/api/transactions";

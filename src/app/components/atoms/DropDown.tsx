@@ -21,6 +21,7 @@ interface DropdownProps {
     input?: string;
     arrow?: string;
   };
+  "data-testid"?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -32,6 +33,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   pill = true,
   inputSize = "md",
   classes = {},
+  "data-testid": testId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(
@@ -64,7 +66,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, []);
 
   return (
-    <div className={`relative ${classes.container || "w-full"}`} ref={dropdownRef}>
+    <div className={`relative ${classes.container || "w-full"}`} ref={dropdownRef} data-testid={testId}>
       <div
         className={`
           flex items-center justify-between p-2 cursor-pointer
@@ -73,6 +75,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           ${classes.inputContainer || "bg- bg-app-dark-surface2"}
         `}
         onClick={() => setIsOpen(!isOpen)}
+        data-testid={`${testId}-input`}
       >
         <span className={`flex justify-start items-center gap-x-2  ${classes.input || "text-gray-900 dark:text-white"}`}>
           {selectedOption?.icon}
@@ -84,11 +87,12 @@ const Dropdown: React.FC<DropdownProps> = ({
             color="white"
             width={18}
             height={18}
+            data-testid={`${testId}-arrow`}
         />
       </div>
 
       {isOpen && (
-        <ul className="absolute overflow-auto z-10 w-full mt-2 bg-app-dark-surface3 border border-zinc-800 rounded-lg shadow-lg max-h-60 transition-all duration-300 ease-in-out transform origin-top scale-y-100 opacity-100 py-1">
+        <ul className="absolute overflow-auto z-10 w-full mt-2 bg-app-dark-surface3 border border-zinc-800 rounded-lg shadow-lg max-h-60 transition-all duration-300 ease-in-out transform origin-top scale-y-100 opacity-100 py-1" data-testid={`${testId}-options`}>
           {options.map((option) => (
             <li
               key={option.value}
@@ -101,6 +105,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                 setIsOpen(false);
               }}
               aria-label={option.name}
+              data-testid={`${testId}-option-${option.value}`}
             >
               {option.icon}
               {option.name}

@@ -2,24 +2,33 @@
 import React, { useEffect } from "react";
 import { formatEther, formatUnits } from "viem";
 import dynamic from "next/dynamic";
-import { EChain, BLOCK_EXPLORER_URL } from "@/app/services/common-utils/chainUtils";
+import {
+  EChain,
+  BLOCK_EXPLORER_URL,
+} from "@/app/services/common-utils/chainUtils";
 import useTransactionStore from "@/store/activityStore";
 import { Loader } from "../molecules/Loader";
 import ComponentLoader from "../atoms/ComponentLoader";
 import { useAccount } from "wagmi";
 import { RawToken } from "@/app/constants/asset.interface";
 
-const Dropdown = dynamic(() => import('../atoms/DropDown'), {
+const Dropdown = dynamic(() => import("../atoms/DropDown"), {
   ssr: true,
   loading: () => <ComponentLoader loaderClass="h-[42px] mb-4" />,
-})
+});
 
 const ActivityFeed = () => {
+  const {
+    fetchTransactions,
+    isLoading,
+    transactions,
+    error,
+    filters,
+    setFilters,
+  } = useTransactionStore();
 
-  const { fetchTransactions, isLoading, transactions, error, filters, setFilters } = useTransactionStore();
+  const { address, chain } = useAccount();
 
-    const { address, chain } = useAccount();
-  
   const DAYS_FILTER_OPTIONS = [
     { value: "7", name: "Last 7 days" },
     { value: "30", name: "Last 30 days" },
@@ -34,21 +43,25 @@ const ActivityFeed = () => {
   ];
 
   const changeFilter = (value: string) => {
-      setFilters(Number(value), filters?.type || "all")
-  }
+    setFilters(Number(value), filters?.type || "all");
+  };
 
   const changeFilterType = (type: string) => {
-      setFilters(filters?.days, type)
-  }
+    setFilters(filters?.days, type);
+  };
 
   const fetchExplorerActivity = async () => {
-    await fetchTransactions(address!, chain?.id || EChain.ETH_SEPOLIA, filters?.days.toString() || "7", filters?.type || "all");
+    await fetchTransactions(
+      address!,
+      chain?.id || EChain.ETH_SEPOLIA,
+      filters?.days.toString() || "7",
+      filters?.type || "all"
+    );
   };
 
   useEffect(() => {
     fetchExplorerActivity();
   }, [filters]);
-
 
   useEffect(() => {
     const interval = setInterval(fetchExplorerActivity, 15000);
@@ -65,7 +78,7 @@ const ActivityFeed = () => {
     };
 
     return (
-      <span className="text-2xl">
+      <span className="text-2xl" data-testid={`transaction-icon-${type}`}>
         {icons[type as keyof typeof icons] || icons.default}
       </span>
     );
@@ -82,9 +95,6 @@ const ActivityFeed = () => {
         Number(tx.tokenDecimal || 18)
       )} ${tx.tokenSymbol}`;
     }
-    // if (tx.type === "NFT") {
-    //   return `NFT ${tx.tokenId ? `#${tx.tokenId}` : "Transfer"}`;
-    // }
     return "Token Transfer";
   };
 
@@ -98,36 +108,47 @@ const ActivityFeed = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-[90vh] py-8">
+      <div
+        className="flex justify-center items-center h-[90vh] py-8"
+        data-testid="loader"
+      >
         <Loader size="md" className="w-8 h-8 " />
       </div>
     );
   }
 
   return (
-    <div className="bg-app-dark-surface3 relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card">
+    <div
+      className="bg-app-dark-surface3 relative mx-auto mt-12 w-full max-w-4xl rounded-xl border border-neutral-800 p-6 shadow-card"
+      data-testid="activity-feed"
+    >
       {/* Header */}
       <div className="flex justify-between items-center mb-6 sm:flex-row flex-col">
         <h2
           className="text-xl font-semibold text-socket-primary sm:text-2xl"
           aria-label="Transaction History"
+          data-testid="transaction-history-title"
         >
           Transaction History
         </h2>
 
         {/* Filters */}
-        <div className="flex gap-4 sm:flex-row flex-col">
+        <div
+          className="flex gap-4 sm:flex-row flex-col"
+        >
           <Dropdown
             options={DAYS_FILTER_OPTIONS}
             inputSize="md"
             defaultValue={filters?.days.toString()}
             classes={{
               container: "w-36",
-              inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
+              inputContainer:
+                "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
               input: "text-app-gray-50",
               arrow: "text-app-gray-400",
             }}
             onChange={changeFilter}
+             data-testid="days-filter"
           />
 
           <Dropdown
@@ -136,30 +157,39 @@ const ActivityFeed = () => {
             defaultValue={filters?.type}
             classes={{
               container: "w-44",
-              inputContainer: "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
+              inputContainer:
+                "p-3 bg- bg-app-dark-surface2 border border-neutral-800",
               input: "text-app-gray-50",
               arrow: "text-app-gray-400",
             }}
             onChange={changeFilterType}
+            data-testid="type-filter"
           />
         </div>
       </div>
 
       {/* Transaction List */}
-      <div className="space-y-4">
+      <div className="space-y-4" data-testid="transaction-list">
         {transactions.map((tx) => (
           <div
             key={tx.hash}
             className="bg- bg-app-dark-surface2 p-4 border border-neutral-800 rounded-lg hover:bg-app-dark-surface4 transition-colors"
+            data-testid={`transaction-${tx.hash}`}
           >
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-3">
                 <TransactionTypeIcon type={tx.type} />
                 <div>
-                  <h3 className="font-medium text-app-gray-50">
+                  <h3
+                    className="font-medium text-app-gray-50"
+                    data-testid="transaction-title"
+                  >
                     {getTransactionTitle(tx as unknown as RawToken)}
                   </h3>
-                  <p className="text-sm text-app-gray-300">
+                  <p
+                    className="text-sm text-app-gray-300"
+                    data-testid="transaction-timestamp"
+                  >
                     {new Date(tx.timestamp).toLocaleDateString()} •{" "}
                     {new Date(tx.timestamp).toLocaleTimeString()}
                   </p>
@@ -172,6 +202,7 @@ const ActivityFeed = () => {
                     ? "bg-red-500/20 text-red-400"
                     : "bg-green-500/20 text-green-400"
                 }`}
+                data-testid="transaction-status"
               >
                 {tx.status === "failed" ? "Failed" : "Confirmed"}
               </span>
@@ -179,29 +210,52 @@ const ActivityFeed = () => {
 
             <div className="grid grid-cols-3 gap-4 text-sm mb-4">
               <div>
-                <p className="text-app-gray-300 mb-1" aria-label="from">
+                <p
+                  className="text-app-gray-300 mb-1"
+                  aria-label="from"
+                  data-testid="transaction-from-label"
+                >
                   From
                 </p>
-                <p className="text-app-gray-50 truncate" aria-label={tx.from}>
+                <p
+                  className="text-app-gray-50 truncate"
+                  aria-label={tx.from}
+                  data-testid="transaction-from"
+                >
                   {tx.from}
                 </p>
               </div>
               <div>
-                <p className="text-app-gray-300 mb-1" aria-label="to">
+                <p
+                  className="text-app-gray-300 mb-1"
+                  aria-label="to"
+                  data-testid="transaction-to-label"
+                >
                   To
                 </p>
-                <p className="text-app-gray-50 truncate" aria-label={tx.to}>
+                <p
+                  className="text-app-gray-50 truncate"
+                  aria-label={tx.to}
+                  data-testid="transaction-to"
+                >
                   {tx.to}
                 </p>
               </div>
               <div>
-                <p className="text-app-gray-300 mb-1" aria-label="value">
+                <p
+                  className="text-app-gray-300 mb-1"
+                  aria-label="value"
+                  data-testid="transaction-value-label"
+                >
                   Value
                 </p>
-                <p className="text-app-gray-50">
+                <p className="text-app-gray-50" data-testid="transaction-value">
                   {formatValue(tx as unknown as RawToken)}
                   {tx.type === "NFT" && (
-                    <span className="block text-xs text-app-gray-400 mt-1">
+                    <span
+                      className="block text-xs text-app-gray-400 mt-1"
+                      data-testid="transaction-contract"
+                    >
                       Contract: {tx.contractAddress?.slice(0, 6)}...
                       {tx.contractAddress?.slice(-4)}
                     </span>
@@ -212,9 +266,12 @@ const ActivityFeed = () => {
 
             <a
               aria-label="View transactions Explorer"
-              href={`${BLOCK_EXPLORER_URL[chain?.id as EChain || EChain.ETH_SEPOLIA]}/tx/${tx.hash}`}
+              href={`${
+                BLOCK_EXPLORER_URL[(chain?.id as EChain) || EChain.ETH_SEPOLIA]
+              }/tx/${tx.hash}`}
               target="_blank"
               className="inline-flex items-center text-primary-400 hover:text-primary-300 text-sm transition-colors"
+              data-testid="transaction-explorer-link"
             >
               View on Explorer
               <svg
@@ -233,15 +290,17 @@ const ActivityFeed = () => {
           <div
             className="text-center py-8 text-app-gray-400"
             aria-label="No transactions Found Explorer"
+            data-testid="no-transactions"
           >
             No transactions found
           </div>
         )}
-        
+
         {error && (
           <div
             className="text-center py-8 text-app-gray-400"
             aria-label="Error Fetching Transaction from Explorer"
+            data-testid="error-fetching-transactions"
           >
             Error Fetching Transaction
           </div>
