@@ -1,8 +1,6 @@
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import NavBar from "./components/templates/NavBar";
-import Footer from "./components/templates/Footer";
 import { Metadata } from "next";
 import Providers from "@/context/RainbowKitProvider";
 
@@ -20,9 +18,9 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   robots: { index: true, follow: true },
   icons: {
-    icon: "/favicon/favicon.ico",
-    shortcut: "/favicon/favicon.ico",
-    apple: "/favicon/favicon.ico",
+    icon: "/favicon/favicon.png",
+    shortcut: "/favicon/favicon.png",
+    apple: "/favicon/favicon.png",
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -63,11 +61,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://assets.web3auth.io" />
 
         <Providers>
-          <NavBar />
           <div className="min-h-[87vh]">
             {children}
           </div>
-          <Footer />
         </Providers>
       </body>
     </html>

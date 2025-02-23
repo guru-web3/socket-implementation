@@ -8,6 +8,9 @@ import { defaultWagmiConfig } from "@/app/services/common-utils/rainbowKitUtils"
 import { sepolia } from "viem/chains";
 import { ToastProvider } from "./ToastContex";
 import ZustandProvider from "./ZustandProvider";
+import { AuthProvider } from "./AuthProvider";
+import Footer from "@/app/components/templates/Footer";
+import NavBar from "@/app/components/templates/NavBar";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +24,13 @@ export default function Providers({ children }: Props) {
       <WagmiProvider config={defaultWagmiConfig}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider initialChain={sepolia.id}>
-            <ZustandProvider>{children}</ZustandProvider>
+            <ZustandProvider>
+              <NavBar />
+              <AuthProvider>
+                {children}
+              </AuthProvider>
+              <Footer />
+            </ZustandProvider>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
