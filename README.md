@@ -55,16 +55,22 @@ POLYGONSCAN_API_KEY=
 ```
 
 ## Screenshots
+<img width="1719" alt="Screenshot 2025-02-23 at 4 01 10 PM" src="https://github.com/user-attachments/assets/26fd439d-7bcb-4b4f-bf6f-28d79bde81d3" />
 
 ### Wrap Ether
+<img width="644" alt="wrap-eth" src="https://github.com/user-attachments/assets/a8900149-a79d-4fcc-b1aa-5867cd9ec514" />
 
 ### Socket.tech Swap
+<img width="724" alt="bungee-swap" src="https://github.com/user-attachments/assets/641c6446-5a08-4626-a76c-4ac6511c95f5" />
 
 ### Across Token List
+<img width="582" alt="across-chain-token-viewer" src="https://github.com/user-attachments/assets/498d6a85-a760-4f32-bf85-82c6d4ce3aec" />
 
 ### Token Transfer
+<img width="622" alt="transfer-token" src="https://github.com/user-attachments/assets/35eef0af-2db4-4a1b-813f-bd3576643471" />
 
 ### Transaction Activity
+<img width="1029" alt="bungee-transaction-activity" src="https://github.com/user-attachments/assets/23a5d672-3b2c-46f9-a52f-49b45e939b67" />
 
 
 ## Best Practices Followed
