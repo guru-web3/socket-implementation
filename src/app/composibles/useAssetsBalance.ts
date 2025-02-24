@@ -119,7 +119,7 @@ export const useVisibleAssets = () => {
 
         assetsState.shownAssets.forEach((assetId) => {
           const asset = assetsState.allAssets.find(
-            (asset) => asset.assetId === assetId
+            (asset) => asset.assetId === assetId,
           );
           if (
             asset &&
@@ -128,7 +128,7 @@ export const useVisibleAssets = () => {
           ) {
             const balance = convertToDecimals(
               balanceState.balancesMap[deployedAccountAddress][assetId],
-              asset.decimals
+              asset.decimals,
             );
             if (balance > 0) {
               localVisibleAssets.push({
@@ -177,7 +177,7 @@ export const useVisibleAssets = () => {
               return Number(asset.balance) > 0;
             }
             return false;
-          })
+          }),
         );
         setLoading(false);
       }

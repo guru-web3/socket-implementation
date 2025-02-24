@@ -33,11 +33,7 @@ export const ToastProvider: React.FC<{ children: ReactNode }> = ({
   }, []);
 
   const addToast = useCallback(
-    (
-      type: ToastType,
-      message: string,
-      icon?: React.ReactNode,
-    ) => {
+    (type: ToastType, message: string, icon?: React.ReactNode) => {
       setToasts((prevToasts) => [
         ...prevToasts,
         { id: ++toastId, type, message },

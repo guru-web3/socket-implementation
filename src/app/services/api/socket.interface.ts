@@ -143,7 +143,6 @@ export interface StartRouteResponse {
   [key: string]: any; // Handle additional fields in the response
 }
 
-
 export interface PrepareNextTxParams {
   activeRouteId: string;
   userTxIndex: number;
@@ -157,4 +156,3 @@ export interface PrepareNextTxResponse {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   [key: string]: any; // Handle additional fields in the response
 }
-

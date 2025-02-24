@@ -83,9 +83,9 @@ export default class BalancesController extends BaseController<
     const response = await HttpClient<{
       data: BalanceApiReturnType;
     }>("/api/balance", {
-        method: "POST",
-        body: body,
-      });
+      method: "POST",
+      body: body,
+    });
 
     // check if balances changes
     // emit balance changed

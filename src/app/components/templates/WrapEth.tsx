@@ -74,24 +74,22 @@ const WrapUnwrapCard = () => {
       // Get current block base fee
       const block = await publicClient?.getBlock();
       const baseFeePerGas = block?.baseFeePerGas;
-      
-      if (!baseFeePerGas) throw new Error('EIP-1559 not supported');
-  
+
+      if (!baseFeePerGas) throw new Error("EIP-1559 not supported");
+
       // Set priority fee (2 Gwei in this example)
-      const priorityFeePerGas = parseGwei('3'); 
-  
+      const priorityFeePerGas = parseGwei("3");
+
       // Calculate total gas cost
       const totalGasCost = (baseFeePerGas + priorityFeePerGas) * wrapGas.data;
-  
+
       // Calculate max sendable amount
-      const maxValue = ethBalance.value > totalGasCost 
-        ? ethBalance.value - totalGasCost
-        : 0n;
-  
+      const maxValue =
+        ethBalance.value > totalGasCost ? ethBalance.value - totalGasCost : 0n;
+
       setWrapAmount(Number(formatEther(maxValue)).toFixed(5));
-  
     } catch (error) {
-      console.error('Gas estimation error:', error);
+      console.error("Gas estimation error:", error);
       // Fallback to simple gas subtraction
       const maxValue = ethBalance.value - wrapGas.data;
       setWrapAmount((Number(maxValue) / 1e18).toFixed(4));
@@ -123,47 +121,59 @@ const WrapUnwrapCard = () => {
     setUnwrapAmount((Number(wethBalance.value) / 1e18).toFixed(4));
   };
 
-  const postTransactionApi = async (wrapType: "wrap" | "unwrap", hash: string) => {
+  const postTransactionApi = async (
+    wrapType: "wrap" | "unwrap",
+    hash: string,
+  ) => {
     if (wrapType === "wrap") {
-      await postTransaction(wrapType, hash, address || "", wrapAmount, "0")
+      await postTransaction(wrapType, hash, address || "", wrapAmount, "0");
     } else {
-      await postTransaction(wrapType, hash || "", address || "", "0", unWrapAmount)
+      await postTransaction(
+        wrapType,
+        hash || "",
+        address || "",
+        "0",
+        unWrapAmount,
+      );
     }
-  }
+  };
 
   const handleWrap = async () => {
     if (!address || chain?.id !== sepoliaId) return;
-    
+
     try {
       setLoading(true);
       const value = BigInt(parseFloat(wrapAmount) * 1e18);
       // The module is only loaded on the client is address is sfa during handle wrap
       if (safeEnabled) {
         // dynamically loads
-        const SafeKit = (await import('@safe-global/protocol-kit')).default
-        const apiKit = (await import("@safe-global/api-kit")).default
+        const SafeKit = (await import("@safe-global/protocol-kit")).default;
+        const apiKit = (await import("@safe-global/api-kit")).default;
 
-        const safeSDK = await SafeKit.init({ 
-          safeAddress: safeAddress as `0x${string}`, 
+        const safeSDK = await SafeKit.init({
+          safeAddress: safeAddress as `0x${string}`,
           provider: connectorData?.transport as SafeConfig["provider"],
         });
-        const signerAddress = (await safeSDK.getSafeProvider().getSignerAddress()) || '0x'
+        const signerAddress =
+          (await safeSDK.getSafeProvider().getSignerAddress()) || "0x";
 
         const safeTx = await safeSDK.createTransaction({
-          transactions: [{
-            to: WETH_SEPOLIA_CONTRACT,
-            value: value.toString(),
-            // deposit hex
-            data: "0xd0e30db0",
-          }]
+          transactions: [
+            {
+              to: WETH_SEPOLIA_CONTRACT,
+              value: value.toString(),
+              // deposit hex
+              data: "0xd0e30db0",
+            },
+          ],
         });
 
         const txHash = await safeSDK.getTransactionHash(safeTx);
         const signature = await safeSDK.signHash(txHash);
-        
-        console.log({txHash});
 
-        const api = new apiKit({ 
+        console.log({ txHash });
+
+        const api = new apiKit({
           chainId: BigInt(sepoliaId),
         });
         await api.proposeTransaction({
@@ -171,11 +181,11 @@ const WrapUnwrapCard = () => {
           safeTransactionData: safeTx.data,
           safeTxHash: txHash,
           senderAddress: signerAddress!,
-          senderSignature: signature.data
+          senderSignature: signature.data,
         });
         await postTransactionApi("wrap", txHash);
         setTxHash(txHash as `0x${string}`);
-        return router.push("/activity")
+        return router.push("/activity");
       } else {
         const hash = await writeContractAsync({
           address: WETH_SEPOLIA_CONTRACT,
@@ -190,11 +200,16 @@ const WrapUnwrapCard = () => {
         // get the transaction details from api and format it to show in the UI
         await postTransactionApi("wrap", hash);
         setTxHash(hash);
-        return router.push("/activity")
+        return router.push("/activity");
       }
     } catch (error) {
       console.error("Transaction failed:", error);
-      addToast("error", (error as {shortMessage: string}).shortMessage || (error as Error).message || "Transaction failed")
+      addToast(
+        "error",
+        (error as { shortMessage: string }).shortMessage ||
+          (error as Error).message ||
+          "Transaction failed",
+      );
     } finally {
       setLoading(false);
     }
@@ -215,10 +230,15 @@ const WrapUnwrapCard = () => {
       });
       await postTransactionApi("unwrap", hash);
       setTxHash(hash);
-      return router.push("/activity")
-      } catch (error) {
+      return router.push("/activity");
+    } catch (error) {
       console.error("Unwrap failed:", error);
-      addToast("error", (error as {shortMessage: string}).shortMessage || (error as Error).message || "Transaction failed")
+      addToast(
+        "error",
+        (error as { shortMessage: string }).shortMessage ||
+          (error as Error).message ||
+          "Transaction failed",
+      );
     } finally {
       setUnWrapLoading(false);
     }
@@ -250,134 +270,139 @@ const WrapUnwrapCard = () => {
 
   return (
     chain?.id == sepoliaId && (
-    <div className="bg-app-dark-surface3 relative mx-auto w-full max-w-lg rounded-xl border border-neutral-800 p-6 shadow-card">
-      {/* Safe Wallet Toggle */}
-      <div className="mb-4 h-8 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <label htmlFor="refuel-toggle" className="relative inline-flex items-center cursor-pointer">
+      <div className="bg-app-dark-surface3 relative mx-auto w-full max-w-lg rounded-xl border border-neutral-800 p-6 shadow-card">
+        {/* Safe Wallet Toggle */}
+        <div className="mb-4 h-8 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <label
+              htmlFor="refuel-toggle"
+              className="relative inline-flex items-center cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                id="refuel-toggle"
+                className="sr-only peer"
+                checked={safeEnabled}
+                onChange={(e) => setSafeEnabled(e.target.checked)}
+              />
+              <div className="w-11 h-6 bg-gray-600 border:bg-gray-600 rounded-full peer peer-focus:ring-2 peer-focus:ring-purple-500 peer-checked:bg-purple-500 transition-all"></div>
+              <span className="absolute left-[4px] top-[2px] w-5 h-5 bg-white rounded-full peer-checked:translate-x-full transition-transform"></span>
+            </label>
+            <span className="text-app-gray-50 text-sm">Use Safe Wallet</span>
+          </div>
+
+          {safeEnabled && (
             <input
-              type="checkbox"
-              id="refuel-toggle"
-              className="sr-only peer"
-              checked={safeEnabled}
-              onChange={(e) => setSafeEnabled(e.target.checked)}
+              type="text"
+              value={safeAddress}
+              onChange={(e) => setSafeAddress(e.target.value)}
+              placeholder="Safe address..."
+              className="w-48 px-3 py-1 bg- bg-app-dark-surface2 border border-neutral-800 rounded-lg text-app-gray-50 text-sm focus:outline-none"
+              aria-label="Safe Wallet Address"
             />
-            <div className="w-11 h-6 bg-gray-600 border:bg-gray-600 rounded-full peer peer-focus:ring-2 peer-focus:ring-purple-500 peer-checked:bg-purple-500 transition-all"></div>
-            <span className="absolute left-[4px] top-[2px] w-5 h-5 bg-white rounded-full peer-checked:translate-x-full transition-transform"></span>
-          </label>
-          <span className="text-app-gray-50 text-sm">Use Safe Wallet</span>
+          )}
         </div>
-        
-        {safeEnabled && (
-          <input
-            type="text"
-            value={safeAddress}
-            onChange={(e) => setSafeAddress(e.target.value)}
-            placeholder="Safe address..."
-            className="w-48 px-3 py-1 bg- bg-app-dark-surface2 border border-neutral-800 rounded-lg text-app-gray-50 text-sm focus:outline-none"
-            aria-label="Safe Wallet Address"
-          />
+
+        {/* Cards Container */}
+        <div className="space-y-4">
+          {/* Wrap Card */}
+          <div className="bg- bg-app-dark-surface2 rounded-lg border border-neutral-800 p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-app-gray-50 font-medium text-nowrap">
+                Wrap-ETH
+              </h3>
+              <Button
+                onClick={handleMaxWrap}
+                className="text-purple-500 text-sm hover:text-purple-400 !justify-end"
+                aria-label="Set max ETH to wrap"
+              >
+                Max: {Number(ethBalance?.formatted || 0).toFixed(4)} ETH
+              </Button>
+            </div>
+
+            <div className="flex gap-2 justify-center items-center">
+              <TextInput
+                placeholder="0.0"
+                type="number"
+                inputSize="lg"
+                pill={true}
+                error={!!wrapError}
+                value={wrapAmount}
+                onChange={(e) => setWrapAmount(e.target.value)}
+                EndSlot={<span className="text-neutral-500">ETH</span>}
+                helperText={wrapError}
+                className="w-full"
+                data-testid="wrap-input"
+              />
+              <Button
+                onClick={handleWrap}
+                data-testid="wrap-button"
+                loading={loading}
+                disabled={loading || !wrapAmount}
+                className={`!h-12 !w-28 px-6 py-3 rounded-lg font-medium transition-colors ${
+                  loading || !wrapAmount
+                    ? "bg-neutral-800 text-app-gray-400 cursor-not-allowed"
+                    : "  bg-purple-400 text-white"
+                }`}
+                aria-label="Wrap ETH to WETH"
+              >
+                {loading ? "" : "Wrap"}
+              </Button>
+            </div>
+          </div>
+
+          {/* Unwrap Card */}
+          <div className="bg- bg-app-dark-surface2 rounded-lg border border-neutral-800 p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-app-gray-50 font-medium">Unwrap WETH</h3>
+              <Button
+                onClick={handleMaxUnwrap}
+                className="text-purple-500 text-sm hover:text-purple-400 !justify-end"
+                aria-label="Set max WETH to unwrap"
+              >
+                Max: {Number(wethBalance?.formatted || 0).toFixed(4)} WETH
+              </Button>
+            </div>
+
+            <div className="flex gap-2 justify-center items-center">
+              <TextInput
+                placeholder="0.0"
+                type="number"
+                data-testid="unwrap-input"
+                inputSize="lg"
+                pill={true}
+                error={!!unWrapError}
+                value={unWrapAmount}
+                onChange={(e) => setUnwrapAmount(e.target.value)}
+                EndSlot={<span className="text-neutral-500">wETH</span>}
+                helperText={unWrapError}
+                className="w-full"
+              />
+              <Button
+                onClick={handleUnwrap}
+                data-testid="unwrap-button"
+                loading={unWrapLoading}
+                disabled={unWrapLoading || !unWrapAmount}
+                className={`!h-12 !w-28 px-6 py-3 rounded-lg font-medium transition-colors ${
+                  unWrapLoading || !unWrapAmount
+                    ? "bg-neutral-800 text-app-gray-400 cursor-not-allowed"
+                    : " bg-purple-400 text-white"
+                }`}
+                aria-label="Wrap ETH to WETH"
+              >
+                {unWrapLoading ? "" : "Unwrap"}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Transaction Status */}
+        {txStatus === "success" && (
+          <div className="mt-4 p-3 bg-green-500/20 text-green-400 rounded-lg text-center text-sm">
+            Transaction confirmed successfully!
+          </div>
         )}
       </div>
-
-      {/* Cards Container */}
-      <div className="space-y-4">
-        {/* Wrap Card */}
-        <div className="bg- bg-app-dark-surface2 rounded-lg border border-neutral-800 p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-app-gray-50 font-medium text-nowrap">Wrap-ETH</h3>
-            <Button
-              onClick={handleMaxWrap}
-              className="text-purple-500 text-sm hover:text-purple-400 !justify-end"
-              aria-label="Set max ETH to wrap"
-            >
-              Max: {Number(ethBalance?.formatted || 0).toFixed(4)} ETH
-            </Button>
-          </div>
-          
-          <div className="flex gap-2 justify-center items-center">
-            <TextInput
-              placeholder="0.0"
-              type="number"
-              inputSize="lg"
-              pill={true}
-              error={!!wrapError}
-              value={wrapAmount}
-              onChange={(e) => setWrapAmount(e.target.value)}
-              EndSlot={<span className="text-neutral-500">ETH</span>}
-              helperText={wrapError}
-              className="w-full"
-              data-testid="wrap-input"
-            />
-            <Button
-              onClick={handleWrap}
-              data-testid="wrap-button"
-              loading={loading}
-              disabled={loading || !wrapAmount}
-              className={`!h-12 !w-28 px-6 py-3 rounded-lg font-medium transition-colors ${
-                loading || !wrapAmount 
-                  ? 'bg-neutral-800 text-app-gray-400 cursor-not-allowed'
-                  : '  bg-purple-400 text-white'
-              }`}
-              aria-label="Wrap ETH to WETH"
-            >
-              {loading ? "" : "Wrap"}
-            </Button>
-          </div>
-        </div>
-
-        {/* Unwrap Card */}
-        <div className="bg- bg-app-dark-surface2 rounded-lg border border-neutral-800 p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-app-gray-50 font-medium">Unwrap WETH</h3>
-            <Button
-              onClick={handleMaxUnwrap}
-              className="text-purple-500 text-sm hover:text-purple-400 !justify-end"
-              aria-label="Set max WETH to unwrap"
-            >
-              Max: {Number(wethBalance?.formatted || 0).toFixed(4)} WETH
-            </Button>
-          </div>
-          
-        <div className="flex gap-2 justify-center items-center">
-          <TextInput
-              placeholder="0.0"
-              type="number"
-              data-testid="unwrap-input"
-              inputSize="lg"
-              pill={true}
-              error={!!unWrapError}
-              value={unWrapAmount}
-              onChange={(e) => setUnwrapAmount(e.target.value)}
-              EndSlot={<span className="text-neutral-500">wETH</span>}
-              helperText={unWrapError}
-              className="w-full"
-            />
-            <Button
-              onClick={handleUnwrap}
-              data-testid="unwrap-button"
-              loading={unWrapLoading}
-              disabled={unWrapLoading || !unWrapAmount}
-              className={`!h-12 !w-28 px-6 py-3 rounded-lg font-medium transition-colors ${
-                unWrapLoading || !unWrapAmount 
-                  ? 'bg-neutral-800 text-app-gray-400 cursor-not-allowed'
-                  : ' bg-purple-400 text-white'
-              }`}
-              aria-label="Wrap ETH to WETH"
-            >
-              {unWrapLoading ? "" : "Unwrap"}
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Transaction Status */}
-      {txStatus === "success" && (
-        <div className="mt-4 p-3 bg-green-500/20 text-green-400 rounded-lg text-center text-sm">
-          Transaction confirmed successfully!
-        </div>
-      )}
-    </div>
     )
   );
 };

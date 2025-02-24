@@ -31,7 +31,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       type = "text", // Default type is 'text'
       ...props
     },
-    ref
+    ref,
   ) => {
     const [inputFocus, setInputFocus] = useState(false);
 
@@ -46,16 +46,16 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     const borderColor = error
       ? "border-red-500 dark:border-red-500"
       : success
-      ? "border-green-500 dark:border-green-500"
-      : inputFocus
-      ? "border-primaryPurple dark:border-primaryPurple"
-      : "border-neutral-800";
+        ? "border-green-500 dark:border-green-500"
+        : inputFocus
+          ? "border-primaryPurple dark:border-primaryPurple"
+          : "border-neutral-800";
 
     const textColor = error
       ? "text-red-500 dark:text-red-400"
       : success
-      ? "text-green-500 dark:text-green-400"
-      : "text-neutral-50";
+        ? "text-green-500 dark:text-green-400"
+        : "text-neutral-50";
 
     return (
       <div className={`flex flex-col gap-2 ${className}`}>
@@ -65,8 +65,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
               error
                 ? "text-red-500 dark:text-red-400"
                 : success
-                ? "text-green-500 dark:text-green-400"
-                : "text-neutral-50"
+                  ? "text-green-500 dark:text-green-400"
+                  : "text-neutral-50"
             }`}
           >
             {label}
@@ -110,8 +110,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
               error
                 ? "text-red-500 dark:text-red-400"
                 : success
-                ? "text-green-500 dark:text-green-400"
-                : "text-neutral-500 dark:text-neutral-400"
+                  ? "text-green-500 dark:text-green-400"
+                  : "text-neutral-500 dark:text-neutral-400"
             }`}
           >
             {helperText}
@@ -119,7 +119,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 TextInput.displayName = "TextInput";

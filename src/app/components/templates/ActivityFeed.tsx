@@ -55,7 +55,7 @@ const ActivityFeed = () => {
       address!,
       chain?.id || EChain.ETH_SEPOLIA,
       filters?.days.toString() || "7",
-      filters?.type || "all"
+      filters?.type || "all",
     );
   };
 
@@ -92,7 +92,7 @@ const ActivityFeed = () => {
     if (tx.type === "ERC20" && tx.tokenSymbol) {
       return `${formatUnits(
         BigInt(tx.tokenValue || 0),
-        Number(tx.tokenDecimal || 18)
+        Number(tx.tokenDecimal || 18),
       )} ${tx.tokenSymbol}`;
     }
     return "Token Transfer";
@@ -133,9 +133,7 @@ const ActivityFeed = () => {
         </h2>
 
         {/* Filters */}
-        <div
-          className="flex gap-4 sm:flex-row flex-col"
-        >
+        <div className="flex gap-4 sm:flex-row flex-col">
           <Dropdown
             options={DAYS_FILTER_OPTIONS}
             inputSize="md"
@@ -148,7 +146,7 @@ const ActivityFeed = () => {
               arrow: "text-app-gray-400",
             }}
             onChange={changeFilter}
-             data-testid="days-filter"
+            data-testid="days-filter"
           />
 
           <Dropdown
@@ -267,7 +265,9 @@ const ActivityFeed = () => {
             <a
               aria-label="View transactions Explorer"
               href={`${
-                BLOCK_EXPLORER_URL_UI[(chain?.id as EChain) || EChain.ETH_SEPOLIA]
+                BLOCK_EXPLORER_URL_UI[
+                  (chain?.id as EChain) || EChain.ETH_SEPOLIA
+                ]
               }/tx/${tx.hash}`}
               target="_blank"
               className="inline-flex items-center text-primary-400 hover:text-primary-300 text-sm transition-colors"

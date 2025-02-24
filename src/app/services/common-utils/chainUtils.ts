@@ -9,7 +9,16 @@ export interface ChainConfig extends Chain {
   currencyConversionSymbol: string;
 }
 
-import { mainnet, sepolia, polygon, polygonAmoy, arbitrum, arbitrumSepolia, base, optimism } from "viem/chains";
+import {
+  mainnet,
+  sepolia,
+  polygon,
+  polygonAmoy,
+  arbitrum,
+  arbitrumSepolia,
+  base,
+  optimism,
+} from "viem/chains";
 import { ethereumTokens } from "@/app/constants/TokenDirectory/Ethereum";
 import { polygonTokens } from "@/app/constants/TokenDirectory/Polygon";
 import { ChainInfo } from "@/app/constants/asset.interface";
@@ -40,42 +49,41 @@ export type TChain = {
 };
 
 export enum EChain {
-    // mainnets
-    ETH_MAINNET = 1,
-    POLYGON_MAINNET = 137,
-    OPTIMISM = 10,
-    BASE = 8453,
-    ARBITRUM_ONE = 42161,
-  
-    // testnets
-    ETH_GOERLI = 5,
-    ETH_RINKEBY = 4,
-    ETH_SEPOLIA = 11155111,
-    POLYGON_AMOY = 80002,
-    BASE_SEPOLIA = 84532,
-    OPTIMISM_SEPOLIA = 11155420,
-    ARBITRUM_SEPOLIA = 421614,
+  // mainnets
+  ETH_MAINNET = 1,
+  POLYGON_MAINNET = 137,
+  OPTIMISM = 10,
+  BASE = 8453,
+  ARBITRUM_ONE = 42161,
+
+  // testnets
+  ETH_GOERLI = 5,
+  ETH_RINKEBY = 4,
+  ETH_SEPOLIA = 11155111,
+  POLYGON_AMOY = 80002,
+  BASE_SEPOLIA = 84532,
+  OPTIMISM_SEPOLIA = 11155420,
+  ARBITRUM_SEPOLIA = 421614,
 }
 
 export const AVAILABLE_CHAINS: Record<string, TChain> = {
-    [EChain.ETH_SEPOLIA]: {
-      chainId: EChain.ETH_SEPOLIA,
-      id: EChain.ETH_SEPOLIA,
-      displayName: "Ethereum Sepolia",
-      currency: "ETH",
-      logo: `${process.env.NEXT_PUBLIC_S3_ASSETS}/icons/eth.svg`,
-      blockExplorerUrl: "https://sepolia.etherscan.io",
-    },
-    [EChain.ARBITRUM_SEPOLIA]: {
-      chainId: EChain.ARBITRUM_SEPOLIA,
-      id: EChain.ARBITRUM_SEPOLIA,
-      displayName: "Arbitrum Sepolia",
-      currency: "ETH",
-      logo: "https://assets.web3pay.io/images/arbitrum-dark.svg",
-      blockExplorerUrl: "https://sepolia.arbiscan.io",
-    },
+  [EChain.ETH_SEPOLIA]: {
+    chainId: EChain.ETH_SEPOLIA,
+    id: EChain.ETH_SEPOLIA,
+    displayName: "Ethereum Sepolia",
+    currency: "ETH",
+    logo: `${process.env.NEXT_PUBLIC_S3_ASSETS}/icons/eth.svg`,
+    blockExplorerUrl: "https://sepolia.etherscan.io",
+  },
+  [EChain.ARBITRUM_SEPOLIA]: {
+    chainId: EChain.ARBITRUM_SEPOLIA,
+    id: EChain.ARBITRUM_SEPOLIA,
+    displayName: "Arbitrum Sepolia",
+    currency: "ETH",
+    logo: "https://assets.web3pay.io/images/arbitrum-dark.svg",
+    blockExplorerUrl: "https://sepolia.arbiscan.io",
+  },
 };
-
 
 export const Ethereum: ChainInfo = {
   id: "ethereum",
@@ -150,7 +158,6 @@ export const Base: ChainInfo = {
     },
   },
 };
-
 
 export const Arbitrum: ChainInfo = {
   id: "arbitrum",
@@ -347,7 +354,6 @@ export const arbitrumSepoliaClient = createPublicClient({
   transport: http(`${ArbitrumSepolia.rpc}/${InfuraKey}`),
 });
 
-
 export function chainIdToNetworkKey(chainId: number | string): string {
   const chainIdNumb = Number(chainId);
   switch (chainIdNumb) {
@@ -469,8 +475,6 @@ export const getProxyChainRpc = (chainId: number | string): string => {
   }
 };
 
-
-
 type API_PROVIDER_OBJ = { keys: string[]; globalCounter: number; url: string };
 
 export const ETHERSCAN_API_MAP: Record<string, API_PROVIDER_OBJ> = {
@@ -515,39 +519,39 @@ export const getEtherscanApiKey = (network: string): string =>
 export const getSimpleHashApiKey = (): string => getNextKey(SIMPLEHASH_API);
 
 export const BLOCK_EXPLORER_URL = {
-// mainnets
-[EChain.ETH_MAINNET]: "https://api.etherscan.io/api",
-[EChain.POLYGON_MAINNET]: "https://api.polygonscan.com/api",
-[EChain.OPTIMISM]: "https://api-optimistic.etherscan.io/api",
-[EChain.BASE]: "https://api.basescan.org/api",
-[EChain.ARBITRUM_ONE]: "https://api.arbiscan.io/api",
+  // mainnets
+  [EChain.ETH_MAINNET]: "https://api.etherscan.io/api",
+  [EChain.POLYGON_MAINNET]: "https://api.polygonscan.com/api",
+  [EChain.OPTIMISM]: "https://api-optimistic.etherscan.io/api",
+  [EChain.BASE]: "https://api.basescan.org/api",
+  [EChain.ARBITRUM_ONE]: "https://api.arbiscan.io/api",
 
-// testnets
-[EChain.ETH_SEPOLIA]: "https://api-sepolia.etherscan.io/api",
-[EChain.POLYGON_AMOY]: "https://api-amoy.polygonscan.com/api",
-[EChain.BASE_SEPOLIA]: "https://api-sepolia.basescan.org/api",
-[EChain.ARBITRUM_SEPOLIA]: "https://api-sepolia.arbiscan.io/api",
-[EChain.OPTIMISM_SEPOLIA]: "https://api-sepolia-optimism.etherscan.io/api",
-[EChain.ETH_GOERLI]: "",
-[EChain.ETH_RINKEBY]: "",
+  // testnets
+  [EChain.ETH_SEPOLIA]: "https://api-sepolia.etherscan.io/api",
+  [EChain.POLYGON_AMOY]: "https://api-amoy.polygonscan.com/api",
+  [EChain.BASE_SEPOLIA]: "https://api-sepolia.basescan.org/api",
+  [EChain.ARBITRUM_SEPOLIA]: "https://api-sepolia.arbiscan.io/api",
+  [EChain.OPTIMISM_SEPOLIA]: "https://api-sepolia-optimism.etherscan.io/api",
+  [EChain.ETH_GOERLI]: "",
+  [EChain.ETH_RINKEBY]: "",
 };
 
 export const BLOCK_EXPLORER_URL_UI = {
-// mainnets
-[EChain.ETH_MAINNET]: "https://etherscan.io",
-[EChain.POLYGON_MAINNET]: "https://polygonscan.com",
-[EChain.OPTIMISM]: "https://optimistic.etherscan.io",
-[EChain.BASE]: "https://basescan.org",
-[EChain.ARBITRUM_ONE]: "https://arbiscan.io/",
+  // mainnets
+  [EChain.ETH_MAINNET]: "https://etherscan.io",
+  [EChain.POLYGON_MAINNET]: "https://polygonscan.com",
+  [EChain.OPTIMISM]: "https://optimistic.etherscan.io",
+  [EChain.BASE]: "https://basescan.org",
+  [EChain.ARBITRUM_ONE]: "https://arbiscan.io/",
 
-// testnets
-[EChain.ETH_SEPOLIA]: "https://sepolia.etherscan.io",
-[EChain.POLYGON_AMOY]: "https://oklink.com/amoy",
-[EChain.BASE_SEPOLIA]: "https://sepolia.basescan.org/",
-[EChain.ARBITRUM_SEPOLIA]: "https://sepolia.arbiscan.io",
-[EChain.OPTIMISM_SEPOLIA]: "https://sepolia-optimism.etherscan.io",
-[EChain.ETH_GOERLI]: "",
-[EChain.ETH_RINKEBY]: "",
+  // testnets
+  [EChain.ETH_SEPOLIA]: "https://sepolia.etherscan.io",
+  [EChain.POLYGON_AMOY]: "https://oklink.com/amoy",
+  [EChain.BASE_SEPOLIA]: "https://sepolia.basescan.org/",
+  [EChain.ARBITRUM_SEPOLIA]: "https://sepolia.arbiscan.io",
+  [EChain.OPTIMISM_SEPOLIA]: "https://sepolia-optimism.etherscan.io",
+  [EChain.ETH_GOERLI]: "",
+  [EChain.ETH_RINKEBY]: "",
 };
 
 // Helper to get chain configuration
@@ -573,46 +577,46 @@ export function validateAddress(address: string) {
   return true;
 }
 
-  // const estimateGas = async () => {
-  //   if (!selectedToken || !amount || !validateBalance() || !address) return;
+// const estimateGas = async () => {
+//   if (!selectedToken || !amount || !validateBalance() || !address) return;
 
-  //   try {
-  //     const value = parseUnits(amount, selectedToken.decimals);
-  //     const chain = getChainConfiguration(selectedToken.chainId);
+//   try {
+//     const value = parseUnits(amount, selectedToken.decimals);
+//     const chain = getChainConfiguration(selectedToken.chainId);
 
-  //     let gasEstimate;
-  //     if (selectedToken.isErc20) {
-  //       gasEstimate = await publicClient.estimateGas({
-  //         account: address as `0x${string}`,
-  //         to: selectedToken.address as `0x${string}`,
-  //         data: encodeFunctionData({
-  //           abi: ERC20_ABI,
-  //           functionName: "transfer",
-  //           args: [address, value],
-  //         }),
-  //         // Chain-specific configuration is not needed here
-  //       });
-  //     } else {
-  //       gasEstimate = await publicClient.estimateGas({
-  //         account: address as `0x${string}`,
-  //         value,
-  //         //   chain, // Chain-specific configuration
-  //       });
-  //     }
+//     let gasEstimate;
+//     if (selectedToken.isErc20) {
+//       gasEstimate = await publicClient.estimateGas({
+//         account: address as `0x${string}`,
+//         to: selectedToken.address as `0x${string}`,
+//         data: encodeFunctionData({
+//           abi: ERC20_ABI,
+//           functionName: "transfer",
+//           args: [address, value],
+//         }),
+//         // Chain-specific configuration is not needed here
+//       });
+//     } else {
+//       gasEstimate = await publicClient.estimateGas({
+//         account: address as `0x${string}`,
+//         value,
+//         //   chain, // Chain-specific configuration
+//       });
+//     }
 
-  //     // Convert gas estimate to native token units (ETH, MATIC, etc.)
-  //     const formattedGas = formatUnits(
-  //       gasEstimate,
-  //       chain.nativeCurrency.decimals
-  //     );
-  //     setGasEstimate(`${formattedGas} ${chain.nativeCurrency.symbol}`);
-  //   } catch (err) {
-  //     console.error("Gas estimation error:", err);
-  //     addToast(
-  //       "error",
-  //       (err as any).shortMessage ||
-  //         (err as Error).message ||
-  //         "Transaction failed"
-  //     );
-  //   }
-  // };
+//     // Convert gas estimate to native token units (ETH, MATIC, etc.)
+//     const formattedGas = formatUnits(
+//       gasEstimate,
+//       chain.nativeCurrency.decimals
+//     );
+//     setGasEstimate(`${formattedGas} ${chain.nativeCurrency.symbol}`);
+//   } catch (err) {
+//     console.error("Gas estimation error:", err);
+//     addToast(
+//       "error",
+//       (err as any).shortMessage ||
+//         (err as Error).message ||
+//         "Transaction failed"
+//     );
+//   }
+// };

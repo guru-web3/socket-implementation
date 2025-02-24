@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
   serverExternalPackages: ["zod", "redis"],
-  
+
   eslint: {
     dirs: ["src"],
   },
@@ -16,17 +16,17 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
       {
-        protocol: 'https',
-        hostname: 'assets.web3pay.io',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "assets.web3pay.io",
+        port: "",
+        pathname: "/**",
       },
     ],
   },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
-      /* eslint-disable  @typescript-eslint/no-explicit-any */
-      const fileLoaderRule = config.module.rules.find((rule: any) =>
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
+    const fileLoaderRule = config.module.rules.find((rule: any) =>
       rule.test?.test?.(".svg"),
     );
 
@@ -83,11 +83,11 @@ nextConfig.experimental = {
   optimizeCss: true, // Enable CSS optimization
 };
 nextConfig.compiler = {
-  removeConsole: process.env.NODE_ENV === 'production',
+  removeConsole: process.env.NODE_ENV === "production",
 };
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
- 
-module.exports = withBundleAnalyzer(nextConfig)
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
+module.exports = withBundleAnalyzer(nextConfig);

@@ -14,20 +14,24 @@ export const Loader: React.FC<LoaderProps> = ({
   size = "default",
   showLogo = false,
   text = "",
-  className = ""
+  className = "",
 }) => {
   const sizeClasses = {
     sm: "w-6 h-6",
     default: "h-[60px] w-[60px]",
     md: "w-8 h-8",
-    lg: "w-16 h-16"
+    lg: "w-16 h-16",
   };
 
   return (
-    <div className={`flex flex-col items-center justify-center gap-4 ${className}`}>
+    <div
+      className={`flex flex-col items-center justify-center gap-4 ${className}`}
+    >
       <div className={`relative ${sizeClasses[size]}`}>
-        <div className={`${sizeClasses[size]} border-2 border-t-transparent border-app-primary-500 rounded-full animate-spin w-full h-full`} />
-        
+        <div
+          className={`${sizeClasses[size]} border-2 border-t-transparent border-app-primary-500 rounded-full animate-spin w-full h-full`}
+        />
+
         {showLogo && (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Image
@@ -47,7 +51,7 @@ export const Loader: React.FC<LoaderProps> = ({
           </div>
         )}
       </div>
-      
+
       {text && (
         <p className="text-lg text-gray-900 dark:text-white text-center">
           {text}

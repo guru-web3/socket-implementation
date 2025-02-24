@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        transparent: 'transparent',
+        transparent: "transparent",
         gray: {
           50: "#fafafa",
           100: "#f5f5f5",
@@ -25,43 +25,43 @@ export default {
           900: "#212121",
         },
         purple: {
-          100: 'rgb(var(--socket-purple-100) / <alpha-value>)',
-          70: 'rgb(var(--socket-purple-70) / <alpha-value>)',
-          60: 'rgb(var(--socket-purple-60) / <alpha-value>)',
-          50: 'rgb(var(--socket-purple-50) / <alpha-value>)',
-          30: 'rgb(var(--socket-purple-30) / <alpha-value>)',
-          20: 'rgb(var(--socket-purple-20) / <alpha-value>)',
-          10: 'rgb(var(--socket-purple-10) / <alpha-value>)',
-          0: 'rgb(var(--socket-purple-0) / <alpha-value>)'
+          100: "rgb(var(--socket-purple-100) / <alpha-value>)",
+          70: "rgb(var(--socket-purple-70) / <alpha-value>)",
+          60: "rgb(var(--socket-purple-60) / <alpha-value>)",
+          50: "rgb(var(--socket-purple-50) / <alpha-value>)",
+          30: "rgb(var(--socket-purple-30) / <alpha-value>)",
+          20: "rgb(var(--socket-purple-20) / <alpha-value>)",
+          10: "rgb(var(--socket-purple-10) / <alpha-value>)",
+          0: "rgb(var(--socket-purple-0) / <alpha-value>)",
         },
         blue: {
-          70: 'rgb(var(--socket-blue-70) / <alpha-value>)',
-          50: 'rgb(var(--socket-blue-50) / <alpha-value>)',
-          30: 'rgb(var(--socket-blue-30) / <alpha-value>)',
-          20: 'rgb(var(--socket-blue-20) / <alpha-value>)',
-          10: 'rgb(var(--socket-blue-10) / <alpha-value>)',
-          0: 'rgb(var(--socket-blue-0) / <alpha-value>)'
+          70: "rgb(var(--socket-blue-70) / <alpha-value>)",
+          50: "rgb(var(--socket-blue-50) / <alpha-value>)",
+          30: "rgb(var(--socket-blue-30) / <alpha-value>)",
+          20: "rgb(var(--socket-blue-20) / <alpha-value>)",
+          10: "rgb(var(--socket-blue-10) / <alpha-value>)",
+          0: "rgb(var(--socket-blue-0) / <alpha-value>)",
         },
         green: {
-          80: 'rgb(var(--socket-green-80) / <alpha-value>)',
-          70: 'rgb(var(--socket-green-70) / <alpha-value>)',
-          50: 'rgb(var(--socket-green-50) / <alpha-value>)',
-          30: 'rgb(var(--socket-green-30) / <alpha-value>)',
-          10: 'rgb(var(--socket-green-10) / <alpha-value>)',
-          0: 'rgb(var(--socket-green-0) / <alpha-value>)'
+          80: "rgb(var(--socket-green-80) / <alpha-value>)",
+          70: "rgb(var(--socket-green-70) / <alpha-value>)",
+          50: "rgb(var(--socket-green-50) / <alpha-value>)",
+          30: "rgb(var(--socket-green-30) / <alpha-value>)",
+          10: "rgb(var(--socket-green-10) / <alpha-value>)",
+          0: "rgb(var(--socket-green-0) / <alpha-value>)",
         },
         yellow: {
-          80: 'rgb(var(--socket-yellow-80) / <alpha-value>)',
-          50: 'rgb(var(--socket-yellow-50) / <alpha-value>)',
-          30: 'rgb(var(--socket-yellow-30) / <alpha-value>)',
-          0: 'rgb(var(--socket-yellow-0) / <alpha-value>)'
+          80: "rgb(var(--socket-yellow-80) / <alpha-value>)",
+          50: "rgb(var(--socket-yellow-50) / <alpha-value>)",
+          30: "rgb(var(--socket-yellow-30) / <alpha-value>)",
+          0: "rgb(var(--socket-yellow-0) / <alpha-value>)",
         },
         rose: {
-          70: 'rgb(var(--socket-rose-70) / <alpha-value>)',
-          60: 'rgb(var(--socket-rose-60) / <alpha-value>)',
-          50: 'rgb(var(--socket-rose-50) / <alpha-value>)',
-          30: 'rgb(var(--socket-rose-30) / <alpha-value>)',
-          0: 'rgb(var(--socket-rose-0) / <alpha-value>)'
+          70: "rgb(var(--socket-rose-70) / <alpha-value>)",
+          60: "rgb(var(--socket-rose-60) / <alpha-value>)",
+          50: "rgb(var(--socket-rose-50) / <alpha-value>)",
+          30: "rgb(var(--socket-rose-30) / <alpha-value>)",
+          0: "rgb(var(--socket-rose-0) / <alpha-value>)",
         },
         app: {
           onPrimary: "var(--app-on-primary)",
@@ -125,7 +125,7 @@ export default {
           alertDark: "var(--app-alertDark)",
           blueBorder: "var(--app-blueBorder)",
         },
-        dark: 'rgb(var(--bg-dark) / <alpha-value>)'
+        dark: "rgb(var(--bg-dark) / <alpha-value>)",
       },
       variables: {
         DEFAULT: {
@@ -180,22 +180,21 @@ export default {
       },
       // Update existing color references to match Socket scheme
       backgroundColor: {
-        card: 'rgb(var(--socket-gray-90) / <alpha-value>)',
-        dark: 'rgb(var(--bg-dark) / <alpha-value>)',
+        card: "rgb(var(--socket-gray-90) / <alpha-value>)",
+        dark: "rgb(var(--bg-dark) / <alpha-value>)",
       },
       textColor: {
-        primary: 'rgb(var(--socket-primary-purple) / <alpha-value>)',
-        gray: 'rgb(var(--socket-gray-50) / <alpha-value>)'
+        primary: "rgb(var(--socket-primary-purple) / <alpha-value>)",
+        gray: "rgb(var(--socket-gray-50) / <alpha-value>)",
       },
       borderColor: {
-        gray: 'rgb(var(--socket-gray-80) / <alpha-value>)'
+        gray: "rgb(var(--socket-gray-80) / <alpha-value>)",
       },
       boxShadow: {
-        card: '0px 4px 12px rgba(var(--socket-gray-90), 0.25)'
-      }
+        card: "0px 4px 12px rgba(var(--socket-gray-90), 0.25)",
+      },
     },
   },
   plugins: [],
   darkMode: "class",
-
 } satisfies Config;

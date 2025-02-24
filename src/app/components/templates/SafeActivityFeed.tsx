@@ -7,7 +7,6 @@
 // import Image from "next/image";
 // import { EChain, BLOCK_EXPLORER_URL } from "@/app/services/utils/chainUtils";
 
-
 // const SAFE_API_URL = "https://safe-transaction-sepolia.safe.global/api";
 
 // const SafeActivityFeed = ({ safeAddress }: { safeAddress: string }) => {

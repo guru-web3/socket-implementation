@@ -37,15 +37,13 @@ const Dropdown: React.FC<DropdownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(
-    options.find((o) => o.value === defaultValue) || null
+    options.find((o) => o.value === defaultValue) || null,
   );
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setSelectedOption(
-      options.find((o) => o.value === defaultValue) || null
-    );
-  }, [options, defaultValue])
+    setSelectedOption(options.find((o) => o.value === defaultValue) || null);
+  }, [options, defaultValue]);
 
   useEffect(() => {
     if (value) {
@@ -55,7 +53,10 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, [value, options]);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
       setIsOpen(false);
     }
   };
@@ -66,7 +67,11 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, []);
 
   return (
-    <div className={`relative ${classes.container || "w-full"}`} ref={dropdownRef} data-testid={testId}>
+    <div
+      className={`relative ${classes.container || "w-full"}`}
+      ref={dropdownRef}
+      data-testid={testId}
+    >
       <div
         className={`
           flex items-center justify-between p-2 cursor-pointer
@@ -77,27 +82,34 @@ const Dropdown: React.FC<DropdownProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         data-testid={`${testId}-input`}
       >
-        <span className={`flex justify-start items-center gap-x-2  ${classes.input || "text-gray-900 dark:text-white"}`}>
+        <span
+          className={`flex justify-start items-center gap-x-2  ${classes.input || "text-gray-900 dark:text-white"}`}
+        >
           {selectedOption?.icon}
           {selectedOption?.name || placeholder}
         </span>
-        <Image 
-            src="/icons/drop-down.svg"
-            alt="Arrow Up"
-            color="white"
-            width={18}
-            height={18}
-            data-testid={`${testId}-arrow`}
+        <Image
+          src="/icons/drop-down.svg"
+          alt="Arrow Up"
+          color="white"
+          width={18}
+          height={18}
+          data-testid={`${testId}-arrow`}
         />
       </div>
 
       {isOpen && (
-        <ul className="absolute overflow-auto z-10 w-full mt-2 bg-app-dark-surface3 border border-zinc-800 rounded-lg shadow-lg max-h-60 transition-all duration-300 ease-in-out transform origin-top scale-y-100 opacity-100 py-1" data-testid={`${testId}-options`}>
+        <ul
+          className="absolute overflow-auto z-10 w-full mt-2 bg-app-dark-surface3 border border-zinc-800 rounded-lg shadow-lg max-h-60 transition-all duration-300 ease-in-out transform origin-top scale-y-100 opacity-100 py-1"
+          data-testid={`${testId}-options`}
+        >
           {options.map((option) => (
             <li
               key={option.value}
               className={`p-2 flex justify-start gap-x-2 mt-1 gap-y-1 hover:bg- bg-app-dark-surface2 dark:hover:bg-gray-700 cursor-pointer ${
-                option.value === selectedOption?.value ? "bg- bg-app-dark-surface2 dark:bg-gray-700" : ""
+                option.value === selectedOption?.value
+                  ? "bg- bg-app-dark-surface2 dark:bg-gray-700"
+                  : ""
               }`}
               onClick={() => {
                 setSelectedOption(option);

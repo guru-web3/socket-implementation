@@ -32,7 +32,7 @@ const positionClasses = {
   "top-right": "fixed top-0 right-0",
   "top-left": "fixed top-0 left-0",
   "bottom-right": "fixed bottom-0 right-0",
-  "bottom-left": "fixed bottom-0 left-0"
+  "bottom-left": "fixed bottom-0 left-0",
 };
 
 const colors = {
@@ -40,7 +40,7 @@ const colors = {
   warning: "bg-yellow-600 text-white dark:bg-yellow-500",
   error: "bg-red-600 text-white dark:bg-red-500",
   info: "bg-blue-600 text-white dark:bg-blue-500",
-  default: "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
+  default: "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
 };
 
 const icons = {
@@ -58,7 +58,7 @@ const icons = {
   </svg>`,
   default: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>`
+  </svg>`,
 };
 
 const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
@@ -74,11 +74,11 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
       pill = true,
       ...props
     },
-    ref
+    ref,
   ) => {
     useEffect(() => {
       const timers = toasts.map((toast) =>
-        setTimeout(() => removeToast(toast.id), 3000)
+        setTimeout(() => removeToast(toast.id), 3000),
       );
       return () => timers.forEach(clearTimeout);
     }, [toasts, removeToast]);
@@ -98,7 +98,7 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
             } ${pill ? "rounded-full" : "rounded-lg"} ${toastStyle || ""}`}
           >
             {icon || (
-              <span 
+              <span
                 className="w-6 h-6 mr-2"
                 dangerouslySetInnerHTML={{ __html: icons[toast.type] }}
               />
@@ -108,7 +108,7 @@ const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
         ))}
       </div>
     );
-  }
+  },
 );
 
 Toast.displayName = "Toast";

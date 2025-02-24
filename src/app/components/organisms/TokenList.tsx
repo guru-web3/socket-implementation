@@ -9,15 +9,15 @@ import { Token } from "@/app/services/api/socket.interface";
 
 const TokenTransfer = dynamic(
   () => import("./TokenTransfer").then((module) => module.TokenTransfer),
-  { ssr: false }
+  { ssr: false },
 );
 const TokenImage = dynamic(
   () => import("../molecules/TokenImage").then((module) => module.TokenImage),
-  { ssr: false }
+  { ssr: false },
 );
 const TokenFilter = dynamic(
   () => import("./TokenFilter").then((module) => module.default),
-  { ssr: false }
+  { ssr: false },
 );
 
 const TokenList: React.FC = ({}) => {
@@ -26,7 +26,7 @@ const TokenList: React.FC = ({}) => {
 
   const handleTokenDetails = (token: Token) => {
     const tokenMapped = visibleAssets.find(
-      (asset) => asset.address == token.address
+      (asset) => asset.address == token.address,
     );
     if (tokenMapped) {
       setSelectedToken(tokenMapped);

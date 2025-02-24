@@ -1,11 +1,7 @@
-import {
-  useWriteContract,
-  useAccount,
-  useSendTransaction,
-} from "wagmi";
+import { useWriteContract, useAccount, useSendTransaction } from "wagmi";
 import { createPublicClient, encodeFunctionData, http } from "viem";
- // Get from Safe contracts repo
- import ERC20_ABI from "../constants/erc20.json";
+// Get from Safe contracts repo
+import ERC20_ABI from "../constants/erc20.json";
 
 export function useMakeApprovalTx() {
   const { chain } = useAccount();
@@ -72,7 +68,7 @@ export function useBungeeTx() {
 
   // Send transaction
   const {
-    sendTransaction,
+    sendTransactionAsync,
     isPending,
     isSuccess,
     data: txHash,
@@ -83,11 +79,11 @@ export function useBungeeTx() {
     const gasEstimate: bigint = await publicClient.estimateGas({
       to: txTarget,
       account: address,
-    //   value: BigInt("0x0"),
+      //   value: BigInt("0x0"),
       data: txData as `0x${string}`,
     });
 
-    return sendTransaction({
+    return sendTransactionAsync({
       to: txTarget as `0x${string}`,
       value: BigInt("0x0"),
       data: txData as `0x${string}`,

@@ -6,9 +6,12 @@ import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 import { useAccount } from "wagmi";
 
-const TokenList = dynamic(() =>
-  import("@/app/components/organisms/TokenList").then((module) => module.default),
-  { ssr: false }
+const TokenList = dynamic(
+  () =>
+    import("@/app/components/organisms/TokenList").then(
+      (module) => module.default,
+    ),
+  { ssr: false },
 );
 
 const Wallet = () => {

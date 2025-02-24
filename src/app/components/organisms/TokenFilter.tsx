@@ -23,10 +23,10 @@ const TokenFilter: React.FC<TokenFilterProps> = ({
     ? tokens.filter(
         (token) =>
           token.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          token.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+          token.symbol.toLowerCase().includes(searchQuery.toLowerCase()),
       )
     : tokens;
-  console.log({filteredTokens});
+  console.log({ filteredTokens });
 
   return (
     <div

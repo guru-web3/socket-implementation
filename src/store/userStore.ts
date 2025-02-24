@@ -9,14 +9,15 @@ interface UserStore {
 const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
-    address: "",
-    setAddress: (address) => set({ address: address }),
-  }), 
-  {
-    name: "user-storage",
-    storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
-    skipHydration: true,
-  },
-));
+      address: "",
+      setAddress: (address) => set({ address: address }),
+    }),
+    {
+      name: "user-storage",
+      storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+      skipHydration: true,
+    },
+  ),
+);
 
 export default useUserStore;

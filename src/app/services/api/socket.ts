@@ -1,8 +1,20 @@
 import { HttpClient } from "../http/httpClient";
-import { TokenListParams, TokenListResponse, ChainsResponse, UserBalanceParams, UserBalanceResponse, QuoteParams, QuoteResponse, StartRouteParams, StartRouteResponse, PrepareNextTxParams, PrepareNextTxResponse } from "./socket.interface";
+import {
+  TokenListParams,
+  TokenListResponse,
+  ChainsResponse,
+  UserBalanceParams,
+  UserBalanceResponse,
+  QuoteParams,
+  QuoteResponse,
+  StartRouteParams,
+  StartRouteResponse,
+  PrepareNextTxParams,
+  PrepareNextTxResponse,
+} from "./socket.interface";
 
 export async function getFromTokenList(
-  params: TokenListParams
+  params: TokenListParams,
 ): Promise<TokenListResponse> {
   return HttpClient<TokenListResponse>(
     "https://api.socket.tech/v2/token-lists/from-token-list",
@@ -11,12 +23,12 @@ export async function getFromTokenList(
         ...params,
         isShortList: params.isShortList ?? true,
       },
-    }
+    },
   );
 }
 
 export async function getToTokenList(
-  params: TokenListParams
+  params: TokenListParams,
 ): Promise<TokenListResponse> {
   return HttpClient<TokenListResponse>(
     "https://api.socket.tech/v2/token-lists/to-token-list",
@@ -25,13 +37,13 @@ export async function getToTokenList(
         ...params,
         isShortList: params.isShortList ?? true,
       },
-    }
+    },
   );
 }
 
 export async function getSupportedChains(): Promise<ChainsResponse> {
   return HttpClient<ChainsResponse>(
-    "https://api.socket.tech/v2/supported/chains"
+    "https://api.socket.tech/v2/supported/chains",
   );
 }
 
@@ -45,10 +57,9 @@ export async function getUserBalances(
         ...params,
         isShortList: params.isShortList ?? true,
       },
-    }
+    },
   );
 }
-
 
 export async function getQuote(params: QuoteParams): Promise<QuoteResponse> {
   const API_URL = "https://api.socket.tech/v2/quote";
@@ -59,18 +70,18 @@ export async function getQuote(params: QuoteParams): Promise<QuoteResponse> {
       singleTxOnly: params.singleTxOnly?.toString(),
       bridgeWithGas: params.bridgeWithGas?.toString(),
       sort: params.sort || "output",
-      defaultSwapSlippage:
-        params.defaultSwapSlippage?.toString() || "0.5",
-      isContractCall:
-        params.isContractCall?.toString() || "false",
-      showAutoRoutes:
-        params.showAutoRoutes?.toString() || "false",
-    }).reduce((acc, [key, value]) => {
-      if (value !== undefined) {
-        acc[key] = String(value);
-      }
-      return acc;
-    }, {} as Record<string, string>)
+      defaultSwapSlippage: params.defaultSwapSlippage?.toString() || "0.5",
+      isContractCall: params.isContractCall?.toString() || "false",
+      showAutoRoutes: params.showAutoRoutes?.toString() || "false",
+    }).reduce(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = String(value);
+        }
+        return acc;
+      },
+      {} as Record<string, string>,
+    ),
   );
 
   try {
@@ -84,9 +95,7 @@ export async function getQuote(params: QuoteParams): Promise<QuoteResponse> {
     });
 
     if (!response.ok) {
-      throw new Error(
-        `Failed to fetch quote. Status code ${response.status}`
-      );
+      throw new Error(`Failed to fetch quote. Status code ${response.status}`);
     }
 
     const data = (await response.json()) as QuoteResponse;
@@ -103,15 +112,18 @@ export async function getQuote(params: QuoteParams): Promise<QuoteResponse> {
 }
 
 export async function startRoute(
-  startRouteBody: StartRouteParams
+  startRouteBody: StartRouteParams,
 ): Promise<StartRouteResponse> {
-  return HttpClient<StartRouteResponse>("https://api.socket.tech/v2/route/start", {
-    method: "POST",
-    headers: {
-      "API-Key": process.env.NEXT_PUBLIC_SOCKET_API_KEY!,
+  return HttpClient<StartRouteResponse>(
+    "https://api.socket.tech/v2/route/start",
+    {
+      method: "POST",
+      headers: {
+        "API-Key": process.env.NEXT_PUBLIC_SOCKET_API_KEY!,
+      },
+      body: startRouteBody,
     },
-    body: startRouteBody,
-  });
+  );
 }
 
 export const ERC20_ABI = [
@@ -128,7 +140,7 @@ export const ERC20_ABI = [
 ];
 
 export async function prepareNextTx(
-  params: PrepareNextTxParams
+  params: PrepareNextTxParams,
 ): Promise<PrepareNextTxResponse> {
   return HttpClient<PrepareNextTxResponse>(
     "https://api.socket.tech/v2/route/prepare",
@@ -138,7 +150,7 @@ export async function prepareNextTx(
         ...params,
         userTxIndex: params.userTxIndex.toString(),
       },
-    }
+    },
   );
 }
 
@@ -153,7 +165,7 @@ interface BuildNextTxResponse {
 }
 
 export async function buildNextTx(
-  params: BuildNextTxParams
+  params: BuildNextTxParams,
 ): Promise<BuildNextTxResponse> {
   return HttpClient<BuildNextTxResponse>(
     "https://api.socket.tech/v2/route/build-next-tx",
@@ -162,6 +174,6 @@ export async function buildNextTx(
       params: {
         ...params,
       },
-    }
+    },
   );
 }

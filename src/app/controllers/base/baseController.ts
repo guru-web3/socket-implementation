@@ -1,4 +1,3 @@
-
 import SafeEventEmitter from "../eventEmiiter/safeEventEmitter";
 import { BaseConfig, BaseState, IController } from "./interfaces";
 

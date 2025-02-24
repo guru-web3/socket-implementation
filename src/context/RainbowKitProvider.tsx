@@ -26,13 +26,11 @@ export default function Providers({ children }: Props) {
       <WagmiProvider config={defaultWagmiConfig}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider initialChain={sepolia.id}>
-          {/* state management provider - zustand */}
+            {/* state management provider - zustand */}
             <ZustandProvider>
               <NavBar />
-            {/* Handle unauthorized routes */}
-              <AuthProvider>
-                {children}
-              </AuthProvider>
+              {/* Handle unauthorized routes */}
+              <AuthProvider>{children}</AuthProvider>
               <Footer />
             </ZustandProvider>
           </RainbowKitProvider>

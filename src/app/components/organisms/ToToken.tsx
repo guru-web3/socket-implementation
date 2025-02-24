@@ -22,10 +22,21 @@ const ToTokenSelection: React.FC<ToTokenSelectionProps> = ({
   const { toAmount } = useSwapTransactionStore();
   return (
     <>
-      <div className="bg- bg-app-dark-surface2 rounded bg-socket-layers-2 mb-4 mt-7" aria-label="To Token Container">
-        <div className="border-b-2 border-b-zinc-800 flex items-center justify-between px-3 py-2.5 sm:p-3 max-h-12" aria-label="To Token Header">
+      <div
+        className="bg- bg-app-dark-surface2 rounded bg-socket-layers-2 mb-4 mt-7"
+        aria-label="To Token Container"
+      >
+        <div
+          className="border-b-2 border-b-zinc-800 flex items-center justify-between px-3 py-2.5 sm:p-3 max-h-12"
+          aria-label="To Token Header"
+        >
           <div className="flex items-center" aria-label="To Token Dropdown">
-            <p className="text-sm text-app-gray-50 sm:text-base" aria-label="To Label">To</p>
+            <p
+              className="text-sm text-app-gray-50 sm:text-base"
+              aria-label="To Label"
+            >
+              To
+            </p>
             <Dropdown
               options={
                 supportedChains?.length
@@ -54,12 +65,21 @@ const ToTokenSelection: React.FC<ToTokenSelectionProps> = ({
               aria-label="To Chain Dropdown"
             />
           </div>
-          <div className="flex items-center text-sm font-semibold text-socket-primary sm:text-base" aria-label="To Token Balance">
-            <span className="pr-1 text-app-gray-50" aria-label="Balance Label">Bal:</span>
-            {Number(selectedToToken?.balance)?.toFixed(4)} {selectedToToken?.symbol}
+          <div
+            className="flex items-center text-sm font-semibold text-socket-primary sm:text-base"
+            aria-label="To Token Balance"
+          >
+            <span className="pr-1 text-app-gray-50" aria-label="Balance Label">
+              Bal:
+            </span>
+            {Number(selectedToToken?.balance)?.toFixed(4)}{" "}
+            {selectedToToken?.symbol}
           </div>
         </div>
-        <div className="flex items-center justify-between px-3 py-[14px] sm:py-3 max-h-16" aria-label="To Token Input">
+        <div
+          className="flex items-center justify-between px-3 py-[14px] sm:py-3 max-h-16"
+          aria-label="To Token Input"
+        >
           <input
             type="number"
             disabled={true}
@@ -68,7 +88,10 @@ const ToTokenSelection: React.FC<ToTokenSelectionProps> = ({
             value={toAmount?.toFixed(4)}
             aria-label="To Amount Input"
           />
-          <span className="text-sm text-app-gray-50" aria-label="To Token Button">
+          <span
+            className="text-sm text-app-gray-50"
+            aria-label="To Token Button"
+          >
             <Button
               onClick={() => {
                 setSelectedTokenType("to");
@@ -90,7 +113,10 @@ const ToTokenSelection: React.FC<ToTokenSelectionProps> = ({
                     unoptimized
                     aria-label={`${selectedToToken.name} Icon`}
                   />
-                  <p aria-label="Selected To Token Symbol"> {selectedToToken.symbol} </p>
+                  <p aria-label="Selected To Token Symbol">
+                    {" "}
+                    {selectedToToken.symbol}{" "}
+                  </p>
                 </>
               ) : (
                 <p aria-label="Select Token Text"> Select </p>

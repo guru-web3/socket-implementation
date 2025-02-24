@@ -18,7 +18,7 @@
 //   ];
 //   /* eslint-disable  @typescript-eslint/no-explicit-any */
 //   const [transactions, setTransactions] = useState<any[]>([]);
-  
+
 //   const TYPE_FILTER_OPTIONS = [
 //     { value: "all", name: "All Transactions" },
 //     { value: "ETH", name: "ETH Transfers" },
@@ -261,7 +261,6 @@
 
 // export default ActivityFeed;
 
-
 // "use client";
 // import React, { useEffect, useState } from "react";
 
@@ -288,8 +287,6 @@
 // import Button from "../atoms/Button";
 // import { WETH_SEPOLIA_CONTRACT } from "@/lib/constants/transaction";
 // import useTransactionStore from "@/store/activityStore";
-
-
 
 // const WrapUnwrapCard = () => {
 //   const publicClient = usePublicClient();
@@ -334,28 +331,28 @@
 //   const { writeContractAsync } = useWriteContract();
 
 //   const handleMaxWrap = async () => {
-    
+
 //     if (!ethBalance?.value || !wrapGas.data) return;
 //     try {
 //       // Get current block base fee
 //       const block = await publicClient?.getBlock();
 //       const baseFeePerGas = block?.baseFeePerGas;
-      
+
 //       if (!baseFeePerGas) throw new Error('EIP-1559 not supported');
-  
+
 //       // Set priority fee (2 Gwei in this example)
-//       const priorityFeePerGas = parseGwei('3'); 
-  
+//       const priorityFeePerGas = parseGwei('3');
+
 //       // Calculate total gas cost
 //       const totalGasCost = (baseFeePerGas + priorityFeePerGas) * wrapGas.data;
-  
+
 //       // Calculate max sendable amount
-//       const maxValue = ethBalance.value > totalGasCost 
+//       const maxValue = ethBalance.value > totalGasCost
 //         ? ethBalance.value - totalGasCost
 //         : 0n;
-  
+
 //       setWrapAmount(Number(formatEther(maxValue)).toFixed(5));
-  
+
 //     } catch (error) {
 //       console.error('Gas estimation error:', error);
 //       // Fallback to simple gas subtraction
@@ -428,18 +425,18 @@
 
 //   const handleWrap = async () => {
 //     if (!address || chain?.id !== sepolia.id) return;
-    
+
 //     try {
 //       setLoading(true);
 //       const value = BigInt(parseFloat(wrapAmount) * 1e18);
 
 //       if (safeEnabled) {
-        
+
 //         const SafeKit = (await import('@safe-global/protocol-kit')).default
 //         const apiKit = (await import("@safe-global/api-kit")).default
 
-//         const safeSDK = await SafeKit.init({ 
-//           safeAddress: safeAddress as `0x${string}`, 
+//         const safeSDK = await SafeKit.init({
+//           safeAddress: safeAddress as `0x${string}`,
 //           provider: connectorData?.transport as SafeConfig["provider"],
 //         });
 //         const signerAddress = (await safeSDK.getSafeProvider().getSignerAddress()) || '0x'
@@ -455,10 +452,10 @@
 
 //         const txHash = await safeSDK.getTransactionHash(safeTx);
 //         const signature = await safeSDK.signHash(txHash);
-        
+
 //         console.log({txHash});
 
-//         const api = new apiKit({ 
+//         const api = new apiKit({
 //           chainId: BigInt(sepolia.id),
 //         });
 //         await api.proposeTransaction({
@@ -508,7 +505,7 @@
 //         args: [value],
 //       });
 //       await postTransactionApi("unwrap", hash);
-      
+
 //       setTxHash(hash);
 //     } catch (error) {
 //       console.error("Unwrap failed:", error);
@@ -560,7 +557,7 @@
 //           </label>
 //           <span className="text-app-gray-50 text-sm">Use Safe Wallet</span>
 //         </div>
-        
+
 //         {safeEnabled && (
 //           <input
 //             type="text"
@@ -587,7 +584,7 @@
 //               Max: {Number(ethBalance?.formatted || 0).toFixed(4)} ETH
 //             </Button>
 //           </div>
-          
+
 //           <div className="flex gap-2 justify-center items-center">
 //             <TextInput
 //               placeholder="0.0"
@@ -606,7 +603,7 @@
 //               loading={loading}
 //               disabled={loading || !wrapAmount}
 //               className={`!h-12 w-28 px-6 py-3 rounded-lg font-medium transition-colors ${
-//                 loading || !wrapAmount 
+//                 loading || !wrapAmount
 //                   ? 'bg-neutral-800 text-app-gray-400 cursor-not-allowed'
 //                   : '  bg-purple-400 text-white'
 //               }`}
@@ -629,7 +626,7 @@
 //               Max: {Number(wethBalance?.formatted || 0).toFixed(4)} WETH
 //             </Button>
 //           </div>
-          
+
 //         <div className="flex gap-2 justify-center items-center">
 //           <TextInput
 //               placeholder="0.0"
@@ -648,7 +645,7 @@
 //               loading={unWrapLoading}
 //               disabled={unWrapLoading || !unWrapAmount}
 //               className={`!h-12 w-28 px-6 py-3 rounded-lg font-medium transition-colors ${
-//                 unWrapLoading || !unWrapAmount 
+//                 unWrapLoading || !unWrapAmount
 //                   ? 'bg-neutral-800 text-app-gray-400 cursor-not-allowed'
 //                   : ' bg-purple-400 text-white'
 //               }`}
@@ -666,7 +663,7 @@
 //           Transaction confirmed successfully!
 //         </div>
 //       )}
-      
+
 //       {transactionFailure && (
 //         <div className="mt-4 p-3 bg-red-500/20 text-red-500 rounded-lg text-center text-sm">
 //           {transactionFailure}
@@ -857,7 +854,7 @@
 //     // const safe = await createSafeClient({
 //     //   provider: connectorData?.transport as SafeConfig["provider"],
 //     // });
-    
+
 //     const nonce = await appKit.getNextNonce(safeAddress);
 //     const signerAddress = (await safeSdk.getSafeProvider().getSignerAddress()) || '0x'
 
@@ -865,7 +862,7 @@
 //       abi: WethAbi,
 //       functionName: 'deposit',
 //     });
-  
+
 //     const transactionData: SafeTransactionDataPartial = {
 //       to: WETH_SEPOLIA_CONTRACT,
 //       value: amount.toString(),
@@ -874,11 +871,11 @@
 //       nonce: Number(nonce),
 //       safeTxGas: "1",
 //     };
-  
+
 //       // safe.send({ transactions: [transactionData] });
 //     // Create Safe transaction
 //     const safeTransaction = await safeSdk.createTransaction({
-//       transactions: [transactionData], 
+//       transactions: [transactionData],
 //       options: {
 //         nonce: Number(nonce),
 //         safeTxGas: '0', // Auto-calculate
@@ -908,7 +905,7 @@
 //       // senderSignature: signature.data
 //     // }
 //   // )
-  
+
 //   };
 
 //   const handleWrapEth = async () => {
@@ -927,7 +924,7 @@
 //         //   abi: SafeAbi,
 //         //   functionName: 'nonce'
 //         // });
-  
+
 //         // // Generate Safe transaction hash
 //         // const safeTxHash = await publicClient.readContract({
 //         //   address: address as Hex,
@@ -1086,7 +1083,7 @@
 
 //   const handleMaxWrap = async () => {
 //     if (!ethBalance?.value || !wrapGas) return;
-    
+
 //     const maxValue = ethBalance.value - wrapGas;
 //     setWrapAmount((Number(maxValue) / 1e18).toFixed(4));
 //   };
@@ -1098,19 +1095,19 @@
 
 //   const handleWrap = async () => {
 //     if (!address || chain?.id !== sepolia.id) return;
-    
+
 //     try {
 //       setLoading(true);
 //       const value = BigInt(parseFloat(wrapAmount) * 1e18);
 
 //       if (safeEnabled) {
-        
+
 //         const SafeKit = (await import('@safe-global/protocol-kit')).default
 //         const apiKit = (await import("@safe-global/api-kit")).default
 
-//         const safeSDK = await SafeKit.init({ 
-//           safeAddress: safeAddress as `0x${string}`, 
-//           provider: window.ethereum as any 
+//         const safeSDK = await SafeKit.init({
+//           safeAddress: safeAddress as `0x${string}`,
+//           provider: window.ethereum as any
 //         });
 //         const signerAddress = (await safeSDK.getSafeProvider().getSignerAddress()) || '0x'
 
@@ -1125,8 +1122,8 @@
 
 //         const txHash = await safeSDK.getTransactionHash(safeTx);
 //         const signature = await safeSDK.signHash(txHash);
-        
-//         const api = new apiKit({ 
+
+//         const api = new apiKit({
 //           chainId: BigInt(sepolia.id),
 //         });
 //         await api.proposeTransaction({
@@ -1167,7 +1164,7 @@
 //         functionName: "withdraw",
 //         args: [value],
 //       });
-      
+
 //       setTxHash(hash);
 //     } catch (error) {
 //       console.error("Unwrap failed:", error);

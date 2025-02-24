@@ -34,7 +34,7 @@ const BridgeRoutes = () => {
   } = useSwapTransactionStore();
   const [quickestRoute, setQuickestRoute] = useState<RouteDetails | null>(null);
   const [bestReturnRoute, setBestReturnRoute] = useState<RouteDetails | null>(
-    null
+    null,
   );
 
   // Extract protocol details from routes
@@ -45,7 +45,7 @@ const BridgeRoutes = () => {
       const estimateOutput = route.outputValueInUsd || 0;
       const estimateTokenOutput = formatUnits(
         BigInt(route.toAmount || "0"),
-        selectedToToken?.decimals || 18
+        selectedToToken?.decimals || 18,
       );
       const estimateGasFee = route.totalGasFeesInUsd || 0;
 
@@ -69,7 +69,7 @@ const BridgeRoutes = () => {
   useEffect(() => {
     if (!selectedRoute && bestReturnRoute) {
       const defaultSelectedRoute = routes?.find(
-        (route) => route.routeId === bestReturnRoute?.routeId
+        (route) => route.routeId === bestReturnRoute?.routeId,
       );
       if (defaultSelectedRoute) setSelectedRoute(defaultSelectedRoute);
     }
@@ -84,12 +84,12 @@ const BridgeRoutes = () => {
 
     // Sort by service time (quickest)
     const sortedByTime = [...details].sort(
-      (a, b) => (a.serviceTime || Infinity) - (b.serviceTime || Infinity)
+      (a, b) => (a.serviceTime || Infinity) - (b.serviceTime || Infinity),
     );
 
     // Sort by output value (best return)
     const sortedByOutput = [...details].sort(
-      (a, b) => b.estimateOutput - a.estimateOutput
+      (a, b) => b.estimateOutput - a.estimateOutput,
     );
 
     setQuickestRoute(sortedByTime[0]);
@@ -98,7 +98,7 @@ const BridgeRoutes = () => {
     // Set default selection to best return route
     setToAmount(+sortedByOutput[0].estimateTokenOutput);
     const defaultSelectedRoute = routes?.find(
-      (route) => route.routeId === sortedByOutput[0].routeId
+      (route) => route.routeId === sortedByOutput[0].routeId,
     );
     if (defaultSelectedRoute) setSelectedRoute(defaultSelectedRoute);
   };
@@ -112,7 +112,7 @@ const BridgeRoutes = () => {
   const renderRouteCard = (
     route: RouteDetails,
     badgeText: string,
-    badgeColor: string
+    badgeColor: string,
   ) => (
     <div
       className={`p-4 rounded-lg border ${
@@ -171,7 +171,11 @@ const BridgeRoutes = () => {
       {/* Bridge Routes */}
       {fetchingQuote ? (
         <div className="py-8">
-          <Loader size="lg" aria-label="Loading Tokens" text="Fetching Routes" />
+          <Loader
+            size="lg"
+            aria-label="Loading Tokens"
+            text="Fetching Routes"
+          />
         </div>
       ) : (
         <>

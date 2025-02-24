@@ -3,9 +3,12 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { useAccount } from "wagmi";
 
-const SwapCard = dynamic(() =>
-  import("@/app/components/templates/SwapCard").then((module) => module.default),
-  { ssr: false }
+const SwapCard = dynamic(
+  () =>
+    import("@/app/components/templates/SwapCard").then(
+      (module) => module.default,
+    ),
+  { ssr: false },
 );
 
 const Swap = () => {

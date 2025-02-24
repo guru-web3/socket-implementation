@@ -30,8 +30,7 @@ const Button: React.FC<ButtonProps> = ({
       "bg-transparent text-app-gray-500 border border-app-gray-500 hover:bg-app-gray-200 focus-visible:ring-app-primary-600 dark:text-app-white dark:border-app-gray-300 dark:hover:bg-app-gray-700",
     tertiary:
       "bg-app-gray-200 text-app-gray-800 hover:bg-app-gray-300 focus-visible:ring-app-primary-600 dark:bg-app-gray-500 dark:text-app-white dark:hover:bg-app-gray-400",
-    text:
-      "text-app-primary-600 focus:outline-none focus:ring-0 disabled:text-app-gray-400 dark:text-app-primary-500",
+    text: "text-app-primary-600 focus:outline-none focus:ring-0 disabled:text-app-gray-400 dark:text-app-primary-500",
   };
 
   // Size styles
@@ -51,7 +50,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={loading || props.disabled}
       {...props}
     >
-        {loading && <Loader size={"sm"} className="flex-none" />}
+      {loading && <Loader size={"sm"} className="flex-none" />}
       {children}
     </button>
   );

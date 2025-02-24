@@ -1,4 +1,4 @@
- import { EventEmitter } from "events";
+import { EventEmitter } from "events";
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 type Handler = (...args: any[]) => void;

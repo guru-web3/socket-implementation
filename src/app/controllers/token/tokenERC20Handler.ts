@@ -2,8 +2,16 @@ import { PublicClient } from "viem";
 
 import { erc20Abi } from "./erc20abi";
 
-import { chainIdToNetworkKey, chainIdToViemChain, getNetworkImageUrl, getPublicClient } from "@/app/services/common-utils/chainUtils";
-import { AssetIdType, TAssetInfoWithBalance } from "@/app/constants/asset.interface";
+import {
+  chainIdToNetworkKey,
+  chainIdToViemChain,
+  getNetworkImageUrl,
+  getPublicClient,
+} from "@/app/services/common-utils/chainUtils";
+import {
+  AssetIdType,
+  TAssetInfoWithBalance,
+} from "@/app/constants/asset.interface";
 
 export interface ITokenOptions {
   address: AssetIdType;
@@ -82,7 +90,9 @@ export class TokenHandler {
     return balance.toString();
   }
 
-  public async toAssetInfo(account: AssetIdType): Promise<TAssetInfoWithBalance> {
+  public async toAssetInfo(
+    account: AssetIdType,
+  ): Promise<TAssetInfoWithBalance> {
     const networkKey = chainIdToNetworkKey(this.chainId);
     const network = chainIdToViemChain(this.chainId);
     const [name, symbol, decimals, balance] = await Promise.all([

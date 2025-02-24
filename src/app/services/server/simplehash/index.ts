@@ -1,4 +1,18 @@
-import { EthereumSepolia, getSimpleHashApiKey, AMOY, ARBITRUM_MAINNET, ARBITRUM_SEPOLIA, AVALANCHE_MAINNET, BSC_MAINNET, CELO_MAINNET, GOERLI, MAINNET, MATIC, OPTIMISM_MAINNET, OPTIMISM_SEPOLIA } from "@/app/services/common-utils/chainUtils";
+import {
+  EthereumSepolia,
+  getSimpleHashApiKey,
+  AMOY,
+  ARBITRUM_MAINNET,
+  ARBITRUM_SEPOLIA,
+  AVALANCHE_MAINNET,
+  BSC_MAINNET,
+  CELO_MAINNET,
+  GOERLI,
+  MAINNET,
+  MATIC,
+  OPTIMISM_MAINNET,
+  OPTIMISM_SEPOLIA,
+} from "@/app/services/common-utils/chainUtils";
 
 const SIMPLEHASH_MAP: Record<string, string> = {
   [MAINNET]: "ethereum",
@@ -49,5 +63,4 @@ export class SimpleHash {
     const result = await response.json();
     return result;
   }
-
 }

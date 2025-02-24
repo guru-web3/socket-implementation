@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import WrapUnwrapCard from "../../app/components/templates/WrapEth";
 import { ToastProvider } from "@/context/ToastContex"; // Import the ToastProvider
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 import { useRouter } from "next/navigation";
 
 jest.mock("next/navigation", () => ({
@@ -73,8 +73,8 @@ describe("WrapUnwrapCard Component", () => {
 
     await waitFor(() =>
       expect(
-        screen.getByText(/Transaction confirmed successfully!/i)
-      ).toBeInTheDocument()
+        screen.getByText(/Transaction confirmed successfully!/i),
+      ).toBeInTheDocument(),
     );
   });
 
@@ -89,8 +89,8 @@ describe("WrapUnwrapCard Component", () => {
 
     await waitFor(() =>
       expect(
-        screen.getByText(/Transaction confirmed successfully!/i)
-      ).toBeInTheDocument()
+        screen.getByText(/Transaction confirmed successfully!/i),
+      ).toBeInTheDocument(),
     );
   });
 
@@ -108,15 +108,14 @@ describe("WrapUnwrapCard Component", () => {
         ? { value: BigInt(1e18), formatted: "1.0" }
         : { value: BigInt(0.5e18), formatted: "0.5" },
     }));
-  
+
     renderWithProviders(<WrapUnwrapCard />);
-  
+
     const input = screen.getByTestId("wrap-input");
     fireEvent.change(input, { target: { value: "2" } });
-  
+
     await waitFor(() => {
       expect(screen.getByText("Insufficient Balance")).toBeInTheDocument();
     });
   });
-  
 });

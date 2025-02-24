@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import redisClient from "@/lib/redis";
 
-import { TokenBalancesQuerySchema, TokensServices } from "@/app/services/server/tokenService";
+import {
+  TokenBalancesQuerySchema,
+  TokensServices,
+} from "@/app/services/server/tokenService";
 import { SimpleHash } from "@/app/services/server/simplehash";
 
 // for start set to 60secs

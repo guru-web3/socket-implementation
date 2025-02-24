@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { useAccount, useSwitchChain } from "wagmi";
-import Button from "../atoms/Button";
 import { parseUnits } from "viem";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
+import Button from "../atoms/Button";
 import useSwapStore from "@/store/swapStore";
 import useSwapTransactionStore from "@/store/swapTransactionStore";
 import { useBungeeTx, useMakeApprovalTx } from "@/app/composibles/useApproval";
@@ -17,36 +18,39 @@ import {
   BLOCK_EXPLORER_URL_UI,
   EChain,
 } from "@/app/services/common-utils/chainUtils";
-import { useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContex";
 
-const TokenFilter = dynamic(
-  () => import("../organisms/TokenFilter").then((module) => module.default),
-  { ssr: false }
-);
-const FromTokenSelection = dynamic(
-  () => import("../organisms/FromToken").then((module) => module.default),
-  { ssr: false }
-);
-const ToTokenSelection = dynamic(
-  () => import("../organisms/ToToken").then((module) => module.default),
-  { ssr: false }
-);
-const EnableRefuel = dynamic(
-  () => import("../organisms/EnableRefuel").then((module) => module.default),
-  { ssr: false }
-);
-const BridgeRoutes = dynamic(
-  () => import("../organisms/BridgeRoutes").then((module) => module.default),
-  { ssr: false }
-);
+// Dynamically import components for better performance
+const TokenFilter = dynamic(() => import("../organisms/TokenFilter"), {
+  ssr: false,
+});
+const FromTokenSelection = dynamic(() => import("../organisms/FromToken"), {
+  ssr: false,
+});
+const ToTokenSelection = dynamic(() => import("../organisms/ToToken"), {
+  ssr: false,
+});
+const EnableRefuel = dynamic(() => import("../organisms/EnableRefuel"), {
+  ssr: false,
+});
+const BridgeRoutes = dynamic(() => import("../organisms/BridgeRoutes"), {
+  ssr: false,
+});
 
 const SwapCard = () => {
+  // Hooks and state management
   const { address, chain } = useAccount();
   const router = useRouter();
   const { switchChain } = useSwitchChain();
   const { addToast } = useToast();
+  const { approve } = useMakeApprovalTx();
+  const { executeTx } = useBungeeTx();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [balanceError, setBalanceError] = useState("");
+  const [chainError, setChainError] = useState("");
+
+  // Destructure state and actions from custom hooks
   const {
     supportedChains,
     fromTokens,
@@ -57,7 +61,6 @@ const SwapCard = () => {
     selectedToChain,
     setSelectedTokenType,
     selectedTokenType,
-    userBalance,
     fetchUserBalances,
     fetchSupportedChains,
     setSelectedFromChain,
@@ -65,9 +68,7 @@ const SwapCard = () => {
     setSelectedFromToken,
     setSelectedToToken,
   } = useSwapStore();
-  const { approve } = useMakeApprovalTx();
-  const { executeTx } = useBungeeTx();
-  const [isLoading, setIsLoading] = useState(false);
+
   const {
     fromAmount,
     isRefuelEnabled,
@@ -76,9 +77,8 @@ const SwapCard = () => {
     setFetchingQuote,
     fetchingQuote,
   } = useSwapTransactionStore();
-  const [balanceError, setBalanceError] = useState("");
-  const [chainError, setChainError] = useState("");
 
+  // Initialize data on component mount
   useEffect(() => {
     const init = async () => {
       if (address) {
@@ -87,42 +87,52 @@ const SwapCard = () => {
       }
     };
     init();
-  }, [address]);
+  }, [address, fetchUserBalances, fetchSupportedChains]);
 
+  // Set initial chains
   useEffect(() => {
     const setInitChain = async () => {
       if (!selectedFromChain && supportedChains.length) {
         const defaultChain = supportedChains.find(
-          (chain) => chain.chainId === 1
+          (chain) => chain.chainId === 1,
         );
         const defaultToChain = supportedChains.find(
-          (chain) => chain.chainId === 10
+          (chain) => chain.chainId === 10,
         );
-        if (defaultChain) {
-          await setSelectedFromChain(defaultChain);
-        }
-        if (defaultToChain) {
-          await setSelectedToChain(defaultToChain);
-        }
-      } else if (userBalance) {
+        if (defaultChain) await setSelectedFromChain(defaultChain);
+        if (defaultToChain) await setSelectedToChain(defaultToChain);
       }
     };
     setInitChain();
-  }, [supportedChains, userBalance]);
+  }, [
+    supportedChains,
+    selectedFromChain,
+    setSelectedFromChain,
+    setSelectedToChain,
+  ]);
 
-  const fetchBalance = async () => {
+  // Fetch balance periodically
+  const fetchBalance = useCallback(async () => {
     if (address) {
       await fetchUserBalances(address);
-      selectedFromChain && (await setSelectedFromChain(selectedFromChain));
-      selectedToChain && (await setSelectedToChain(selectedToChain));
+      if (selectedFromChain) await setSelectedFromChain(selectedFromChain);
+      if (selectedToChain) await setSelectedToChain(selectedToChain);
     }
-  };
+  }, [
+    address,
+    fetchUserBalances,
+    selectedFromChain,
+    selectedToChain,
+    setSelectedFromChain,
+    setSelectedToChain,
+  ]);
 
   useEffect(() => {
     const interval = setInterval(fetchBalance, 15000);
     return () => clearInterval(interval);
-  }, [userBalance]);
+  }, [fetchBalance]);
 
+  // Check for balance errors
   useEffect(() => {
     if (
       selectedFromToken &&
@@ -135,6 +145,7 @@ const SwapCard = () => {
     }
   }, [fromAmount, selectedFromToken]);
 
+  // Check for chain errors
   useEffect(() => {
     if (selectedFromChain && chain?.id !== selectedFromChain?.chainId) {
       setChainError(`Switch to ${selectedFromChain?.name}`);
@@ -143,6 +154,7 @@ const SwapCard = () => {
     }
   }, [chain, selectedFromChain]);
 
+  // Calculate routes when relevant data changes
   useEffect(() => {
     calculateRoutes();
   }, [
@@ -164,7 +176,7 @@ const SwapCard = () => {
       setFetchingQuote(true);
       const bigIntFromAmount = parseUnits(
         fromAmount.toString(),
-        selectedFromToken.decimals
+        selectedFromToken.decimals,
       );
       await fetchQuote({
         fromChainId: selectedFromChain.chainId,
@@ -184,9 +196,10 @@ const SwapCard = () => {
     }
   };
 
+  // Handler functions
   const changeNetwork = (chainId: string, option: "from" | "to") => {
     const newSelectedChain = supportedChains?.find(
-      (chain) => chain.chainId === parseInt(chainId, 10)
+      (chain) => chain.chainId === parseInt(chainId, 10),
     );
     if (newSelectedChain) {
       return option === "from"
@@ -235,13 +248,14 @@ const SwapCard = () => {
             approvalTokenAddress,
           });
         }
-        await executeTx(txTarget, value, txData);
+        const txHash = await executeTx(txTarget, value, txData);
         const url = `${
           BLOCK_EXPLORER_URL_UI[
             selectedFromChain?.chainId.toString() as unknown as EChain
           ]
         }/address/${address}#tokentxns`;
         router.push("/wallet");
+        console.log({ txHash });
         return window.open(url, "_blank");
       } catch (err) {
         addToast("error", (err as Error).message || "Swap failed!");
@@ -251,6 +265,7 @@ const SwapCard = () => {
     }
   };
 
+  // Render loading state
   if (isLoading) {
     return (
       <div className="h-[88vh] flex justify-center items-center">
@@ -259,6 +274,7 @@ const SwapCard = () => {
     );
   }
 
+  // Main render
   return (
     <>
       {address ? (
@@ -275,6 +291,7 @@ const SwapCard = () => {
             />
           ) : (
             <>
+              {/* Swap Card Header */}
               <div
                 className="mb-3 flex items-center justify-between"
                 aria-label="Swap Card Header"
@@ -317,6 +334,8 @@ const SwapCard = () => {
                   </Button>
                 </div>
               </div>
+
+              {/* Token Selection Components */}
               <FromTokenSelection
                 changeNetwork={changeNetwork}
                 aria-label="From Token Selection"
@@ -339,8 +358,12 @@ const SwapCard = () => {
                 changeNetwork={changeNetwork}
                 aria-label="To Token Selection"
               />
+
+              {/* Additional Components */}
               <EnableRefuel aria-label="Enable Refuel Section" />
               <BridgeRoutes aria-label="Bridge Routes Section" />
+
+              {/* Add Recipient Address Button */}
               <Button
                 className="w-56 my-4 flex items-center gap-2 bg-neutral-800 text-app-gray-50 rounded-full !p-0 max-h-9 shadow-md hover:bg-neutral-700 transition-all"
                 aria-label="Add Recipient Address Button"
@@ -358,6 +381,8 @@ const SwapCard = () => {
                   Add Recipient Address
                 </span>
               </Button>
+
+              {/* Action Button */}
               {balanceError ? (
                 <Button
                   variant="primary"

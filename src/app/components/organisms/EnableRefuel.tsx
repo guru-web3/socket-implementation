@@ -4,13 +4,14 @@ import { useAccount } from "wagmi";
 import useSwapTransactionStore from "@/store/swapTransactionStore";
 
 const EnableRefuel = () => {
-  const {
-    isRefuelEnabled, setIsRefuelEnabled
-   } = useSwapTransactionStore();
+  const { isRefuelEnabled, setIsRefuelEnabled } = useSwapTransactionStore();
   const { chain } = useAccount();
 
   return (
-    <div className="bg-gradient-to-b from- bg-app-dark-surface2 to-gray-900 rounded-lg p-4 flex items-center justify-between shadow-md" aria-label="Enable Refuel Container">
+    <div
+      className="bg-gradient-to-b from- bg-app-dark-surface2 to-gray-900 rounded-lg p-4 flex items-center justify-between shadow-md"
+      aria-label="Enable Refuel Container"
+    >
       {/* Left Section */}
       <div className="flex items-center gap-3" aria-label="Refuel Information">
         <Image
@@ -21,9 +22,15 @@ const EnableRefuel = () => {
           aria-label="Refuel Icon"
         />
         <div>
-          <p className="text-app-gray-50 font-medium flex items-center gap-1" aria-label="Enable Refuel">
+          <p
+            className="text-app-gray-50 font-medium flex items-center gap-1"
+            aria-label="Enable Refuel"
+          >
             Enable Refuel{" "}
-            <span className="text-app-gray-300 text-sm cursor-pointer" aria-label="Info Icon">
+            <span
+              className="text-app-gray-300 text-sm cursor-pointer"
+              aria-label="Info Icon"
+            >
               <Image
                 src="https://www.bungee.exchange/_next/static/media/info-new.6b61946d.svg" // Replace with your actual info icon path
                 alt="Info"
@@ -32,14 +39,21 @@ const EnableRefuel = () => {
               />
             </span>
           </p>
-          <p className="text-app-gray-300 text-sm" aria-label="Refuel Description">
+          <p
+            className="text-app-gray-300 text-sm"
+            aria-label="Refuel Description"
+          >
             Get {chain?.nativeCurrency?.symbol} for transactions on Polygon
           </p>
         </div>
       </div>
-    
+
       {/* Toggle */}
-      <label htmlFor="refuel-toggle" className="relative inline-flex items-center cursor-pointer" aria-label="Enable Refuel Toggle">
+      <label
+        htmlFor="refuel-toggle"
+        className="relative inline-flex items-center cursor-pointer"
+        aria-label="Enable Refuel Toggle"
+      >
         <input
           type="checkbox"
           id="refuel-toggle"

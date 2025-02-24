@@ -1,10 +1,16 @@
-
 import { BaseController } from "../base";
 import { AssestInfoConfig, AssetsInfoState } from "./interfaces";
 
 import { TokenHandler } from "../token/tokenERC20Handler";
-import { chainIdToNetworkKey, getNetworkImageUrl } from "@/app/services/common-utils/chainUtils";
-import { AssetInfo, AssetIdType, TAssetInfoWithBalance } from "@/app/constants/asset.interface";
+import {
+  chainIdToNetworkKey,
+  getNetworkImageUrl,
+} from "@/app/services/common-utils/chainUtils";
+import {
+  AssetInfo,
+  AssetIdType,
+  TAssetInfoWithBalance,
+} from "@/app/constants/asset.interface";
 
 export interface AccountAssetsInfo {
   customAssets: { [key: string]: AssetInfo };
@@ -111,7 +117,6 @@ export default class AssetsInfoController extends BaseController<
     });
   }
 
-
   async readErc20TokenDetails(
     chainId: number,
     tokenAddress: AssetIdType,
@@ -167,5 +172,4 @@ export default class AssetsInfoController extends BaseController<
       new Set(this.state.shownAssets.concat(this.state.nonZeroBalanceAssets)),
     );
   }
-
 }

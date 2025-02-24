@@ -10,7 +10,7 @@ interface HttpClientConfig {
 
 export async function HttpClient<T>(
   url: string,
-  config: HttpClientConfig = { method: "GET" }
+  config: HttpClientConfig = { method: "GET" },
 ): Promise<T> {
   try {
     const { method = "GET", params, body, headers } = config;

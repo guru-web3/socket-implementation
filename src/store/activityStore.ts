@@ -20,15 +20,12 @@ interface TransactionState {
   isLoading: boolean;
   error: string | null;
   filters: {
-    days: number, 
-    type: string,
+    days: number;
+    type: string;
   };
-  setFilters: (
-    days: number, 
-    type: string,
-  ) => Promise<void>;
+  setFilters: (days: number, type: string) => Promise<void>;
   fetchTransactions: (
-    address: string, 
+    address: string,
     chainId: number,
     days: string,
     typ: string,
@@ -41,7 +38,7 @@ interface TransactionState {
     hash: string,
     address: string,
     amount: string,
-    unWrapAmount: string
+    unWrapAmount: string,
   ) => Promise<void>;
 }
 
@@ -87,17 +84,10 @@ const useTransactionStore = create<TransactionState>((set) => ({
     }
   },
 
-
   //   post transaction from wrap
   isPosting: false,
   postTransactionError: null,
-  postTransaction: async (
-    wrapType,
-    hash,
-    address,
-    amount,
-    unWrapAmount
-  ) => {
+  postTransaction: async (wrapType, hash, address, amount, unWrapAmount) => {
     set({ isPosting: true, error: null });
     const { sepolia } = await import("wagmi/chains");
 

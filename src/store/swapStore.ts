@@ -1,4 +1,9 @@
-import { Token, UserBalance, Chain, QuoteParams } from "@/app/services/api/socket.interface";
+import {
+  Token,
+  UserBalance,
+  Chain,
+  QuoteParams,
+} from "@/app/services/api/socket.interface";
 import {
   getFromTokenList,
   getToTokenList,
@@ -43,16 +48,16 @@ const useSwapStore = create<SwapStoreState>()(
       selectedFromToken: null,
       selectedToToken: null,
       fetchingQuote: false,
-      selectedTokenType: null, 
+      selectedTokenType: null,
       setSelectedTokenType: (tokenType: TokenType) => {
-        set({selectedTokenType: tokenType})
+        set({ selectedTokenType: tokenType });
       },
 
       setSelectedFromToken: (token: Token) => {
-        set({selectedFromToken: token})
+        set({ selectedFromToken: token });
       },
       setSelectedToToken: (token: Token) => {
-        set({selectedToToken: token})
+        set({ selectedToToken: token });
       },
       // Fetch supported chains
       fetchSupportedChains: async () => {
@@ -65,7 +70,13 @@ const useSwapStore = create<SwapStoreState>()(
       },
       setSelectedToChain: async (chain: Chain) => {
         set({ selectedToChain: chain });
-        const { selectedFromChain, selectedToChain, userBalance, fromTokens , setSelectedFromChain} = get();
+        const {
+          selectedFromChain,
+          selectedToChain,
+          userBalance,
+          fromTokens,
+          setSelectedFromChain,
+        } = get();
         if (selectedFromChain && selectedToChain) {
           const result = await getToTokenList({
             toChainId: selectedToChain.chainId,
@@ -78,10 +89,10 @@ const useSwapStore = create<SwapStoreState>()(
             return { ...token, balance };
           });
           const sortedTokens = updatedTokens.sort(
-            (a, b) => (b.balance || 0) - (a.balance || 0)
+            (a, b) => (b.balance || 0) - (a.balance || 0),
           );
-          if (sortedTokens) set({toTokens: sortedTokens});
-          if(!fromTokens.length) await setSelectedFromChain(selectedFromChain)
+          if (sortedTokens) set({ toTokens: sortedTokens });
+          if (!fromTokens.length) await setSelectedFromChain(selectedFromChain);
         }
       },
       setSelectedFromChain: async (chain: Chain) => {
@@ -99,10 +110,9 @@ const useSwapStore = create<SwapStoreState>()(
             return { ...token, balance };
           });
           const sortedTokens = updatedTokens.sort(
-            (a, b) => (b.balance || 0) - (a.balance || 0)
+            (a, b) => (b.balance || 0) - (a.balance || 0),
           );
-          if (sortedTokens) set({fromTokens: sortedTokens});
-  
+          if (sortedTokens) set({ fromTokens: sortedTokens });
         }
       },
 
@@ -127,14 +137,13 @@ const useSwapStore = create<SwapStoreState>()(
           console.error("Error fetching quote:", error);
         }
       },
-
     }),
     {
       name: "swap-storage",
       storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
       skipHydration: true,
     },
-  )
+  ),
 );
 
 export default useSwapStore;

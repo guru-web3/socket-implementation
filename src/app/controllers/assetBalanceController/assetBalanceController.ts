@@ -41,7 +41,6 @@ export default class AssetsBalanceController extends BaseController<
 
   getAccounts: () => string[];
 
-  
   // Temp Config as the default config is not working
   tempConfig: MainControllerConfig;
 
@@ -52,7 +51,7 @@ export default class AssetsBalanceController extends BaseController<
       balanceControllerConfig: config.balanceControllerConfig,
       // ...config,
     };
-    
+
     this.getAccounts = () => {
       const { address } = useUserStore.getState();
 
@@ -63,7 +62,6 @@ export default class AssetsBalanceController extends BaseController<
     };
     this.tempConfig = config;
     // getAccounts
-
 
     this.assetsController = new AssetsInfoController({
       config: config.assetsInfoConfig,
@@ -102,7 +100,6 @@ export default class AssetsBalanceController extends BaseController<
       setStates({ balanceControllerState: state });
       // useBalancesStore.setState(state);
     });
-
 
     // Save preference state before closing the window
     // function createBeforeUnloadHandler( mainController: AssetsBalanceController) {

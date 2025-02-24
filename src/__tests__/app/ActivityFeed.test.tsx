@@ -1,8 +1,14 @@
 import React from "react";
-import { render, screen, waitFor, fireEvent, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  within,
+} from "@testing-library/react";
 import { useAccount } from "wagmi";
 import useTransactionStore from "@/store/activityStore";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 import ActivityFeed from "@/app/components/templates/ActivityFeed";
 
 // Mock wagmi hooks
@@ -65,24 +71,40 @@ describe("ActivityFeed Component", () => {
     render(<ActivityFeed />);
 
     expect(screen.getByTestId("transaction-history-title")).toBeInTheDocument();
-    await waitFor(() => expect(screen.getByTestId("days-filter")).toBeInTheDocument());
-    await waitFor(() => expect(screen.getByTestId("type-filter")).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByTestId("days-filter")).toBeInTheDocument(),
+    );
+    await waitFor(() =>
+      expect(screen.getByTestId("type-filter")).toBeInTheDocument(),
+    );
     expect(screen.getByTestId("transaction-list")).toBeInTheDocument();
   });
 
   it("displays transactions correctly", async () => {
     render(<ActivityFeed />);
 
-    await waitFor(() => expect(screen.getByTestId("transaction-0x1")).toBeInTheDocument());
-    await waitFor(() => expect(screen.getByTestId("transaction-0x2")).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByTestId("transaction-0x1")).toBeInTheDocument(),
+    );
+    await waitFor(() =>
+      expect(screen.getByTestId("transaction-0x2")).toBeInTheDocument(),
+    );
 
     const transaction1 = screen.getByTestId("transaction-0x1");
-    expect(within(transaction1).getByTestId("transaction-title")).toHaveTextContent("ETH Transfer");
-    expect(within(transaction1).getByTestId("transaction-status")).toHaveTextContent("Confirmed");
+    expect(
+      within(transaction1).getByTestId("transaction-title"),
+    ).toHaveTextContent("ETH Transfer");
+    expect(
+      within(transaction1).getByTestId("transaction-status"),
+    ).toHaveTextContent("Confirmed");
 
     const transaction2 = screen.getByTestId("transaction-0x2");
-    expect(within(transaction2).getByTestId("transaction-title")).toHaveTextContent("USDC Transfer");
-    expect(within(transaction2).getByTestId("transaction-status")).toHaveTextContent("Failed");
+    expect(
+      within(transaction2).getByTestId("transaction-title"),
+    ).toHaveTextContent("USDC Transfer");
+    expect(
+      within(transaction2).getByTestId("transaction-status"),
+    ).toHaveTextContent("Failed");
   });
 
   it("displays loader when loading", () => {
@@ -112,7 +134,9 @@ describe("ActivityFeed Component", () => {
 
     render(<ActivityFeed />);
 
-    expect(screen.getByTestId("error-fetching-transactions")).toBeInTheDocument();
+    expect(
+      screen.getByTestId("error-fetching-transactions"),
+    ).toBeInTheDocument();
   });
 
   it("displays 'No transactions found' when there are no transactions", () => {

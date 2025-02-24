@@ -6,9 +6,9 @@ import { useAccount } from "wagmi";
 const ActivityFeed = dynamic(
   () =>
     import("@/app/components/templates/ActivityFeed").then(
-      (module) => module.default
+      (module) => module.default,
     ),
-  { ssr: false }
+  { ssr: false },
 );
 
 const Activity = () => {

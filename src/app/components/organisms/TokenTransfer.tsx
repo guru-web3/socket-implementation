@@ -9,7 +9,7 @@ import {
   parseGwei,
   formatEther,
 } from "viem";
-import { mainnet } from "viem/chains"; 
+import { mainnet } from "viem/chains";
 import { useRouter } from "next/navigation";
 
 import ERC20_ABI from "../../constants/erc20.json";
@@ -30,7 +30,7 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
   const router = useRouter();
   const { address, chain } = useAccount();
   const { switchChain } = useSwitchChain();
-  
+
   const { sendTransactionAsync } = useSendTransaction();
   const { addToast } = useToast();
 
@@ -48,18 +48,18 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
         ? chainIdToViemChain(selectedToken.chainId)
         : mainnet, // Default chain, will override per token
       transport: http(),
-    })
+    }),
   );
 
   useEffect(() => {
-    console.log({selectedToken});
+    console.log({ selectedToken });
     setPublicClient(
       createPublicClient({
         chain: selectedToken
           ? chainIdToViemChain(selectedToken.chainId)
           : mainnet, // Default chain, will override per token
         transport: http(),
-      })
+      }),
     );
   }, [selectedToken]);
 
@@ -74,9 +74,9 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
   }, [amount]);
 
   useEffect(() => {
-    if ( amount && !toAddress) {
+    if (amount && !toAddress) {
       setIsValidAddress("Address is needed");
-    } else if(amount && !validateAddress(toAddress)) {
+    } else if (amount && !validateAddress(toAddress)) {
       setIsValidAddress("Invalid Address");
     } else {
       setIsValidAddress("");
@@ -88,29 +88,28 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
     if (selectedToken && amount) estimateGas();
   }, [selectedToken, amount]);
 
-
   const estimateGas = async () => {
     if (!address || chain?.id !== selectedToken.chainId) return;
-    
+
     try {
       if (!selectedToken || !amount || !address) return;
-  
+
       // Parse the input amount to the token's smallest unit
       const value = parseUnits(amount, selectedToken.decimals);
-  
+
       // Fetch the current block to get base fee and priority fee
       const block = await publicClient.getBlock();
       const baseFeePerGas = block?.baseFeePerGas;
-  
+
       if (!baseFeePerGas) {
         throw new Error("EIP-1559 not supported on this chain");
       }
-  
+
       // Set priority fee (e.g., 2 Gwei)
       const priorityFeePerGas = parseGwei("2.4");
-  
+
       let gasEstimate;
-  
+
       if (selectedToken.isErc20) {
         // Estimate gas for ERC20 transfer
         gasEstimate = await publicClient.estimateGas({
@@ -129,20 +128,19 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
           value,
         });
       }
-  
+
       // Calculate total gas cost: (base fee + priority fee) x gas units
       const totalGasCost = (baseFeePerGas + priorityFeePerGas) * gasEstimate;
-  
+
       // Convert total gas cost to native token units (ETH, MATIC, etc.)
       const formattedGasCost = formatEther(totalGasCost);
-  
+
       setGasEstimate(`${formattedGasCost}`);
     } catch (error) {
       console.error("Error calculating gas:", error);
       setGasEstimate("Error calculating gas");
     }
   };
-  
 
   // Validate token balance
   const validateBalance = () => {
@@ -157,10 +155,10 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
   // Handle token transfer
   const handleTransfer = async () => {
     if (chain?.id !== selectedToken.chainId) {
-      addToast("error", `Change to ${selectedToken.chainId} and try again!`)
+      addToast("error", `Change to ${selectedToken.chainId} and try again!`);
       return;
     }
-    
+
     if (!validateBalance()) {
       addToast("error", "Insufficient balance");
       return;
@@ -179,15 +177,15 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
                 args: [toAddress || address, value],
               }),
             }
-          : { value }
+          : { value },
       );
-      
+
       // post transaction
       await fetch("/api/transactions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          hash: txHash, 
+          hash: txHash,
           type: selectedToken?.isErc20 ? "ERC20" : "NATIVE",
           to: selectedToken.address,
           value: value.toString(),
@@ -196,16 +194,15 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
           address: address,
           chainId: chain.id,
         }),
-      })
-
+      });
 
       router.push(`/activity`);
     } catch (err) {
       addToast(
         "error",
-        (err as {shortMessage: string}).shortMessage ||
+        (err as { shortMessage: string }).shortMessage ||
           (err as Error).message ||
-          "Transaction failed"
+          "Transaction failed",
       );
     } finally {
       setIsLoading(false);
@@ -213,27 +210,29 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
   };
 
   if (chain?.id !== selectedToken.chainId) {
-      return (
-        <div className="bg-app-dark-surface3 p-4 rounded-xl border border-neutral-800 text-center">
-          <div className="mb-3 flex flex-col items-center gap-2">
-            <Image
-              src="/icons/settings.svg"
-              alt="Warning"
-              width={40}
-              height={40}
-              className="mb-2"
-            />
-            <p className="text-app-gray-50">Please switch to {selectedToken.network} network</p>
-            <button
-              onClick={() => switchChain?.({ chainId: selectedToken.chainId })}
-              className="mt-2 hover:bg-purple-400 text-white px-4 py-2 rounded-full transition-colors"
-              aria-label="Switch to Sepolia network"
-            >
-              Switch Network
-            </button>
-          </div>
+    return (
+      <div className="bg-app-dark-surface3 p-4 rounded-xl border border-neutral-800 text-center">
+        <div className="mb-3 flex flex-col items-center gap-2">
+          <Image
+            src="/icons/settings.svg"
+            alt="Warning"
+            width={40}
+            height={40}
+            className="mb-2"
+          />
+          <p className="text-app-gray-50">
+            Please switch to {selectedToken.network} network
+          </p>
+          <button
+            onClick={() => switchChain?.({ chainId: selectedToken.chainId })}
+            className="mt-2 hover:bg-purple-400 text-white px-4 py-2 rounded-full transition-colors"
+            aria-label="Switch to Sepolia network"
+          >
+            Switch Network
+          </button>
         </div>
-      );
+      </div>
+    );
   }
   return (
     <div className="max-w-md mx-auto p-6 bg-gray-800 rounded-lg">
@@ -272,7 +271,10 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
           aria-label="Eth Address"
         />
         {selectedToken && (
-          <div className="mt-2 text-sm text-center text-gray-600" aria-label="Balance">
+          <div
+            className="mt-2 text-sm text-center text-gray-600"
+            aria-label="Balance"
+          >
             Balance: {selectedToken.balance} {selectedToken.symbol}
           </div>
         )}
@@ -281,7 +283,10 @@ export const TokenTransfer = ({ selectedToken }: TokenTransferProps) => {
       {/* Gas Estimate */}
       {selectedToken && (
         <div className="mb-4">
-          <div className="text-sm text-center text-gray-600" aria-label="Estimated Gas">
+          <div
+            className="text-sm text-center text-gray-600"
+            aria-label="Estimated Gas"
+          >
             Estimated Gas: {gasEstimate} {chain?.nativeCurrency.symbol}
           </div>
         </div>

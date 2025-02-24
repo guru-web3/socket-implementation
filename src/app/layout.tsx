@@ -61,9 +61,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://assets.web3auth.io" />
 
         <Providers>
-          <div className="min-h-[87vh]">
-            {children}
-          </div>
+          <div className="min-h-[87vh]">{children}</div>
         </Providers>
       </body>
     </html>
