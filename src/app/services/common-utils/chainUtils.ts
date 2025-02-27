@@ -18,6 +18,21 @@ import {
   arbitrumSepolia,
   base,
   optimism,
+  aurora,
+  avalanche,
+  bsc,
+  celo,
+  gnosis,
+  iotex,
+  linea,
+  mantle,
+  metis,
+  mode,
+  polygonZkEvm,
+  scrollSepolia,
+  syscoin,
+  zksync,
+  zora,
 } from "viem/chains";
 import { ethereumTokens } from "@/app/constants/TokenDirectory/Ethereum";
 import { polygonTokens } from "@/app/constants/TokenDirectory/Polygon";
@@ -436,20 +451,49 @@ export function chainIdToViemChain(chainId: number | string): ChainConfig {
   switch (chainIdNumb) {
     case 1:
       return { ...mainnet, currencyConversionSymbol: "ETH" };
-    case 11155111:
-      return { ...sepolia, currencyConversionSymbol: "ETH" };
+    case 10:
+      return { ...optimism, currencyConversionSymbol: "ETH" };
+    case 56:
+      return { ...bsc, currencyConversionSymbol: "BNB" };
+    case 100:
+      return { ...gnosis, currencyConversionSymbol: "xDAI" };
     case 137:
       return { ...polygon, currencyConversionSymbol: "MATIC" };
-    case 80002:
-      return { ...polygonAmoy, currencyConversionSymbol: "MATIC" };
+    case 324:
+      return { ...zksync, currencyConversionSymbol: "ETH" };
+    case 1101:
+      return { ...polygonZkEvm, currencyConversionSymbol: "ETH" };
+    case 2741:
+      return { ...metis, currencyConversionSymbol: "METIS" };
+    case 5000:
+      return { ...mantle, currencyConversionSymbol: "MNT" };
+    case 8333:
+      return { ...syscoin, currencyConversionSymbol: "SYS" };
+    case 8453:
+      return { ...base, currencyConversionSymbol: "ETH" };
+    case 34443:
+      return { ...iotex, currencyConversionSymbol: "IOTX" };
     case 42161:
       return { ...arbitrum, currencyConversionSymbol: "ETH" };
-    case 421614:
-      return { ...arbitrumSepolia, currencyConversionSymbol: "ARB" };
+    case 43114:
+      return { ...avalanche, currencyConversionSymbol: "AVAX" };
+    case 59144:
+      return { ...linea, currencyConversionSymbol: "ETH" };
+    case 80094:
+      return { ...celo, currencyConversionSymbol: "CELO" };
+    case 81457:
+      return { ...mode, currencyConversionSymbol: "ETH" };
+    case 534352:
+      return { ...scrollSepolia, currencyConversionSymbol: "ETH" };
+    case 7777777:
+      return { ...zora, currencyConversionSymbol: "ETH" };
+    case 1313161554:
+      return { ...aurora, currencyConversionSymbol: "ETH" };
     default:
       throw new Error(`Invalid chainId: ${JSON.stringify(chainId)}`);
   }
 }
+
 
 export function getPublicClient(chainId: number | string) {
   const chain = chainIdToViemChain(chainId);

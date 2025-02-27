@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useAccount } from "wagmi";
 import useSwapTransactionStore from "@/store/swapTransactionStore";
+import useSwapStore from "@/store/swapStore";
+import { chainIdToViemChain } from "@/app/services/common-utils/chainUtils";
+import { Chain } from "@rainbow-me/rainbowkit";
 
 const EnableRefuel = () => {
   const { isRefuelEnabled, setIsRefuelEnabled } = useSwapTransactionStore();
-  const { chain } = useAccount();
+  const {selectedToChain } = useSwapStore();
+  const [selectedRefuelChain, setSelectedRefuelChain] = useState<Chain>();
+
+  useEffect(() => {
+    if (selectedToChain?.chainId) {
+      setSelectedRefuelChain(chainIdToViemChain(selectedToChain?.chainId))
+    }
+  }, [selectedToChain])
 
   return (
     <div
@@ -43,7 +52,7 @@ const EnableRefuel = () => {
             className="text-app-gray-300 text-sm"
             aria-label="Refuel Description"
           >
-            Get {chain?.nativeCurrency?.symbol} for transactions on Polygon
+            Get {selectedRefuelChain?.nativeCurrency.symbol} for transactions on {selectedRefuelChain?.name}
           </p>
         </div>
       </div>
