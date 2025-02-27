@@ -59,13 +59,6 @@ export function useMakeApprovalTx() {
 }
 
 export function useBungeeTx() {
-  const { chain, address } = useAccount();
-
-  const publicClient = createPublicClient({
-    chain: chain,
-    transport: http(),
-  });
-
   // Send transaction
   const {
     sendTransactionAsync,
@@ -76,18 +69,10 @@ export function useBungeeTx() {
   } = useSendTransaction();
 
   const executeTx = async (txTarget: string, value: string, txData: string) => {
-    const gasEstimate: bigint = await publicClient.estimateGas({
-      to: txTarget,
-      account: address,
-      //   value: BigInt("0x0"),
-      data: txData as `0x${string}`,
-    });
-
     return sendTransactionAsync({
       to: txTarget as `0x${string}`,
       value: BigInt("0x0"),
       data: txData as `0x${string}`,
-      gas: gasEstimate,
     });
   };
 

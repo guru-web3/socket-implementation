@@ -140,7 +140,7 @@ const BridgeRoutes = () => {
             <p className="text-app-gray-50 font-medium flex items-center gap-2">
               {route.name}{" "}
               <span className="text-app-gray-300 text-sm">
-                ~ {route.serviceTime} mins
+                ~ {route.serviceTime} secs
               </span>
             </p>
             <p className="text-app-gray-300 text-sm">
